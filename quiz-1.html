@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
-    <title>Главная</title>
+    <title>Викторина</title>
 </head>
 
 <body>
+
 
     <div class="wrapper">
         <header class="header">
@@ -23,12 +24,27 @@
                     <span></span>
                 </button>
             </div>
+            <div class="header__menu menu">
+                <div class="menu__content">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="" class="menu__link">О продукции</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Сертификация</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Купить</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </header>
         <main class="page">
             <div class="quiz">
                 <div class="quiz__container container">
                     <div class="quiz__top">
-                        <div class="quiz__title text-highlighted">
+                        <div class="quiz__title">
                             Выбирай пазл,
                             <br>
                             отвечай на вопросы
@@ -45,24 +61,19 @@
                         <div data-piece-id="6" class="quiz__square"></div>
                     </div>
                     <div class="quiz__pieces">
-                        <canvas class="quiz__piece"></canvas>
-                        <canvas class="quiz__piece"></canvas>
-                        <canvas class="quiz__piece"></canvas>
-                        <canvas class="quiz__piece"></canvas>
-                        <canvas class="quiz__piece"></canvas>
-                        <canvas class="quiz__piece"></canvas>
+                        <div class="quiz__piece"></div>
+                        <div class="quiz__piece"></div>
+                        <div class="quiz__piece"></div>
+                        <div class="quiz__piece"></div>
+                        <div class="quiz__piece"></div>
+                        <div class="quiz__piece"></div>
                     </div>
 
                 </div>
             </div>
         </main>
-        <div class="footer">
-            <div class="footer__container container">
-
-            </div>
-        </div>
-
     </div>
+    <script src="js/puzzle.js"></script>
     <script src="js/script.js"></script>
 </body>
 

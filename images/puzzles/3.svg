@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 477.46 320.41">
     <defs>
         <style>
-            .cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:1.18px;opacity:0.49;}.cls-2{clip-path:url(#clip-path);}
+            .cls-1{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-width:1.18px;opacity:0.49;}.cls-4{clip-path:url(#clip-path-6);}
         </style>
-        <clipPath id="clip-path" transform="translate(272.03 2.77)">
+        <clipPath id="clip-path-6">
             <path class="cls-1"
                   d="M203.11,159.32c-14.77,3.67-32,7.94-36.83,9.25-8.11,2.16-15.78,5.23-22.08.77s-3.81-12.2-2.29-17.13,8.43-11.12,7.36-24.56-21-18.06-34.5-15.59-22,13-22.2,23.32,5.5,13.89,6.74,22.38-2.93,11.42-10.12,12.82-21.81-2.27-28.94-5.05c-3.53-1.38-9.33-3.69-14.76-6.21C50.3,147,54.1,135.61,55.82,129.25c2-7.28,3.7-13.76,1.36-20.41-2-5.65-8.56-7.22-15.94-4.63-7.05,2.48-13.83,8.63-27,4.93-12.11-3.39-15.2-21-13-36S11.55,52,23.78,53.43c6.68.8,12.55,7.23,21.89,4.14s7.9-19.2,6.13-28.08C49.58,18.1,47.41,9.3,45.49.59h123.1A34.58,34.58,0,0,1,203.1,35.26C203.1,78.65,203.09,148.62,203.11,159.32Z"/>
         </clipPath>
     </defs>
-    <g id="Слой_2" data-name="Слой 2">
-        <g id="Layer_1" data-name="Layer 1">
-            <g class="cls-2">
-                <image height="1322" transform="scale"/>
+    <g>
+        <g>
+            <g class="cls-4">
+                <image />
             </g>
         </g>
     </g>
