@@ -36,3 +36,14 @@ if (headerBurger) {
     }, 300);
   });
 }
+
+var toTopButton = document.querySelector('.footer__to-top');
+
+if (toTopButton) {
+  toTopButton.addEventListener('click', function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
