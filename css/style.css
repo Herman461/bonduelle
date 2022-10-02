@@ -431,15 +431,38 @@ a {
   border-radius: 30px;
   border: 1.3px solid #CBCAC4;
   margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .quiz__top {
   margin-bottom: 190px;
 }
 
+.quiz__square {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 1 33.333%;
+  flex: 0 1 33.333%;
+  height: 50%;
+}
+
+.quiz__puzzles {
+  position: relative;
+}
+
 .quiz__piece {
-  display: block;
+  display: inline-block;
   margin-bottom: 4px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.quiz__piece.hold {
+  opacity: 1 !important;
 }
 
 .quiz__pieces {
