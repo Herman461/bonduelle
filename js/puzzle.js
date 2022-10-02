@@ -1,4 +1,4 @@
-const imageObj = new Image();
+const imageObj = new Image(475, 320);
 
 
 const data = [
@@ -33,45 +33,18 @@ const data = [
     {
         id: 5,
         width: 247,
-        height: 169,
+        height: 160,
         imageSrc: 'images/puzzles/5.svg',
         href: null,
     },
     {
         id: 6,
-        width: 170,
+        width: 176,
         height: 206,
         imageSrc: 'images/puzzles/6.svg',
         href: null,
     },
 ]
-//
-// const dragStart = function () {
-//     this.classList.add("hold")
-// };
-//
-// const dragEnd = function () {
-//     // this.className.add("fill")
-//     this.className.remove("hold")
-// };
-//
-// const dragOver = function (e) {
-//     // Ref: https://developer.cdn.mozilla.net/en-US/docs/Web/API/Document/dragover_event
-//     e.preventDefault();
-// };
-//
-// const dragEnter = function (e) {
-//     e.preventDefault();
-//     this.className += " hovered";
-// };
-//
-// const dragLeave = function () {
-//     this.className = "empty";
-// };
-//
-// const dragDrop = function () {
-//     this.className = "empty";
-// };
 
 function dragElement(el) {
     let pos1 = 0,
@@ -119,13 +92,35 @@ function dragElement(el) {
             const puzzleWidth = puzzlePos.width
             const puzzleHeight = puzzlePos.height
 
-            const x = puzzleX - squareX > 0 && puzzleX - squareX < puzzleWidth
-            const y = puzzleY - squareY > 0 && puzzleY - squareY < puzzleHeight
+            const x = puzzleX - squareX > -40 && puzzleX - squareX + 100 < puzzleWidth
+            const y = puzzleY - squareY > -40 && puzzleY - squareY + 100 < puzzleHeight
 
 
             if (x && y)  {
-                el.style.top = square.offsetTop + "px";
-                el.style.left = square.offsetLeft + "px";
+
+
+
+                switch (index) {
+                    case 1:
+                        el.style.left = square.offsetLeft - 11 + "px";
+                        el.style.top = square.offsetTop + "px";
+                        break;
+                    case 2:
+                        el.style.left = square.offsetLeft - 43 + "px";
+                        el.style.top = square.offsetTop + "px";
+                        break;
+                    case 3:
+                        el.style.top = square.offsetTop - 48 + "px";
+                        el.style.left = square.offsetLeft + "px";
+                        break;
+                    case 4:
+                        el.style.top = square.offsetTop - 20 + "px";
+                        el.style.left = square.offsetLeft - 30 + "px";
+                        break;
+                    default:
+                        el.style.top = square.offsetTop + "px";
+                        el.style.left = square.offsetLeft + "px";
+                }
                 break;
             }
         }
@@ -140,30 +135,25 @@ function dragElement(el) {
 
 imageObj.onload = async function() {
 
-    imageObj.width = 470
-    imageObj.height = 315
-
-
-
     let index = 0;
     for (let h = 0; h < 2; h++) {
         const item = data[index]
         let sourceY = 0
 
         if (h !== 0) {
-            sourceY = h * item.height
+            sourceY = h * data[index - 1].height
         }
-
+        let sourceX = 0
         for (let w = 0; w < 3; w++) {
             const canvas = document.createElement('canvas')
             const item = data[index]
 
             const context = canvas.getContext('2d');
 
-            let sourceX = 0
+
 
             if (w !== 0) {
-                sourceX = w * item.width;
+                sourceX += data[index - 1].width;
             }
 
             canvas.height = item.height
@@ -172,7 +162,29 @@ imageObj.onload = async function() {
             context.width = String(item.width)
             context.height = String(item.height)
 
-            context.drawImage(imageObj, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+            const updatedImage = resizeImage(imageObj)
+
+            switch (index) {
+                case 0:
+                    context.drawImage(updatedImage, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+                case 1:
+                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+                case 2:
+                    context.drawImage(updatedImage, 270, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+                case 3:
+                    context.drawImage(updatedImage, sourceX, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+                case 4:
+                    console.log(sourceY)
+                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+                case 5:
+                    context.drawImage(updatedImage, 220, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
+                    break;
+            }
 
             item.href = canvas.toDataURL()
             index++;
@@ -181,9 +193,23 @@ imageObj.onload = async function() {
     await setPuzzleForm()
 
 };
+
 imageObj.src = 'images/test2.jpg';
 
-const images = []
+function resizeImage(image) {
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext("2d");
+    canvas.height = 320
+    canvas.width = 475
+    context.drawImage(image, 0, 0, 586, 320)
+
+    const dataUrl = canvas.toDataURL('image/jpeg')
+    const newImage = document.createElement('img')
+
+    newImage.src = dataUrl
+    return newImage
+}
+
 
 async function setPuzzleForm() {
 
@@ -213,23 +239,12 @@ async function setPuzzleForm() {
         svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + item.width + ' ' + item.height)
         svgImage.querySelector('svg').setAttribute('width', item.width)
         svgImage.querySelector('svg').setAttribute('height', item.height)
-        wrapper.appendChild(svgImage.documentElement)
 
-        // wrapper.setAttribute('draggable', 'true')
-        // wrapper.addEventListener("dragstart", dragStart);
-        // wrapper.addEventListener("dragend", dragEnd);
+        wrapper.appendChild(svgImage.documentElement)
 
         document.querySelector('.quiz__puzzles').appendChild(wrapper)
 
         dragElement(wrapper)
-        // images.push(svgImage.documentElement)
     }
 }
 
-
-//
-// const squares = document.querySelectorAll('.quiz__square')
-//
-// for (let index = 0; index < squares.length; index++) {
-//     const square = squares[index]
-// }

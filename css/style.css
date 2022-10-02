@@ -451,6 +451,7 @@ a {
 
 .quiz__puzzles {
   position: relative;
+  padding-bottom: 200px;
 }
 
 .quiz__piece {
