@@ -33,7 +33,7 @@ const data = [
     {
         id: 5,
         width: 247,
-        height: 160,
+        height: 170,
         imageSrc: 'images/puzzles/5.svg',
         href: null,
     },
@@ -43,6 +43,75 @@ const data = [
         height: 206,
         imageSrc: 'images/puzzles/6.svg',
         href: null,
+    },
+]
+
+const questions = [
+    {
+        id: 1,
+        question: 'Как кукуруза помогает улучшать зрение?',
+        items: [
+            'С помощью витаминов и полезных веществ',
+            'Если на неё долго смотреть, то начнёшь лучше видеть',
+            'С помощью витаминов и полезных веществ',
+        ],
+        explanation: 'В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!',
+        rightAnswer: 'a'
+    },
+    {
+        id: 2,
+        question: 'Почему кукуруза даёт тебе супер-силу?',
+        items: [
+            'Потому что она сама супер!',
+            'Поднимая банки с кукурузой много раз, ты станешь сильнее',
+            'Её полезные вещества укрепляют мышцы',
+        ],
+        explanation: 'Кукуруза помогает мышцам и костям стать крепче, благодаря высокому содержанию белка, чтобы у тебя было больше сил!',
+        rightAnswer: 'c'
+    },
+    {
+        id: 3,
+        question: 'Как кукуруза защищает от болезней?',
+        items: [
+            'Она умеет улучшать иммунитет',
+            'Намажься её зёрнами целиком, и никогда не заболеешь',
+            'Из неё можно сделать щит от любой заразы',
+        ],
+        explanation: 'Пищевые волокна, клетчатка и другие полезные вещества в кукурузе помогают противостоять вирусам и бактериям и укрепляют твоё здоровье!',
+        rightAnswer: 'a'
+    },
+    {
+        id: 4,
+        question: 'Почему кукуруза очень полезна для детей?',
+        items: [
+            'Потому что её собирают, когда она молодая',
+            'Из неё можно сделать немало полезных вещей',
+            'В ней много витаминов для роста',
+        ],
+        explanation: 'В кукурузе содержатся витамины А и Е, кальций, железо и другие вещества, очень полезные для роста и развития молодого организма!',
+        rightAnswer: 'c'
+    },
+    {
+        id: 5,
+        question: 'Как кукуруза улучшает ум?',
+        items: [
+            'Соком кукурузы написано много умных книжек',
+            'С помощью полезных витаминов',
+            'Если сосчитать все зёрнышки в банке, то станешь умнее',
+        ],
+        explanation: 'Витамины группы B, которые содержатся в кукурузе, положительно влияют на центральную нервную систему!',
+        rightAnswer: 'b'
+    },
+    {
+        id: 6,
+        question: 'Почему молодая кукуруза такая сладкая?',
+        items: [
+            'Потому что она растёт рядом со сладкими фруктами и ягодами',
+            'Потому что в банки с ней добавляют конфеты',
+            'Она сладкая от природы',
+        ],
+        explanation: 'Молодая кукуруза сладкая от природы, и в баночки с ней не добавляют сахар, поэтому она такая полезная!',
+        rightAnswer: 'c'
     },
 ]
 
@@ -164,6 +233,8 @@ imageObj.onload = async function() {
 
             const updatedImage = resizeImage(imageObj)
 
+
+
             switch (index) {
                 case 0:
                     context.drawImage(updatedImage, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
@@ -244,7 +315,111 @@ async function setPuzzleForm() {
 
         document.querySelector('.quiz__puzzles').appendChild(wrapper)
 
+        wrapper.dataset.pieceIndex = index
+
+        wrapper.addEventListener('click', setQuestion)
         dragElement(wrapper)
+        wrapper.addEventListener( 'touchmove', function(e) {
+            e.preventDefault()
+        })
+    }
+}
+
+function setQuestion(e) {
+    const variants = document.querySelector('.quiz__variants')
+    variants.innerHTML = ''
+
+
+
+    const index = e.target.closest('.quiz__piece').dataset.pieceIndex
+    const question = questions[index]
+
+    const title = document.querySelector('.quiz__title')
+
+    if (!title.classList.contains('active')) {
+        title.classList.add('active')
+    }
+
+    title.textContent = question.question
+
+    sessionStorage.setItem('stageIndex', index)
+
+    for (let index = 0; index < question.items.length; index++) {
+        const item = question.items[index]
+
+        let letter;
+        switch (index) {
+            case 0:
+                letter = 'A'
+                break;
+            case 1:
+                letter = 'B'
+                break;
+            case 2:
+                letter = 'C'
+                break;
+        }
+
+        const el = document.createElement('div')
+        el.className = 'quiz__variant variant-quiz'
+        el.innerHTML = `
+            <div class="variant-quiz__body">
+                <div class="variant-quiz__letter">${letter}</div>
+                <p class="variant-quiz__text">${item}</p>
+            </div>
+        `
+        el.addEventListener('click', checkAnswer)
+        variants.appendChild(el)
+    }
+}
+
+function checkAnswer(e) {
+    const answers = document.querySelectorAll('.quiz__variant')
+    const answer = e.target.closest('.quiz__variant')
+    const questionIndex = +sessionStorage.getItem('stageIndex')
+    const question = questions[questionIndex]
+
+    let rightAnswerIndex
+
+    switch (question.rightAnswer.toLowerCase()) {
+        case 'a':
+            rightAnswerIndex = 0
+            break;
+        case 'b':
+            rightAnswerIndex = 1
+            break;
+        case 'c':
+            rightAnswerIndex = 2
+            break;
+    }
+
+    answer.querySelector('.variant-quiz__body').classList.add('active')
+
+    for (let index = 0; index < answers.length; index++) {
+        const item = answers[index]
+        console.log(item)
+        // Если ответ правильный
+        if (answer.isEqualNode(item) && rightAnswerIndex === index) {
+            const el = document.createElement('div')
+            el.innerHTML = `
+                <div class="quiz__win win-quiz">
+                    <div class="win-quiz__top">
+                        <div class="win-quiz__image">
+                            <img src="images/puzzles/win.png" alt="">
+                        </div>
+                        <div class="win-quiz__title">
+                            Это <br>
+                            правильный <br>
+                            ответ!
+                        </div>
+                    </div>
+                    <div class="win-quiz__text">
+                        <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
+                    </div>
+                </div>
+            `
+            document.querySelector('.quiz').appendChild(el)
+        }
     }
 }
 
