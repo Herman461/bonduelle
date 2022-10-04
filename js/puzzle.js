@@ -203,10 +203,8 @@ function dragElement(el) {
 
 
 imageObj.onload = async function() {
-
     let index = 0;
     for (let h = 0; h < 2; h++) {
-        const item = data[index]
         let sourceY = 0
 
         if (h !== 0) {
@@ -249,19 +247,18 @@ imageObj.onload = async function() {
                     context.drawImage(updatedImage, sourceX, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
                     break;
                 case 4:
-                    console.log(sourceY)
-                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height - 20, 0, 0, item.width, item.height);
                     break;
                 case 5:
                     context.drawImage(updatedImage, 220, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
                     break;
             }
-
             item.href = canvas.toDataURL()
+            await setPuzzleForm(index)
+
             index++;
         }
     }
-    await setPuzzleForm()
 
 };
 
@@ -272,57 +269,58 @@ function resizeImage(image) {
     const context = canvas.getContext("2d");
     canvas.height = 320
     canvas.width = 475
-    context.drawImage(image, 0, 0, 586, 320)
+    context.drawImage(image, 0, 0, 472, 316)
 
     const dataUrl = canvas.toDataURL('image/jpeg')
-    const newImage = document.createElement('img')
+    const newImage = new Image()
 
     newImage.src = dataUrl
     return newImage
 }
 
 
-async function setPuzzleForm() {
+async function setPuzzleForm(index) {
+    const item = data[index]
 
-    for (let index = 0; index < data.length; index++) {
-        const item = data[index]
+    const wrapper = document.createElement('div')
 
-        const wrapper = document.createElement('div')
+    const doc = new DOMParser()
 
-        wrapper.className = 'quiz__piece'
+    const response = await fetch(item.imageSrc)
+    const str = await response.text()
+    const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
-        wrapper.style.width = item.width + 'px'
-        wrapper.style.height = item.height + 'px'
+    svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', item.href);
 
-        const response = await fetch(item.imageSrc)
-        const str = await response.text()
+    svgImage.querySelector('image').setAttribute( 'width', item.width);
+    svgImage.querySelector('image').setAttribute( 'height', item.height);
+
+    svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + item.width + ' ' + item.height)
+    svgImage.querySelector('svg').setAttribute('width', item.width)
+    svgImage.querySelector('svg').setAttribute('height', item.height)
+
+    wrapper.appendChild(svgImage.documentElement)
+
+    // document.querySelector('.quiz__puzzles').appendChild(wrapper)
+    document.querySelector('body').appendChild(wrapper)
+
+    wrapper.dataset.pieceIndex = index
+
+    wrapper.className = 'quiz__piece'
+
+    wrapper.style.width = item.width + 'px'
+    wrapper.style.height = item.height + 'px'
 
 
 
-        const doc = new DOMParser()
-        const svgImage = doc.parseFromString(str, "image/svg+xml")
 
-        svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', item.href);
 
-        svgImage.querySelector('image').setAttribute( 'width', item.width);
-        svgImage.querySelector('image').setAttribute( 'height', item.height);
 
-        svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + item.width + ' ' + item.height)
-        svgImage.querySelector('svg').setAttribute('width', item.width)
-        svgImage.querySelector('svg').setAttribute('height', item.height)
-
-        wrapper.appendChild(svgImage.documentElement)
-
-        document.querySelector('.quiz__puzzles').appendChild(wrapper)
-
-        wrapper.dataset.pieceIndex = index
-
-        wrapper.addEventListener('click', setQuestion)
-        dragElement(wrapper)
-        wrapper.addEventListener( 'touchmove', function(e) {
-            e.preventDefault()
-        })
-    }
+    wrapper.addEventListener('click', setQuestion)
+    dragElement(wrapper)
+    wrapper.addEventListener( 'touchmove', function(e) {
+        e.preventDefault()
+    })
 }
 
 function setQuestion(e) {
@@ -397,7 +395,8 @@ function checkAnswer(e) {
 
     for (let index = 0; index < answers.length; index++) {
         const item = answers[index]
-        console.log(item)
+
+
         // Если ответ правильный
         if (answer.isEqualNode(item) && rightAnswerIndex === index) {
             const el = document.createElement('div')

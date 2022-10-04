@@ -42,6 +42,20 @@ body.lock {
   margin-bottom: 100px;
 }
 
+*::-moz-selection {
+  background: #00542E;
+  color: #fff;
+}
+
+*::selection {
+  background: #00542E;
+  color: #fff;
+}
+
+img {
+  pointer-events: none;
+}
+
 @font-face {
   font-family: "Montserrat";
   src: local("Montserrat-Bold"), url("../fonts/Montserrat-Bold.woff2") format("woff2"), url("../fonts/Montserrat-Bold.woff") format("woff");
@@ -358,6 +372,51 @@ a {
   color: #fff;
 }
 
+.swiper-build {
+  overflow: hidden;
+}
+
+.swiper-build .swiper-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-build .swiper-slide {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-build.swiper-container-multirow-column > .swiper-wrapper {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.swiper-build.swiper-container-autoheight .swiper-slide {
+  height: auto;
+}
+
+.swiper-build.swiper-container-autoheight .swiper-wrapper {
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-transition-property: height, -webkit-transform;
+  transition-property: height, -webkit-transform;
+  transition-property: transform, height;
+  transition-property: transform, height, -webkit-transform;
+}
+
 .intro {
   position: relative;
   display: -webkit-box;
@@ -370,7 +429,29 @@ a {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  padding: 20px 0 70px 0;
+  padding: 20px 0 100px 0;
+}
+
+.intro::before {
+  content: "";
+  background: url("../images/intro/corn-left.svg") 0 0 no-repeat;
+  width: 192px;
+  height: 162px;
+  position: absolute;
+  bottom: 0;
+  left: -42px;
+  z-index: 5;
+}
+
+.intro__bg::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #fff;
+  z-index: 4;
 }
 
 .intro__body {
@@ -396,12 +477,14 @@ a {
 .intro__title {
   color: #295F3E;
   line-height: 1.5;
+  letter-spacing: -0.06em;
   text-transform: uppercase;
   margin-bottom: 40px;
   font-size: 26px;
 }
 
 .intro__title span {
+  letter-spacing: -0.04em;
   font-weight: 500;
   font-size: 80px;
   line-height: 1;
@@ -650,6 +733,132 @@ a {
   font-weight: 500;
 }
 
+.games {
+  position: relative;
+  min-height: 720px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.games__container {
+  padding-top: 70px !important;
+  padding-bottom: 83px !important;
+}
+
+.games__title {
+  font-size: 45px;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  color: #295F3E;
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  margin-bottom: 100px;
+  text-transform: uppercase;
+}
+
+.games__items {
+  position: relative;
+  z-index: 5;
+}
+
+.games__item {
+  text-align: center;
+}
+
+.games__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.item-games__image {
+  margin: 0 auto;
+  position: relative;
+  top: 5px;
+}
+
+.item-games__image img {
+  width: 214px;
+  height: 174px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  -o-object-position: bottom;
+  object-position: bottom;
+}
+
+.item-games__name {
+  font-size: 32px;
+  letter-spacing: -0.06em;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: relative;
+  font-family: "Arial", sans-serif;
+  z-index: 15;
+}
+
+.item-games__name_green {
+  -webkit-text-stroke: 1px #2B9828;
+}
+
+.item-games__name_orange {
+  -webkit-text-stroke: 1px #FF9436;
+}
+
+.item-games__name_white {
+  -webkit-text-stroke: 1px #FFFFC0;
+  color: #006633;
+}
+
+.item-games__puzzle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 20px 30px;
+  width: 280px;
+  min-height: 186px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.item-games__puzzle::before {
+  content: "";
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  border-radius: 25px;
+}
+
+.item-games__body {
+  display: block;
+  cursor: pointer;
+  background: transparent;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  border-radius: 30px;
+  -webkit-box-shadow: 0 0 0 transparent;
+  box-shadow: 0 0 0 transparent;
+  padding: 35px 25px;
+  position: relative;
+  z-index: 3;
+}
+
 @media (min-width: 767.98px) {
   .intro {
     min-height: 682px;
@@ -837,6 +1046,11 @@ a {
 
   .stages__line_adaptive {
     display: none;
+  }
+
+  .games__items .swiper-wrapper {
+    -webkit-transform: none !important;
+    transform: none !important;
   }
 }
 
@@ -1101,10 +1315,6 @@ a {
 }
 
 @media (min-width: 767.98px) and (max-width: 1245px) {
-  .intro {
-    min-height: calc(500px + 182 * ((100vw - 320px) / 925));
-  }
-
   .intro__image {
     -ms-flex-preferred-size: calc(300px + 200 * ((100vw - 320px) / 925));
     flex-basis: calc(300px + 200 * ((100vw - 320px) / 925));
@@ -1114,5 +1324,15 @@ a {
 @media (any-hover: hover) {
   .footer__link:hover {
     text-decoration: underline;
+  }
+
+  .item-games__body:hover {
+    -webkit-box-shadow: 0 0 8px rgba(0, 84, 46, 0.2);
+    box-shadow: 0 0 8px rgba(0, 84, 46, 0.2);
+    background: #FFF5C2;
+  }
+
+  .item-games__body:hover .item-games__puzzle::before {
+    background: #FFD561;
   }
 }

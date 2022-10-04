@@ -10,7 +10,42 @@ function ibg() {
   }
 }
 
-ibg();
+ibg(); //BuildSlider
+
+var sliders = document.querySelectorAll(".swiper");
+
+if (sliders) {
+  for (var index = 0; index < sliders.length; index++) {
+    var slider = sliders[index];
+
+    if (!slider.classList.contains('swiper-build')) {
+      var slider_items = slider.children;
+
+      if (slider_items) {
+        for (var _index = 0; _index < slider_items.length; _index++) {
+          var el = slider_items[_index];
+          el.classList.add('swiper-slide');
+        }
+      }
+
+      var slider_content = slider.innerHTML;
+      var slider_wrapper = document.createElement("div");
+      slider_wrapper.classList.add('swiper-wrapper');
+      slider_wrapper.innerHTML = slider_content;
+      slider.innerHTML = "";
+      slider.appendChild(slider_wrapper);
+      slider.classList.add('swiper-build');
+    }
+
+    if (slider.classList.contains('_gallery')) {//slider.data('lightGallery').destroy(true);
+    }
+  }
+
+  sliders_build_callback();
+}
+
+function sliders_build_callback() {}
+
 var headerBurger = document.querySelector(".header__burger");
 var header = document.querySelector('.header');
 var timeout = false;
@@ -47,3 +82,25 @@ if (toTopButton) {
     });
   });
 }
+
+var gamesSlider = new Swiper('.games__items', {
+  speed: 800,
+  loop: true,
+  spaceBetween: 65,
+  breakpoints: {
+    1100: {
+      spaceBetween: 50,
+      slidesPerView: 3
+    },
+    992: {
+      slidesPerView: 3
+    },
+    670: {
+      slidesPerView: 2
+    }
+  } // navigation: {
+  //     nextEl: item.parentElement.querySelector(".button-next"),
+  //     prevEl: item.parentElement.querySelector(".button-prev")
+  // },
+
+});
