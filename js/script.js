@@ -88,11 +88,8 @@ var gamesSlider = new Swiper('.games__items', {
   loop: true,
   spaceBetween: 65,
   breakpoints: {
-    1100: {
-      spaceBetween: 50,
-      slidesPerView: 3
-    },
     992: {
+      spaceBetween: 10,
       slidesPerView: 3
     },
     670: {

@@ -1,5 +1,21 @@
-const imageObj = new Image(475, 320);
+function shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
+    while (0 !== currentIndex) {
+
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+const imageObj = new Image(475, 320);
+const pieces = []
 
 const data = [
     {
@@ -123,6 +139,7 @@ function dragElement(el) {
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
+        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
@@ -132,6 +149,8 @@ function dragElement(el) {
     }
 
     function elementDrag(e) {
+        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
@@ -235,6 +254,7 @@ imageObj.onload = async function() {
 
             switch (index) {
                 case 0:
+
                     context.drawImage(updatedImage, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
                     break;
                 case 1:
@@ -260,6 +280,11 @@ imageObj.onload = async function() {
         }
     }
 
+    shuffle(pieces)
+    for (let index = 0; index < pieces.length; index++) {
+        const piece = pieces[index]
+        document.querySelector('.quiz__pieces').appendChild(piece)
+    }
 };
 
 imageObj.src = 'images/test2.jpg';
@@ -301,8 +326,8 @@ async function setPuzzleForm(index) {
 
     wrapper.appendChild(svgImage.documentElement)
 
-    // document.querySelector('.quiz__puzzles').appendChild(wrapper)
-    document.querySelector('body').appendChild(wrapper)
+
+    // document.querySelector('body').appendChild(wrapper)
 
     wrapper.dataset.pieceIndex = index
 
@@ -321,6 +346,8 @@ async function setPuzzleForm(index) {
     wrapper.addEventListener( 'touchmove', function(e) {
         e.preventDefault()
     })
+    pieces.push(wrapper)
+    // document.querySelector('.quiz__pieces').appendChild(wrapper)
 }
 
 function setQuestion(e) {
@@ -329,7 +356,9 @@ function setQuestion(e) {
 
 
 
-    const index = e.target.closest('.quiz__piece').dataset.pieceIndex
+    const piece = e.target.closest('.quiz__piece')
+
+    const index = piece.dataset.pieceIndex
     const question = questions[index]
 
     const title = document.querySelector('.quiz__title')
@@ -391,34 +420,81 @@ function checkAnswer(e) {
             break;
     }
 
+
+
+    if (document.querySelector('.variant-quiz__body.active')) return
+
     answer.querySelector('.variant-quiz__body').classList.add('active')
 
-    for (let index = 0; index < answers.length; index++) {
+    for (let index = 0; index < answers.length; ++index) {
         const item = answers[index]
-
 
         // Если ответ правильный
         if (answer.isEqualNode(item) && rightAnswerIndex === index) {
+            if (document.querySelector('.quiz__win')) continue
             const el = document.createElement('div')
+            el.className = 'quiz__win win-quiz'
             el.innerHTML = `
-                <div class="quiz__win win-quiz">
-                    <div class="win-quiz__top">
-                        <div class="win-quiz__image">
-                            <img src="images/puzzles/win.png" alt="">
-                        </div>
-                        <div class="win-quiz__title">
+                <div class="win-quiz__top">
+                    <div class="win-quiz__image">
+                        <img src="images/puzzles/win.png" alt="">
+                    </div>
+                    <div class="win-quiz__title">
                             Это <br>
                             правильный <br>
                             ответ!
-                        </div>
-                    </div>
-                    <div class="win-quiz__text">
-                        <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
                     </div>
                 </div>
-            `
+                <div class="win-quiz__text">
+                    <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
+                </div>`
+
             document.querySelector('.quiz').appendChild(el)
+
+            const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
+            console.log(questionIndex)
+            puzzle.classList.add('active')
+
+        } else {
+            if (document.querySelector('.quiz__loss')) continue
+            const el = document.createElement('div')
+            el.className = 'quiz__loss loss-quiz'
+            el.innerHTML = `
+                <div class="loss-quiz__image">
+                    <img src="images/puzzles/loss.png" alt="">
+                </div>
+                <p class="loss-quiz__text">
+                    Попробуй <br>
+                    ещё раз!
+                </p>`
+            document.querySelector('.quiz').appendChild(el)
+
         }
+
+
     }
+
+    e.stopPropagation()
 }
 
+window.addEventListener('click', function(e) {
+    if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
+        document.querySelector('.quiz__win').remove()
+        document.querySelector('.variant-quiz__body.active').classList.remove('active')
+        activatePuzzle()
+    }
+})
+
+window.addEventListener('click', function(e) {
+    if (document.querySelector('.quiz__loss') && !e.target.closest('.quiz__loss')) {
+        document.querySelector('.quiz__loss').remove()
+        document.querySelector('.variant-quiz__body.active').classList.remove('active')
+    }
+})
+
+
+
+
+function activatePuzzle() {
+
+}
