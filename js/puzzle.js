@@ -14,6 +14,8 @@ function shuffle(array) {
     return array;
 }
 
+sessionStorage.setItem('stage', 0)
+
 const imageObj = new Image(475, 320);
 const pieces = []
 
@@ -62,74 +64,228 @@ const data = [
     },
 ]
 
-const questions = [
-    {
-        id: 1,
-        question: 'Как кукуруза помогает улучшать зрение?',
-        items: [
-            'С помощью витаминов и полезных веществ',
-            'Если на неё долго смотреть, то начнёшь лучше видеть',
-            'С помощью витаминов и полезных веществ',
-        ],
-        explanation: 'В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!',
-        rightAnswer: 'a'
-    },
-    {
-        id: 2,
-        question: 'Почему кукуруза даёт тебе супер-силу?',
-        items: [
-            'Потому что она сама супер!',
-            'Поднимая банки с кукурузой много раз, ты станешь сильнее',
-            'Её полезные вещества укрепляют мышцы',
-        ],
-        explanation: 'Кукуруза помогает мышцам и костям стать крепче, благодаря высокому содержанию белка, чтобы у тебя было больше сил!',
-        rightAnswer: 'c'
-    },
-    {
-        id: 3,
-        question: 'Как кукуруза защищает от болезней?',
-        items: [
-            'Она умеет улучшать иммунитет',
-            'Намажься её зёрнами целиком, и никогда не заболеешь',
-            'Из неё можно сделать щит от любой заразы',
-        ],
-        explanation: 'Пищевые волокна, клетчатка и другие полезные вещества в кукурузе помогают противостоять вирусам и бактериям и укрепляют твоё здоровье!',
-        rightAnswer: 'a'
-    },
-    {
-        id: 4,
-        question: 'Почему кукуруза очень полезна для детей?',
-        items: [
-            'Потому что её собирают, когда она молодая',
-            'Из неё можно сделать немало полезных вещей',
-            'В ней много витаминов для роста',
-        ],
-        explanation: 'В кукурузе содержатся витамины А и Е, кальций, железо и другие вещества, очень полезные для роста и развития молодого организма!',
-        rightAnswer: 'c'
-    },
-    {
-        id: 5,
-        question: 'Как кукуруза улучшает ум?',
-        items: [
-            'Соком кукурузы написано много умных книжек',
-            'С помощью полезных витаминов',
-            'Если сосчитать все зёрнышки в банке, то станешь умнее',
-        ],
-        explanation: 'Витамины группы B, которые содержатся в кукурузе, положительно влияют на центральную нервную систему!',
-        rightAnswer: 'b'
-    },
-    {
-        id: 6,
-        question: 'Почему молодая кукуруза такая сладкая?',
-        items: [
-            'Потому что она растёт рядом со сладкими фруктами и ягодами',
-            'Потому что в банки с ней добавляют конфеты',
-            'Она сладкая от природы',
-        ],
-        explanation: 'Молодая кукуруза сладкая от природы, и в баночки с ней не добавляют сахар, поэтому она такая полезная!',
-        rightAnswer: 'c'
-    },
-]
+// window.addEventListener('resize', function() {
+//     if ()
+// })
+
+let questions = []
+
+const puzzleName = sessionStorage.getItem('puzzleName')
+if (puzzleName === 'corn') {
+    imageObj.src = 'images/puzzle-03.png'
+    questions = [
+        {
+            id: 1,
+            question: 'Как кукуруза помогает улучшать зрение?',
+            items: [
+                'С помощью витаминов и полезных веществ',
+                'Если на неё долго смотреть, то начнёшь лучше видеть',
+                'С помощью витаминов и полезных веществ',
+            ],
+            explanation: 'В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!',
+            rightAnswer: 'a'
+        },
+        {
+            id: 2,
+            question: 'Почему кукуруза даёт тебе супер-силу?',
+            items: [
+                'Потому что она сама супер!',
+                'Поднимая банки с кукурузой много раз, ты станешь сильнее',
+                'Её полезные вещества укрепляют мышцы',
+            ],
+            explanation: 'Кукуруза помогает мышцам и костям стать крепче, благодаря высокому содержанию белка, чтобы у тебя было больше сил!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 3,
+            question: 'Как кукуруза защищает от болезней?',
+            items: [
+                'Она умеет улучшать иммунитет',
+                'Намажься её зёрнами целиком, и никогда не заболеешь',
+                'Из неё можно сделать щит от любой заразы',
+            ],
+            explanation: 'Пищевые волокна, клетчатка и другие полезные вещества в кукурузе помогают противостоять вирусам и бактериям и укрепляют твоё здоровье!',
+            rightAnswer: 'a'
+        },
+        {
+            id: 4,
+            question: 'Почему кукуруза очень полезна для детей?',
+            items: [
+                'Потому что её собирают, когда она молодая',
+                'Из неё можно сделать немало полезных вещей',
+                'В ней много витаминов для роста',
+            ],
+            explanation: 'В кукурузе содержатся витамины А и Е, кальций, железо и другие вещества, очень полезные для роста и развития молодого организма!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 5,
+            question: 'Как кукуруза улучшает ум?',
+            items: [
+                'Соком кукурузы написано много умных книжек',
+                'С помощью полезных витаминов',
+                'Если сосчитать все зёрнышки в банке, то станешь умнее',
+            ],
+            explanation: 'Витамины группы B, которые содержатся в кукурузе, положительно влияют на центральную нервную систему!',
+            rightAnswer: 'b'
+        },
+        {
+            id: 6,
+            question: 'Почему молодая кукуруза такая сладкая?',
+            items: [
+                'Потому что она растёт рядом со сладкими фруктами и ягодами',
+                'Потому что в банки с ней добавляют конфеты',
+                'Она сладкая от природы',
+            ],
+            explanation: 'Молодая кукуруза сладкая от природы, и в баночки с ней не добавляют сахар, поэтому она такая полезная!',
+            rightAnswer: 'c'
+        },
+    ]
+} else if (puzzleName === 'together') {
+    imageObj.src = 'images/puzzle-04.png'
+    questions = [
+        {
+            id: 1,
+            question: 'Почему брокколи так же полезна, как лимон?',
+            items: [
+                'По кочану и по кочерыжке',
+                'Потому что они растут на одном дереве',
+                'В ней столько же витамина С',
+            ],
+            explanation: 'По содержанию витамина С, полезного для здоровья, брокколи не уступает лимону, и при этом в ней нет такой сильной кислоты!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 2,
+            question: 'Почему фасоль сделает тебя крепче?',
+            items: [
+                'Открывая каждый день банки с фасолью, ты станешь сильнее',
+                'В ней много белка',
+                'Потому что фасолинки похожи на сильные мышцы',
+            ],
+            explanation: 'Фасоль очень питательная, и её называют растительным мясом, потому что в ней много белка!',
+            rightAnswer: 'b'
+        },
+        {
+            id: 3,
+            question: 'Почему кабачок очень полезен для детей?',
+            items: [
+                'В нём много витаминов для роста',
+                'Из него можно сделать классные игрушки',
+                'На кабачках удобно считать, чтобы решать задачки по математике',
+            ],
+            explanation: 'В кабачке содержится множество витаминов и микроэлементов, очень полезных для роста и развития детей!',
+            rightAnswer: 'a'
+        },
+        {
+            id: 4,
+            question: 'Почему морковка умеет быстро заживлять ранки?',
+            items: [
+                'Потому что из неё делают пластыри',
+                'У неё есть антисептические свойства',
+                'Она растёт только рядом с подорожником',
+            ],
+            explanation: 'Морковь обладает отличными обеззараживающими свойствами, поэтому она используется для заживления ран и порезов!',
+            rightAnswer: 'b'
+        },
+        {
+            id: 5,
+            question: 'Почему огурчик пробуждает аппетит?',
+            items: [
+                'Потому что его так и хочется съесть',
+                'С ним всё всегда гораздо вкуснее',
+                'Он стимулирует выработку желудочного сока',
+            ],
+            explanation: 'Огурцы славятся тем, что стимулируют выработку желудочного сока, улучшая переваривание пищи и восстанавливая обмен веществ!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 6,
+            question: 'Почему перец помогает уснуть?',
+            items: [
+                'В нём есть специальные витамины ',
+                'Его семенами можно набить подушку',
+                'Можно быстро задремать, если в голове считать перчики',
+            ],
+            explanation: 'Благодаря своим витаминам, сладкий перец помогает при бессоннице, постоянных стрессах, а также избавляет от усталости!',
+            rightAnswer: 'a'
+        },
+    ]
+} else {
+
+    imageObj.src = 'images/puzzle-02.png';
+    questions = [
+        {
+            id: 1,
+            question: 'Как горошек замедляет старение?',
+            items: [
+                'Когда его ешь, то забываешь про возраст',
+                'С помощью витаминов',
+                'Глядя на молодой горошек, можно почувствовать себя молодым',
+            ],
+            explanation: 'Благодаря витаминам группы B, которые есть в горошке, улучшаются обменные процессы, и замедляется старение клеток!',
+            rightAnswer: 'b'
+        },
+        {
+            id: 2,
+            question: 'Почему горошек делает людей энергичными?',
+            items: [
+                'В нём накапливается электроэнергия',
+                'Потому что его надо быстро есть',
+                'Потому что он природный энергетик',
+            ],
+            explanation: 'Горошек с помощью микроэлементов и углеводов прибавляет бодрости организму, чтобы легче переносить физические нагрузки!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 3,
+            question: 'Как горошек помогает нам быть стройными?',
+            items: [
+                'Он нормализует обмен жиров',
+                'Банка с горошком – лучший спортивный инструмент',
+                'Если принять гороховую ванну, то можно похудеть',
+            ],
+            explanation: 'Из-за низкой калорийности горошек очень полезен людям с лишним весом и сидящим на диете!!',
+            rightAnswer: 'a'
+        },
+        {
+            id: 4,
+            question: 'Почему горошек полезен для твоих зубок?',
+            items: [
+                'Потому что его легко раскусить',
+                'У него есть витамины для укрепления зубов',
+                'Зубные врачи тоже очень любят горошек',
+            ],
+            explanation: 'Благодаря каротину или, как его ещё называют, провитамину А, горошек помогает укреплять костную систему и зубную эмаль!',
+            rightAnswer: 'b'
+        },
+        {
+            id: 5,
+            question: 'Как горошек укрепляет сердце?',
+            items: [
+                'Говорят, смех полезен для сердца, а про горошек есть очень много шуток',
+                'Если каждый день открывать банки с горошком, то можно здорово прокачать сердце',
+                'С помощью полезных веществ',
+            ],
+            explanation: 'Горошек, благодаря калию, магнию и кальцию, помогает сердцу работать лучше и улучшает давление!',
+            rightAnswer: 'c'
+        },
+        {
+            id: 6,
+            question: 'Почему горошек полезен для кожи?',
+            items: [
+                'Потому что у него есть витамин А',
+                'Из него получается отличная маска для лица',
+                'Потому что полезен, и всё тут',
+            ],
+            explanation: 'С помощью ретинола (витамина А) горошек помогает быстро восстановить ткани и оказывает положительное влияние на кожу!',
+            rightAnswer: 'a'
+        },
+    ]
+}
+
+
+
 
 function dragElement(el) {
     let pos1 = 0,
@@ -140,6 +296,8 @@ function dragElement(el) {
 
     function pointerDrag(e) {
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+
+
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
@@ -149,6 +307,7 @@ function dragElement(el) {
     }
 
     function elementDrag(e) {
+
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
         pos1 = pos3 - e.clientX;
@@ -166,7 +325,9 @@ function dragElement(el) {
         document.onpointermove = null;
 
         const squares = document.querySelectorAll('.quiz__square')
+
         for (let index = 0; index < squares.length; index++) {
+
             const square = squares[index]
 
             const squarePos = square.getBoundingClientRect()
@@ -180,48 +341,51 @@ function dragElement(el) {
             const puzzleWidth = puzzlePos.width
             const puzzleHeight = puzzlePos.height
 
-            const x = puzzleX - squareX > -40 && puzzleX - squareX + 100 < puzzleWidth
-            const y = puzzleY - squareY > -40 && puzzleY - squareY + 100 < puzzleHeight
-
+            const x = puzzleX - squareX > -120 && puzzleX - squareX + 120 < puzzleWidth
+            const y = puzzleY - squareY > -120 && puzzleY - squareY + 120 < puzzleHeight
 
             if (x && y)  {
+                const piece = e.target.closest('.quiz__piece')
 
 
 
-                switch (index) {
-                    case 1:
-                        el.style.left = square.offsetLeft - 11 + "px";
-                        el.style.top = square.offsetTop + "px";
-                        break;
-                    case 2:
-                        el.style.left = square.offsetLeft - 43 + "px";
-                        el.style.top = square.offsetTop + "px";
-                        break;
-                    case 3:
-                        el.style.top = square.offsetTop - 48 + "px";
-                        el.style.left = square.offsetLeft + "px";
-                        break;
-                    case 4:
-                        el.style.top = square.offsetTop - 20 + "px";
-                        el.style.left = square.offsetLeft - 30 + "px";
-                        break;
-                    default:
-                        el.style.top = square.offsetTop + "px";
-                        el.style.left = square.offsetLeft + "px";
+                const squareIndex = square.dataset.squareIndex
+                const pieceIndex = piece.dataset.pieceIndex
+
+                if (squareIndex !== pieceIndex) {
+                    setInitialPosition(el)
+                    return
                 }
-                break;
+                setFinalPosition(piece, square)
+
+                const stage = +sessionStorage.getItem('stage')
+                sessionStorage.setItem('stage', stage + 1)
+
+                document.querySelector('.quiz__variants').innerHTML = ''
+
+
+
             }
         }
-
-
 
 
     }
 }
 
+function setGameOver() {
+    const fixedPieces = document.querySelectorAll('.quiz__piece.fixed')
+
+    if (fixedPieces.length === 6) {
+        document.querySelector('.quiz__main').style.display = 'none'
+        document.querySelector('.quiz__game-over').style.display = 'block'
+    }
+}
+
+
 
 
 imageObj.onload = async function() {
+    document.querySelector('.game-over__image').appendChild(imageObj)
     let index = 0;
     for (let h = 0; h < 2; h++) {
         let sourceY = 0
@@ -248,29 +412,28 @@ imageObj.onload = async function() {
             context.width = String(item.width)
             context.height = String(item.height)
 
-            const updatedImage = resizeImage(imageObj)
+            const updatedImage = await resizeImage(imageObj)
 
 
 
             switch (index) {
                 case 0:
-
                     context.drawImage(updatedImage, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
                     break;
                 case 1:
-                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, sourceX - 55, sourceY, item.width, item.height, 0, 0, item.width, item.height);
                     break;
                 case 2:
-                    context.drawImage(updatedImage, 270, sourceY, item.width, item.height, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, 268, sourceY, item.width, item.height, 0, 0, item.width, item.height );
                     break;
                 case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, sourceX, sourceY - 65, item.width, item.height, 0, 0, item.width, item.height);
                     break;
                 case 4:
-                    context.drawImage(updatedImage, sourceX - 56, sourceY, item.width, item.height - 20, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, sourceX - 59, sourceY - 20, item.width, item.height - 5, 0, 0, item.width, item.height);
                     break;
                 case 5:
-                    context.drawImage(updatedImage, 220, sourceY - 56, item.width, item.height, 0, 0, item.width, item.height);
+                    context.drawImage(updatedImage, 301, sourceY - 62, item.width, item.height, 0, 0, item.width + 20, item.height);
                     break;
             }
             item.href = canvas.toDataURL()
@@ -285,9 +448,10 @@ imageObj.onload = async function() {
         const piece = pieces[index]
         document.querySelector('.quiz__pieces').appendChild(piece)
     }
+
 };
 
-imageObj.src = 'images/test2.jpg';
+
 
 function resizeImage(image) {
     const canvas = document.createElement('canvas')
@@ -320,14 +484,11 @@ async function setPuzzleForm(index) {
     svgImage.querySelector('image').setAttribute( 'width', item.width);
     svgImage.querySelector('image').setAttribute( 'height', item.height);
 
-    svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + item.width + ' ' + item.height)
+    svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (item.width + 2) + ' ' + item.height)
     svgImage.querySelector('svg').setAttribute('width', item.width)
     svgImage.querySelector('svg').setAttribute('height', item.height)
 
     wrapper.appendChild(svgImage.documentElement)
-
-
-    // document.querySelector('body').appendChild(wrapper)
 
     wrapper.dataset.pieceIndex = index
 
@@ -351,12 +512,15 @@ async function setPuzzleForm(index) {
 }
 
 function setQuestion(e) {
+    const piece = e.target.closest('.quiz__piece')
+
+    if (piece.classList.contains('fixed')) return
     const variants = document.querySelector('.quiz__variants')
     variants.innerHTML = ''
 
 
 
-    const piece = e.target.closest('.quiz__piece')
+
 
     const index = piece.dataset.pieceIndex
     const question = questions[index]
@@ -432,8 +596,11 @@ function checkAnswer(e) {
         // Если ответ правильный
         if (answer.isEqualNode(item) && rightAnswerIndex === index) {
             if (document.querySelector('.quiz__win')) continue
+
             const el = document.createElement('div')
+
             el.className = 'quiz__win win-quiz'
+
             el.innerHTML = `
                 <div class="win-quiz__top">
                     <div class="win-quiz__image">
@@ -451,10 +618,19 @@ function checkAnswer(e) {
 
             document.querySelector('.quiz').appendChild(el)
 
+            setTimeout(() => {
+                if (document.querySelector('.quiz__win')) {
+                    document.querySelector('.quiz__win').remove()
+                }
+                if (document.querySelector('.variant-quiz__body.active')) {
+                    document.querySelector('.variant-quiz__body.active').classList.remove('active')
+                }
+            }, 5000)
             const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
-            console.log(questionIndex)
+
             puzzle.classList.add('active')
 
+            break;
         } else {
             if (document.querySelector('.quiz__loss')) continue
             const el = document.createElement('div')
@@ -469,6 +645,15 @@ function checkAnswer(e) {
                 </p>`
             document.querySelector('.quiz').appendChild(el)
 
+            setTimeout(() => {
+                if (document.querySelector('.quiz__loss')) {
+                    document.querySelector('.quiz__loss').remove()
+                }
+                if (document.querySelector('.variant-quiz__body.active')) {
+                    document.querySelector('.variant-quiz__body.active').classList.remove('active')
+                }
+            }, 5000)
+
         }
 
 
@@ -480,21 +665,165 @@ function checkAnswer(e) {
 window.addEventListener('click', function(e) {
     if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
         document.querySelector('.quiz__win').remove()
-        document.querySelector('.variant-quiz__body.active').classList.remove('active')
-        activatePuzzle()
+        if (document.querySelector('.variant-quiz__body.active')) {
+            document.querySelector('.variant-quiz__body.active').classList.remove('active')
+        }
     }
 })
 
 window.addEventListener('click', function(e) {
     if (document.querySelector('.quiz__loss') && !e.target.closest('.quiz__loss')) {
         document.querySelector('.quiz__loss').remove()
-        document.querySelector('.variant-quiz__body.active').classList.remove('active')
+        if (document.querySelector('.variant-quiz__body.active')) {
+            document.querySelector('.variant-quiz__body.active').classList.remove('active')
+        }
+
     }
 })
 
 
+const nextButton = document.querySelector('.quiz__next-button')
+const prevButton = document.querySelector('.quiz__prev-button')
+
+nextButton.addEventListener('click', function(e) {
+    e.preventDefault()
+    let stage = +sessionStorage.getItem('stage')
+    stage += 1
+
+    const index = stage - 1
+
+    const pieces = document.querySelectorAll('.quiz__piece')
+
+    for (let j = 0; j < pieces.length; j++) {
+        const piece = pieces[j]
+        if (piece.classList.contains('fixed')) continue
 
 
-function activatePuzzle() {
 
+        if (piece.dataset.pieceIndex < index) {
+            console.log(index)
+            const square = document.querySelector(`.quiz__square[data-square-index="${index - 1}"]`)
+            setFinalPosition(piece, square)
+            console.log(square)
+            return
+        }
+    }
+
+    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+    const square = document.querySelector(`.quiz__square[data-square-index="${index}"]`)
+    setFinalPosition(puzzle, square)
+
+    sessionStorage.setItem('stage', stage)
+    setGameOver()
+
+})
+
+prevButton.addEventListener('click', function(e) {
+    e.preventDefault()
+    let stage = +sessionStorage.getItem('stage')
+
+    if (stage === 0) {
+        window.history.go(-1)
+        return
+    }
+    stage -= 1
+    const index = stage
+
+
+
+    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+
+    setInitialPosition(puzzle)
+
+    sessionStorage.setItem('stage', stage)
+
+})
+
+
+
+function setFinalPosition(piece, square) {
+    const index = +piece.dataset.pieceIndex
+
+    switch (index) {
+        case 0:
+            piece.style.left = square.offsetLeft + "px";
+            piece.style.top = square.offsetTop + "px";
+            break;
+        case 1:
+
+            piece.style.left = square.offsetLeft - 11 + "px";
+            piece.style.top = square.offsetTop + "px";
+            break;
+        case 2:
+
+            piece.style.left = square.offsetLeft - 43 + "px";
+            piece.style.top = square.offsetTop + "px";
+            break;
+        case 3:
+            piece.style.top = square.offsetTop - 48 + "px";
+            piece.style.left = square.offsetLeft + "px";
+            break;
+        case 4:
+            piece.style.top = square.offsetTop - 12 + "px";
+            piece.style.left = square.offsetLeft - 43 + "px";
+            break;
+        case 5:
+            piece.style.top = square.offsetTop - 47 + "px";
+            piece.style.left = square.offsetLeft - 11 + "px";
+            break;
+        default:
+            piece.style.top = square.offsetTop + "px";
+            piece.style.left = square.offsetLeft + "px";
+    }
+    piece.classList.add('fixed')
+    piece.classList.remove('active')
+}
+
+function setInitialPosition(el) {
+    const index = Array.from(document.querySelectorAll('.quiz__piece')).findIndex(piece => {
+        return el.isEqualNode(piece)
+    })
+
+    switch (index) {
+        case 0:
+
+            el.style.left = 0;
+            el.style.top = '35px'
+            el.style.right = 'auto'
+            el.style.bottom = 'auto'
+            break;
+        case 1:
+
+            el.style.left = 'auto';
+            el.style.top = '35px'
+            el.style.right = 0
+            el.style.bottom = 'autp'
+            break;
+        case 2:
+            el.style.bottom = 0;
+            el.style.left = 0
+            el.style.right = 'auto'
+            el.style.top = 'auto'
+            break;
+        case 3:
+            el.style.bottom = 0;
+            el.style.left = "28%"
+            el.style.right = 'auto'
+            el.style.top = 'auto'
+            break;
+        case 4:
+            el.style.left = "53%";
+            el.style.bottom = 0;
+            el.style.right = 'auto'
+            el.style.top = 'auto'
+            break;
+        case 5:
+            el.style.right = 0;
+            el.style.bottom = 0
+            el.style.left = 'auto'
+            el.style.top = 'auto'
+            break;
+    }
+    el.classList.remove('active')
+    el.classList.remove('fixed')
 }

@@ -83,21 +83,37 @@ if (toTopButton) {
   });
 }
 
-var gamesSlider = new Swiper('.games__items', {
-  speed: 800,
-  loop: true,
-  spaceBetween: 65,
-  breakpoints: {
-    992: {
-      spaceBetween: 10,
-      slidesPerView: 3
-    },
-    670: {
-      slidesPerView: 2
-    }
-  } // navigation: {
-  //     nextEl: item.parentElement.querySelector(".button-next"),
-  //     prevEl: item.parentElement.querySelector(".button-prev")
-  // },
+if (document.querySelector('.games__items')) {
+  var gamesSlider = new Swiper('.games__items', {
+    speed: 800,
+    loop: true,
+    spaceBetween: 65,
+    breakpoints: {
+      992: {
+        spaceBetween: 10,
+        slidesPerView: 3
+      },
+      670: {
+        slidesPerView: 2
+      }
+    } // navigation: {
+    //     nextEl: item.parentElement.querySelector(".button-next"),
+    //     prevEl: item.parentElement.querySelector(".button-prev")
+    // },
 
-});
+  });
+}
+
+var puzzleLinks = document.querySelectorAll('[data-puzzle]');
+
+var _loop = function _loop(_index2) {
+  var link = puzzleLinks[_index2];
+  link.addEventListener('click', function (e) {
+    var puzzleName = link.dataset.puzzle;
+    sessionStorage.setItem('puzzleName', puzzleName);
+  });
+};
+
+for (var _index2 = 0; _index2 < puzzleLinks.length; _index2++) {
+  _loop(_index2);
+}

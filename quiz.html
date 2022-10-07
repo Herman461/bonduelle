@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Викторина</title>
+
+</head>
+
+<body>
+
+
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__container">
+                <a href="/" class="header__logo">
+                    <img src="images/logo.png" alt="">
+                </a>
+                <button type="button" class="header__burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="header__menu menu">
+                <div class="menu__content">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="" class="menu__link">О продукции</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Сертификация</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Купить</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main class="page">
+            <div class="quiz">
+                <div class="quiz__container container">
+                    <div class="quiz__main">
+                        <div class="quiz__top">
+                            <div class="quiz__title">
+                                Выбирай пазл,
+                                <br>
+                                отвечай на вопросы
+                                <br>
+                                и собери картинку
+                            </div>
+                            <div class="quiz__variants"></div>
+                        </div>
+
+                        <div class="quiz__puzzles">
+                            <div class="quiz__board">
+                                <div data-square-index="0" class="quiz__square"></div>
+                                <div data-square-index="1" class="quiz__square"></div>
+                                <div data-square-index="2" class="quiz__square"></div>
+                                <div data-square-index="3" class="quiz__square"></div>
+                                <div data-square-index="4" class="quiz__square"></div>
+                                <div data-square-index="5" class="quiz__square"></div>
+                            </div>
+                            <div class="quiz__pieces"></div>
+                        </div>
+                    </div>
+                    <div class="quiz__game-over game-over">
+                        <div class="game-over__container container">
+                            <div class="game-over__top">
+                                <h2 class="game-over__title">Ура! Пазл собран!</h2>
+                                <div class="game-over__text">
+                                    <p>Супер-кукурузик помог узнать тебе много нового о пользе молодой кукурузы</p>
+                                    <p>Расскажи об этом своим
+                                        <br>родным и друзьям!
+                                    </p>
+                                </div>
+                                <ul class="game-over__social social-game-over">
+                                    <li>
+                                        <a href="" class="social-game-over__link">
+                                            <svg>
+                                                <use xlink:href="images/icons/icons.svg#ok"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="" class="social-game-over__link">
+                                            <svg>
+                                                <use xlink:href="images/icons/icons.svg#vk"></use>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="game-over__image">
+
+                            </div>
+                            <div class="game-over__text">
+                                <p>Поиграй и сфотографируйся
+                                    <br>с ним прямо сейчас!
+                                </p>
+                            </div>
+                            <a href="" class="game-over__button">Включить камеру</a>
+                        </div>
+                    </div>
+                    <div class="quiz__bottom">
+                        <a href="" class="quiz__prev-button stroke">
+                            <svg>
+                                <use xlink:href="images/icons/icons.svg#arrow-left"></use>
+                            </svg>
+                        </a>
+                        <div class="quiz__next-button">
+                            <a href="">Дальше</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/puzzle.js"></script>
+
+    <script src="js/swiper-bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
