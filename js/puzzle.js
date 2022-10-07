@@ -362,6 +362,7 @@ function dragElement(el) {
                 sessionStorage.setItem('stage', stage + 1)
 
                 document.querySelector('.quiz__variants').innerHTML = ''
+                document.querySelector('.quiz__title').innerHTML = ''
 
 
 
