@@ -283,6 +283,28 @@ if (puzzleName === 'corn') {
 
 buildPieceWrappers()
 
+const prevButton = document.querySelector('.quiz__prev-button')
+
+prevButton.addEventListener('click', function(e) {
+    e.preventDefault()
+    let stage = +sessionStorage.getItem('stage')
+
+    if (stage === 0) {
+        window.history.go(-1)
+        return
+    }
+    stage -= 1
+    const index = stage
+
+
+
+    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+
+    setInitialPosition(puzzle)
+
+    sessionStorage.setItem('stage', stage)
+
+})
 
 function dragElement(el) {
     let pos1 = 0,
@@ -292,7 +314,7 @@ function dragElement(el) {
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
-        // if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
 
         e.preventDefault();
@@ -305,7 +327,7 @@ function dragElement(el) {
 
     function elementDrag(e) {
 
-        // if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
@@ -573,7 +595,7 @@ function setQuestion(e) {
     // Обнуляем варианты ответа на вопрос
     const variants = document.querySelector('.quiz__variants')
     variants.innerHTML = ''
-
+    variants.classList.add('active')
     // Получаем данные о вопросе
     const index = piece.dataset.pieceIndex
     const question = questions[index]
@@ -586,6 +608,12 @@ function setQuestion(e) {
     }
 
     title.textContent = question.question
+
+    if (window.matchMedia('(max-width: 767.98px)').matches) {
+        variants.appendChild(title)
+        document.body.classList.add('lock')
+        document.querySelector('.header').classList.add('active')
+    }
 
     // Устанавливаем индекс текущего вопроса
     sessionStorage.setItem('stageIndex', index)
@@ -681,7 +709,12 @@ function checkAnswer(e) {
                     <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
                 </div>`
 
-            document.querySelector('.quiz').appendChild(el)
+            if (window.matchMedia('(max-width: 767.98px)').matches) {
+                document.querySelector('.quiz__variants').appendChild(el)
+            } else {
+                document.querySelector('.quiz').appendChild(el)
+            }
+
 
 
             setTimeout(() => {
@@ -709,7 +742,13 @@ function checkAnswer(e) {
                     Попробуй <br>
                     ещё раз!
                 </p>`
-            document.querySelector('.quiz').appendChild(el)
+
+            if (window.matchMedia('(max-width: 767.98px)').matches) {
+                document.querySelector('.quiz__variants').appendChild(el)
+            } else {
+                document.querySelector('.quiz').appendChild(el)
+            }
+
 
             setTimeout(() => {
                 if (document.querySelector('.quiz__loss')) {
@@ -748,60 +787,8 @@ window.addEventListener('click', function(e) {
 })
 
 
-const nextButton = document.querySelector('.quiz__next-button')
-const prevButton = document.querySelector('.quiz__prev-button')
-
-nextButton.addEventListener('click', function(e) {
-    e.preventDefault()
-    let stage = +sessionStorage.getItem('stage')
-    stage += 1
-
-    const index = stage - 1
-
-    const pieces = document.querySelectorAll('.quiz__piece')
-
-    for (let j = 0; j < pieces.length; j++) {
-        const piece = pieces[j]
-        if (piece.classList.contains('fixed')) continue
 
 
-
-        if (piece.dataset.pieceIndex < index) {
-            const square = document.querySelector(`.quiz__square[data-square-index="${index - 1}"]`)
-            setFinalPosition(piece, square)
-            return
-        }
-    }
-
-    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
-    const square = document.querySelector(`.quiz__square[data-square-index="${index}"]`)
-    setFinalPosition(puzzle, square)
-
-    sessionStorage.setItem('stage', stage)
-    setGameOver()
-
-})
-
-prevButton.addEventListener('click', function(e) {
-    e.preventDefault()
-    let stage = +sessionStorage.getItem('stage')
-
-    if (stage === 0) {
-        window.history.go(-1)
-        return
-    }
-    stage -= 1
-    const index = stage
-
-
-
-    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
-
-    setInitialPosition(puzzle)
-
-    sessionStorage.setItem('stage', stage)
-
-})
 
 
 
