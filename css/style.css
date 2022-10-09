@@ -321,6 +321,10 @@ a {
   left: 45%;
 }
 
+.menu {
+  display: none;
+}
+
 .menu__content {
   padding: 103px 15px 15px 35px;
   position: fixed;
@@ -351,6 +355,10 @@ a {
   font-size: 18.5px;
   font-weight: 500;
   line-height: 145.9459459459%;
+}
+
+.header__burger {
+  display: none !important;
 }
 
 .footer__top {
