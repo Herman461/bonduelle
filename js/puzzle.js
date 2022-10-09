@@ -287,23 +287,17 @@ const prevButton = document.querySelector('.quiz__prev-button')
 
 prevButton.addEventListener('click', function(e) {
     e.preventDefault()
-    let stage = +sessionStorage.getItem('stage')
 
-    if (stage === 0) {
-        window.history.go(-1)
-        return
+    if (document.querySelector('.quiz__variants.active')
+        && window.matchMedia('(max-width: 768.98px)').matches
+    ) {
+        document.body.classList.remove('lock')
+        document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
+        document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
+        document.querySelector('.quiz__variants.active').innerHTML = ''
+        document.querySelector('.quiz__variants.active').classList.remove('active')
+
     }
-    stage -= 1
-    const index = stage
-
-
-
-    const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
-
-    setInitialPosition(puzzle)
-
-    sessionStorage.setItem('stage', stage)
-
 })
 
 function dragElement(el) {
@@ -333,6 +327,10 @@ function dragElement(el) {
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
+
+        if (window.getComputedStyle(el).position !== 'absolute') {
+            el.style.position = 'absolute'
+        }
 
         el.style.top = el.offsetTop - pos2 + "px";
         el.style.left = el.offsetLeft - pos1 + "px";
@@ -383,7 +381,7 @@ function dragElement(el) {
                 document.querySelector('.quiz__title').innerHTML = ''
 
 
-
+                setGameOver()
             }
         }
 
@@ -546,19 +544,19 @@ async function setGame() {
 }
 imageObj.onload = setGame
 
-window.addEventListener('resize', function() {
-    // Меняем позицию при пазла, чтобы не выходило за пределы доски
-
-    const pieces = document.querySelectorAll('.quiz__piece.fixed')
-
-    for (let index = 0; index < pieces.length; index++) {
-        const piece = pieces[index]
-        const pieceIndex = piece.dataset.pieceIndex
-        const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
-        setFinalPosition(piece, square)
-    }
-    setGame()
-})
+// window.addEventListener('resize', function() {
+//     // Меняем позицию при пазла, чтобы не выходило за пределы доски
+//
+//     const pieces = document.querySelectorAll('.quiz__piece.fixed')
+//
+//     for (let index = 0; index < pieces.length; index++) {
+//         const piece = pieces[index]
+//         const pieceIndex = piece.dataset.pieceIndex
+//         const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
+//         setFinalPosition(piece, square)
+//     }
+//     setGame()
+// })
 
 function resizeImage(image) {
     const canvas = document.createElement('canvas')
@@ -728,7 +726,9 @@ function checkAnswer(e) {
             const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
 
             puzzle.classList.add('active')
-
+            if (document.querySelector('.quiz__loss')) {
+                document.querySelector('.quiz__loss').remove()
+            }
             break;
         } else {
             if (document.querySelector('.quiz__loss')) continue

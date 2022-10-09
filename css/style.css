@@ -611,9 +611,6 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
   width: 438px;
   height: auto;
 }
@@ -662,7 +659,7 @@ a {
 
 .quiz__bottom {
   text-align: left;
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   left: 20px;
   z-index: 20;
@@ -1679,6 +1676,10 @@ a {
     height: auto;
   }
 
+  .quiz__title {
+    margin-bottom: 15px;
+  }
+
   .quiz__title.active {
     padding: 0 20px;
     margin-bottom: 30px;
@@ -1744,6 +1745,7 @@ a {
     -ms-flex-align: center;
     align-items: center;
     min-height: 152px;
+    padding: 0 3px;
   }
 
   .quiz__prev-button {
@@ -1851,6 +1853,10 @@ a {
 @media (max-width: 360.98px) {
   .quiz__puzzles {
     margin: 0 -20px;
+  }
+
+  .quiz__pieces {
+    padding: 0 20px;
   }
 }
 
