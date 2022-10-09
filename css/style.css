@@ -512,11 +512,6 @@ a {
   text-transform: uppercase;
   line-height: 1.37;
   max-width: 640px;
-  margin: 0 auto 190px auto;
-}
-
-.quiz__title.active {
-  margin: 0 auto 75px auto;
 }
 
 .quiz__board {
@@ -543,12 +538,12 @@ a {
   position: relative;
   min-height: 560px;
   margin-bottom: 90px;
+  overflow: hidden;
 }
 
 .quiz__piece {
   display: inline-block;
   margin-bottom: 4px;
-  position: absolute;
   cursor: pointer;
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
@@ -571,34 +566,34 @@ a {
   opacity: 1 !important;
 }
 
-.quiz__piece:nth-child(1) {
-  top: 35px;
-  left: 0;
+.quiz__piece[data-piece-index="0"] {
+  width: 202px;
+  height: 171px;
 }
 
-.quiz__piece:nth-child(2) {
-  top: 35px;
-  right: 0;
+.quiz__piece[data-piece-index="1"] {
+  width: 182px;
+  height: 206px;
 }
 
-.quiz__piece:nth-child(3) {
-  bottom: 0;
-  left: 0;
+.quiz__piece[data-piece-index="2"] {
+  width: 202px;
+  height: 171px;
 }
 
-.quiz__piece:nth-child(4) {
-  bottom: 0;
-  left: 28%;
+.quiz__piece[data-piece-index="3"] {
+  width: 170px;
+  height: 206px;
 }
 
-.quiz__piece:nth-child(5) {
-  bottom: 0;
-  left: 53%;
+.quiz__piece[data-piece-index="4"] {
+  width: 247px;
+  height: 170px;
 }
 
-.quiz__piece:nth-child(6) {
-  bottom: 0;
-  right: 0;
+.quiz__piece[data-piece-index="5"] {
+  width: 176px;
+  height: 206px;
 }
 
 .quiz__pieces {
@@ -610,8 +605,6 @@ a {
   justify-content: space-between;
   width: 438px;
   height: auto;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 .stages__container {
@@ -652,7 +645,6 @@ a {
 }
 
 .quiz__top {
-  min-height: 350px;
   margin-bottom: 36px;
 }
 
@@ -1148,6 +1140,52 @@ a {
     -ms-flex-item-align: end;
     align-self: flex-end;
   }
+
+  .quiz__title {
+    margin: 0 auto 190px auto;
+  }
+
+  .quiz__title.active {
+    margin: 0 auto 75px auto;
+  }
+
+  .quiz__piece {
+    position: absolute;
+  }
+
+  .quiz__piece:nth-child(1) {
+    top: 35px;
+    left: 0;
+  }
+
+  .quiz__piece:nth-child(2) {
+    top: 35px;
+    right: 0;
+  }
+
+  .quiz__piece:nth-child(3) {
+    bottom: 0;
+    left: 0;
+  }
+
+  .quiz__piece:nth-child(4) {
+    bottom: 0;
+    left: 28%;
+  }
+
+  .quiz__piece:nth-child(5) {
+    bottom: 0;
+    left: 53%;
+  }
+
+  .quiz__piece:nth-child(6) {
+    bottom: 0;
+    right: 0;
+  }
+
+  .quiz__top {
+    min-height: 350px;
+  }
 }
 
 @media (min-width: 991.98px) {
@@ -1584,6 +1622,11 @@ a {
 }
 
 @media (max-width: 767.98px) {
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .page__stages {
     margin-bottom: 22px;
   }
@@ -1599,8 +1642,113 @@ a {
     height: auto;
   }
 
+  .quiz__title {
+    font-size: 26.6px;
+  }
+
+  .quiz__title br {
+    display: none;
+  }
+
+  .quiz__board {
+    width: 320px;
+    height: 213px;
+  }
+
+  .quiz__piece {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    margin-right: 10px;
+  }
+
+  .quiz__piece:last-child {
+    margin: 0;
+  }
+
+  .quiz__piece[data-piece-index="0"] {
+    width: 86px;
+    height: 73px;
+  }
+
+  .quiz__piece[data-piece-index="1"] {
+    width: 78px;
+    height: 88px;
+  }
+
+  .quiz__piece[data-piece-index="2"] {
+    width: 86px;
+    height: 73px;
+  }
+
+  .quiz__piece[data-piece-index="3"] {
+    width: 73px;
+    height: 88px;
+  }
+
+  .quiz__piece[data-piece-index="4"] {
+    width: 105px;
+    height: 73px;
+  }
+
+  .quiz__piece[data-piece-index="5"] {
+    width: 75px;
+    height: 90px;
+  }
+
+  .quiz__pieces {
+    overflow: scroll;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
   .item-games__image img {
     width: 174px;
+  }
+}
+
+@media (max-width: 360.98px) {
+  .quiz__puzzles {
+    margin: 0 -20px;
+  }
+}
+
+@media (min-width: 767.98px) and (max-width: 1100px) {
+  .quiz__board {
+    width: 404px;
+    height: 270px;
+  }
+
+  .quiz__piece[data-piece-index="0"] {
+    width: 172px;
+    height: 146px;
+  }
+
+  .quiz__piece[data-piece-index="1"] {
+    width: 156px;
+    height: 176px;
+  }
+
+  .quiz__piece[data-piece-index="2"] {
+    width: 173px;
+    height: 146px;
+  }
+
+  .quiz__piece[data-piece-index="3"] {
+    width: 145px;
+    height: 176px;
+  }
+
+  .quiz__piece[data-piece-index="4"] {
+    width: 208px;
+    height: 145px;
+  }
+
+  .quiz__piece[data-piece-index="5"] {
+    width: 148px;
+    height: 177px;
   }
 }
 

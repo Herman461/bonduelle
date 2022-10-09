@@ -16,7 +16,7 @@ function shuffle(array) {
 
 sessionStorage.setItem('stage', 0)
 
-const imageObj = new Image(475, 320);
+const imageObj = new Image();
 const pieces = []
 
 const data = [
@@ -64,9 +64,6 @@ const data = [
     },
 ]
 
-// window.addEventListener('resize', function() {
-//     if ()
-// })
 
 let questions = []
 
@@ -284,7 +281,7 @@ if (puzzleName === 'corn') {
     ]
 }
 
-
+buildPieceWrappers()
 
 
 function dragElement(el) {
@@ -295,7 +292,7 @@ function dragElement(el) {
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
-        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+        // if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
 
         e.preventDefault();
@@ -308,7 +305,7 @@ function dragElement(el) {
 
     function elementDrag(e) {
 
-        if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
+        // if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
@@ -323,7 +320,6 @@ function dragElement(el) {
     function stopElementDrag(e) {
         document.onpointerup = null;
         document.onpointermove = null;
-
         const squares = document.querySelectorAll('.quiz__square')
 
         for (let index = 0; index < squares.length; index++) {
@@ -341,8 +337,8 @@ function dragElement(el) {
             const puzzleWidth = puzzlePos.width
             const puzzleHeight = puzzlePos.height
 
-            const x = puzzleX - squareX > -120 && puzzleX - squareX + 120 < puzzleWidth
-            const y = puzzleY - squareY > -120 && puzzleY - squareY + 120 < puzzleHeight
+            const x = puzzleX - squareX > -50 && puzzleX - squareX + 50 < puzzleWidth
+            const y = puzzleY - squareY > -50 && puzzleY - squareY + 50 < puzzleHeight
 
             if (x && y)  {
                 const piece = e.target.closest('.quiz__piece')
@@ -382,85 +378,183 @@ function setGameOver() {
     }
 }
 
+function buildPieceWrappers() {
+    const pieces = document.querySelectorAll('.quiz__piece')
 
-
-
-imageObj.onload = async function() {
-    document.querySelector('.game-over__image').appendChild(imageObj)
-    let index = 0;
-    for (let h = 0; h < 2; h++) {
-        let sourceY = 0
-
-        if (h !== 0) {
-            sourceY = h * data[index - 1].height
-        }
-        let sourceX = 0
-        for (let w = 0; w < 3; w++) {
-            const canvas = document.createElement('canvas')
-            const item = data[index]
-
-            const context = canvas.getContext('2d');
-
-
-
-            if (w !== 0) {
-                sourceX += data[index - 1].width;
-            }
-
-            canvas.height = item.height
-            canvas.width = item.width
-
-            context.width = String(item.width)
-            context.height = String(item.height)
-
-            const updatedImage = await resizeImage(imageObj)
-
-
-
-            switch (index) {
-                case 0:
-                    context.drawImage(updatedImage, sourceX, sourceY, item.width, item.height, 0, 0, item.width, item.height);
-                    break;
-                case 1:
-                    context.drawImage(updatedImage, sourceX - 55, sourceY, item.width, item.height, 0, 0, item.width, item.height);
-                    break;
-                case 2:
-                    context.drawImage(updatedImage, 268, sourceY, item.width, item.height, 0, 0, item.width, item.height );
-                    break;
-                case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 65, item.width, item.height, 0, 0, item.width, item.height);
-                    break;
-                case 4:
-                    context.drawImage(updatedImage, sourceX - 59, sourceY - 20, item.width, item.height - 5, 0, 0, item.width, item.height);
-                    break;
-                case 5:
-                    context.drawImage(updatedImage, 301, sourceY - 62, item.width, item.height, 0, 0, item.width + 20, item.height);
-                    break;
-            }
-            item.href = canvas.toDataURL()
-            await setPuzzleForm(index)
-
-            index++;
-        }
-    }
-
-    shuffle(pieces)
     for (let index = 0; index < pieces.length; index++) {
         const piece = pieces[index]
-        document.querySelector('.quiz__pieces').appendChild(piece)
+        piece.addEventListener('click', setQuestion)
+
+        dragElement(piece)
+
+        piece.addEventListener( 'touchmove', function(e) {
+            e.preventDefault()
+        })
     }
+}
 
-};
+async function setGame() {
+    document.querySelector('.game-over__image').appendChild(imageObj)
+
+    let sourceY = 0
+    let sourceX = 0
+    for (let index = 0; index < 6; ++index) {
+        const piece = data[index]
+        const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+
+        let width = parseFloat(window.getComputedStyle(pieceDOM).width)
+        let height = parseFloat(window.getComputedStyle(pieceDOM).height)
+
+        // Устанавливаем начало координат, начиная со второго столбца пазлов
+        if (index % 3 !== 0) {
+            sourceX += width;
+        } else {
+            sourceX = 0
+        }
+
+        // Устанавливаем начало координат для второй строки пазлов
+        if (index > 2) {
+            sourceY = height;
+        }
+
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d');
 
 
+        canvas.width = width
+        canvas.height = height
+
+        context.width = String(width)
+        context.height = String(height)
+
+        const updatedImage = await resizeImage(imageObj)
+
+        // Отрисовка кусков пазла на различных расширениях экрана
+        if (window.matchMedia("(min-width: 1100px)").matches) {
+            switch (index) {
+                case 0:
+                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 1:
+                    context.drawImage(updatedImage, sourceX - 35, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 2:
+                    context.drawImage(updatedImage, 274, sourceY, width, height, 0, 0, width, height );
+                    break;
+                case 3:
+                    context.drawImage(updatedImage, sourceX, sourceY - 100, width, height, 0, 0, width, height);
+                    break;
+                case 4:
+                    context.drawImage(updatedImage, sourceX - 133, sourceY - 20, width, height, 0, 0, width, height);
+                    break;
+                case 5:
+                    context.drawImage(updatedImage, 312, sourceY - 90, width, height, 0, 0, width + 20, height);
+                    break;
+            }
+        } else if (window.matchMedia("(min-width: 767.98px) and (max-width: 1100px)").matches) {
+            switch (index) {
+                case 0:
+                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 1:
+                    context.drawImage(updatedImage, sourceX - 32, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 2:
+                    context.drawImage(updatedImage, 235, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 3:
+                    context.drawImage(updatedImage, sourceX, sourceY - 85, width, height, 0, 0, width, height);
+                    break;
+                case 4:
+                    context.drawImage(updatedImage, sourceX - 110, sourceY - 20, width, height, 0, 0, width, height);
+                    break;
+                case 5:
+                    context.drawImage(updatedImage, 270, sourceY - 80, width, height, 0, 0, width + 20, height);
+                    break;
+                }
+        } else if (window.matchMedia("(max-width: 767px)").matches) {
+            switch (index) {
+                case 0:
+                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 1:
+                    context.drawImage(updatedImage, sourceX - 15, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 2:
+                    context.drawImage(updatedImage, 117, sourceY, width, height, 0, 0, width, height);
+                    break;
+                case 3:
+                    context.drawImage(updatedImage, sourceX, sourceY - 40, width, height, 0, 0, width, height);
+                    break;
+                case 4:
+                    context.drawImage(updatedImage, sourceX - 56, sourceY - 8, width, height, 0, 0, width, height);
+                    break;
+                case 5:
+                    context.drawImage(updatedImage, 136, sourceY - 55, width - 4, height, 0, 0, width, height);
+                    break;
+            }
+        }
+
+
+        piece.href = canvas.toDataURL()
+
+
+        const doc = new DOMParser()
+
+        const response = await fetch(piece.imageSrc)
+        const str = await response.text()
+
+        const svgImage = await doc.parseFromString(str, "image/svg+xml")
+
+        svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
+
+        svgImage.querySelector('image').setAttribute( 'width', piece.width);
+        svgImage.querySelector('image').setAttribute( 'height', piece.height);
+
+        svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
+        svgImage.querySelector('svg').setAttribute('width', width)
+        svgImage.querySelector('svg').setAttribute('height', height)
+
+        pieceDOM.innerHTML = svgImage.documentElement.outerHTML
+
+        // const pieceIndex = pieceDOM.dataset.pieceIndex
+        // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
+        // setFinalPosition(pieceDOM, square)
+    }
+}
+imageObj.onload = setGame
+
+window.addEventListener('resize', function() {
+    // Меняем позицию при пазла, чтобы не выходило за пределы доски
+
+    const pieces = document.querySelectorAll('.quiz__piece.fixed')
+
+    for (let index = 0; index < pieces.length; index++) {
+        const piece = pieces[index]
+        const pieceIndex = piece.dataset.pieceIndex
+        const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
+        setFinalPosition(piece, square)
+    }
+    setGame()
+})
 
 function resizeImage(image) {
     const canvas = document.createElement('canvas')
     const context = canvas.getContext("2d");
-    canvas.height = 320
-    canvas.width = 475
-    context.drawImage(image, 0, 0, 472, 316)
+    const board = document.querySelector('.quiz__board')
 
+    let height = parseFloat(getComputedStyle(board).height) + 5
+    let width = parseFloat(getComputedStyle(board).width) + 5
+
+    if (window.matchMedia('(max-width: 767.98px)').matches) {
+        height = 137
+        width = 204
+    }
+
+    canvas.height = height
+    canvas.width = width
+
+    context.drawImage(image, 0, 0, width, height)
     const dataUrl = canvas.toDataURL('image/jpeg')
     const newImage = new Image()
 
@@ -469,63 +563,22 @@ function resizeImage(image) {
 }
 
 
-async function setPuzzleForm(index) {
-    const item = data[index]
-
-    const wrapper = document.createElement('div')
-
-    const doc = new DOMParser()
-
-    const response = await fetch(item.imageSrc)
-    const str = await response.text()
-    const svgImage = await doc.parseFromString(str, "image/svg+xml")
-
-    svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', item.href);
-
-    svgImage.querySelector('image').setAttribute( 'width', item.width);
-    svgImage.querySelector('image').setAttribute( 'height', item.height);
-
-    svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (item.width + 2) + ' ' + item.height)
-    svgImage.querySelector('svg').setAttribute('width', item.width)
-    svgImage.querySelector('svg').setAttribute('height', item.height)
-
-    wrapper.appendChild(svgImage.documentElement)
-
-    wrapper.dataset.pieceIndex = index
-
-    wrapper.className = 'quiz__piece'
-
-    wrapper.style.width = item.width + 'px'
-    wrapper.style.height = item.height + 'px'
-
-
-
-
-
-
-    wrapper.addEventListener('click', setQuestion)
-    dragElement(wrapper)
-    wrapper.addEventListener( 'touchmove', function(e) {
-        e.preventDefault()
-    })
-    pieces.push(wrapper)
-    // document.querySelector('.quiz__pieces').appendChild(wrapper)
-}
 
 function setQuestion(e) {
     const piece = e.target.closest('.quiz__piece')
 
+    // Если пазл уже установлен, то он не интересует
     if (piece.classList.contains('fixed')) return
+
+    // Обнуляем варианты ответа на вопрос
     const variants = document.querySelector('.quiz__variants')
     variants.innerHTML = ''
 
-
-
-
-
+    // Получаем данные о вопросе
     const index = piece.dataset.pieceIndex
     const question = questions[index]
 
+    // Добавляем заголовок вопроса (сам вопрос)
     const title = document.querySelector('.quiz__title')
 
     if (!title.classList.contains('active')) {
@@ -534,12 +587,15 @@ function setQuestion(e) {
 
     title.textContent = question.question
 
+    // Устанавливаем индекс текущего вопроса
     sessionStorage.setItem('stageIndex', index)
 
+    // Добавляем элементы ответа в DOM
     for (let index = 0; index < question.items.length; index++) {
         const item = question.items[index]
 
-        let letter;
+        let letter
+
         switch (index) {
             case 0:
                 letter = 'A'
@@ -566,13 +622,22 @@ function setQuestion(e) {
 }
 
 function checkAnswer(e) {
+    // Массив ответов
     const answers = document.querySelectorAll('.quiz__variant')
+
+    // Текущий выбранный ответ
     const answer = e.target.closest('.quiz__variant')
+
+    // Индекс вопроса
     const questionIndex = +sessionStorage.getItem('stageIndex')
+
+    // Получаем данные о вопросе
     const question = questions[questionIndex]
 
+    // Переменная с правильным ответов на вопрос
     let rightAnswerIndex
 
+    // Преобразовываем буквы вопроса в индексы для дальнейшего сравнения
     switch (question.rightAnswer.toLowerCase()) {
         case 'a':
             rightAnswerIndex = 0
@@ -584,7 +649,6 @@ function checkAnswer(e) {
             rightAnswerIndex = 2
             break;
     }
-
 
 
     if (document.querySelector('.variant-quiz__body.active')) return
@@ -618,6 +682,7 @@ function checkAnswer(e) {
                 </div>`
 
             document.querySelector('.quiz').appendChild(el)
+
 
             setTimeout(() => {
                 if (document.querySelector('.quiz__win')) {
@@ -702,10 +767,8 @@ nextButton.addEventListener('click', function(e) {
 
 
         if (piece.dataset.pieceIndex < index) {
-            console.log(index)
             const square = document.querySelector(`.quiz__square[data-square-index="${index - 1}"]`)
             setFinalPosition(piece, square)
-            console.log(square)
             return
         }
     }
@@ -745,37 +808,128 @@ prevButton.addEventListener('click', function(e) {
 function setFinalPosition(piece, square) {
     const index = +piece.dataset.pieceIndex
 
-    switch (index) {
-        case 0:
-            piece.style.left = square.offsetLeft + "px";
-            piece.style.top = square.offsetTop + "px";
-            break;
-        case 1:
+    if (window.matchMedia("(min-width: 1100px)").matches) {
+        switch (index) {
+            case 0:
+                piece.style.left = square.offsetLeft + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 1:
 
-            piece.style.left = square.offsetLeft - 11 + "px";
-            piece.style.top = square.offsetTop + "px";
-            break;
-        case 2:
+                piece.style.left = square.offsetLeft - 11 + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 2:
 
-            piece.style.left = square.offsetLeft - 43 + "px";
-            piece.style.top = square.offsetTop + "px";
-            break;
-        case 3:
-            piece.style.top = square.offsetTop - 48 + "px";
-            piece.style.left = square.offsetLeft + "px";
-            break;
-        case 4:
-            piece.style.top = square.offsetTop - 12 + "px";
-            piece.style.left = square.offsetLeft - 43 + "px";
-            break;
-        case 5:
-            piece.style.top = square.offsetTop - 47 + "px";
-            piece.style.left = square.offsetLeft - 11 + "px";
-            break;
-        default:
-            piece.style.top = square.offsetTop + "px";
-            piece.style.left = square.offsetLeft + "px";
+                piece.style.left = square.offsetLeft - 43 + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 3:
+                piece.style.top = square.offsetTop - 48 + "px";
+                piece.style.left = square.offsetLeft + "px";
+                break;
+            case 4:
+                piece.style.top = square.offsetTop - 12 + "px";
+                piece.style.left = square.offsetLeft - 43 + "px";
+                break;
+            case 5:
+                piece.style.top = square.offsetTop - 47 + "px";
+                piece.style.left = square.offsetLeft - 11 + "px";
+                break;
+            default:
+                piece.style.top = square.offsetTop + "px";
+                piece.style.left = square.offsetLeft + "px";
+        }
+    } else if (window.matchMedia("(min-width: 767.98px) and (max-width: 1100px)").matches) {
+        switch (index) {
+            case 0:
+                piece.style.left = square.offsetLeft + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 1:
+                piece.style.left = square.offsetLeft - 11 + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 2:
+                piece.style.left = square.offsetLeft - 37 + "px";
+                piece.style.top = square.offsetTop + "px";
+                break;
+            case 3:
+                piece.style.top = square.offsetTop - 41 + "px";
+                piece.style.left = square.offsetLeft + "px";
+                break;
+            case 4:
+                piece.style.top = square.offsetTop - 9 + "px";
+                piece.style.left = square.offsetLeft - 37 + "px";
+                break;
+            case 5:
+                piece.style.top = square.offsetTop - 40 + "px";
+                piece.style.left = square.offsetLeft - 10 + "px";
+                break;
+            default:
+                piece.style.top = square.offsetTop + "px";
+                piece.style.left = square.offsetLeft + "px";
+        }
+    } else if (window.matchMedia("(max-width: 767px)").matches) {
+        switch (index) {
+            case 0:
+                piece.style.left = square.offsetLeft + "px";
+                piece.style.top = square.offsetTop + "px";
+                piece.style.width = '136px'
+                piece.style.height = '115px'
+                piece.querySelector('svg').setAttribute('width', 136)
+                piece.querySelector('svg').setAttribute('height', 115)
+                break;
+            case 1:
+                piece.style.left = square.offsetLeft - 6 + "px";
+                piece.style.top = square.offsetTop + "px";
+                piece.style.width = '123px'
+                piece.style.height = '139px'
+                piece.querySelector('svg').setAttribute('width', 123)
+                piece.querySelector('svg').setAttribute('height', 139)
+                break;
+            case 2:
+                piece.style.left = square.offsetLeft - 28 + "px";
+                piece.style.top = square.offsetTop + "px";
+                piece.style.width = '137px'
+                piece.style.height = '115px'
+                piece.querySelector('svg').setAttribute('width', 137)
+                piece.querySelector('svg').setAttribute('height', 115)
+                break;
+            case 3:
+                piece.style.top = square.offsetTop - 31 + "px";
+                piece.style.left = square.offsetLeft + "px";
+                piece.style.width = '115px'
+                piece.style.height = '139px'
+                piece.querySelector('svg').setAttribute('width', 115)
+                piece.querySelector('svg').setAttribute('height', 139)
+                break;
+            case 4:
+                piece.style.top = square.offsetTop - 6 + "px";
+                piece.style.left = square.offsetLeft - 28 + "px";
+                piece.style.width = '167px'
+                piece.style.height = '114px'
+                piece.querySelector('svg').setAttribute('width', 167)
+                piece.querySelector('svg').setAttribute('height', 114)
+                break;
+            case 5:
+                piece.style.top = square.offsetTop - 32 + "px";
+                piece.style.left = square.offsetLeft - 3 + "px";
+                piece.style.width = '114px'
+                piece.style.height = '139px'
+                piece.querySelector('svg').setAttribute('width', 114)
+                piece.querySelector('svg').setAttribute('height', 139)
+                break;
+            default:
+                piece.style.top = square.offsetTop + "px";
+                piece.style.left = square.offsetLeft + "px";
+                piece.style.width = '136px'
+                piece.style.height = '115px'
+                piece.querySelector('svg').setAttribute('width', 136)
+                piece.querySelector('svg').setAttribute('height', 115)
+        }
     }
+
     piece.classList.add('fixed')
     piece.classList.remove('active')
 }
@@ -828,3 +982,5 @@ function setInitialPosition(el) {
     el.classList.remove('active')
     el.classList.remove('fixed')
 }
+
+
