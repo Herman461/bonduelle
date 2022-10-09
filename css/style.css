@@ -1,6 +1,7 @@
 body {
   font-size: 14px;
   font-family: "Montserrat";
+  background: #FFFAE4;
 }
 
 body.lock {
