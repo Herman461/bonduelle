@@ -223,7 +223,6 @@ a {
   height: auto;
   z-index: 50;
   background: #FFFAE4;
-  background: #FFFAE4;
 }
 
 .header__container {
@@ -516,6 +515,7 @@ a {
 
 .quiz__container {
   padding-top: 20px;
+  padding-bottom: 83px !important;
 }
 
 .quiz__title {
@@ -654,7 +654,6 @@ a {
 
 .quiz__container {
   position: relative;
-  padding-bottom: 93px;
 }
 
 .quiz__bottom {
@@ -959,12 +958,7 @@ a {
 }
 
 .game-over__top {
-  min-height: 350px;
   margin-bottom: 36px;
-}
-
-.game-over__container {
-  padding-bottom: 60px !important;
 }
 
 .game-over__title {
@@ -975,6 +969,17 @@ a {
   line-height: 120%;
   margin-bottom: 35px;
   text-transform: uppercase;
+}
+
+.game-over__motivation {
+  max-width: 690px;
+  margin: 0 auto;
+  color: #295F3E;
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: -0.05em;
+  line-height: 133.3333333333%;
+  margin-bottom: 35px;
 }
 
 .game-over__text {
@@ -1032,7 +1037,7 @@ a {
   font-size: 26px;
 }
 
-.social-game-over {
+.social-game-over__list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1132,6 +1137,10 @@ a {
     right: 0;
   }
 
+  .quiz__container {
+    padding-bottom: 93px;
+  }
+
   .quiz__top {
     min-height: 350px;
     margin-bottom: 36px;
@@ -1179,6 +1188,14 @@ a {
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     max-width: 500px;
+  }
+
+  .game-over__top {
+    min-height: 350px;
+  }
+
+  .social-game-over__text {
+    display: none;
   }
 }
 
@@ -1676,6 +1693,10 @@ a {
     height: auto;
   }
 
+  .quiz__answer {
+    min-height: 160px;
+  }
+
   .quiz__title {
     margin-bottom: 15px;
   }
@@ -1686,7 +1707,7 @@ a {
   }
 
   .quiz__title {
-    font-size: 26.6px;
+    font-size: 20px;
   }
 
   .quiz__title br {
@@ -1782,7 +1803,12 @@ a {
   }
 
   .variant-quiz__letter {
-    font-size: 24px;
+    min-width: 30px;
+    min-height: 30px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 30px;
+    flex: 0 0 30px;
+    font-size: 18px;
     margin-right: 12px;
   }
 
@@ -1792,7 +1818,7 @@ a {
   }
 
   .variant-quiz__text {
-    font-size: 18px;
+    font-size: 14px;
     -ms-flex-item-align: center;
     -ms-grid-row-align: center;
     align-self: center;
@@ -1811,7 +1837,7 @@ a {
   }
 
   .win-quiz__title {
-    font-size: 22px;
+    font-size: 17px;
     line-height: 123.5294117647%;
     padding-left: 120px !important;
   }
@@ -1821,7 +1847,7 @@ a {
   }
 
   .win-quiz__text {
-    font-size: 16px;
+    font-size: 12px;
     line-height: 150%;
     padding: 14px 30px;
   }
@@ -1840,13 +1866,103 @@ a {
   }
 
   .loss-quiz__text {
-    font-size: 26px;
+    font-size: 20px;
+  }
+
+  .game-over__title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .game-over__motivation {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .game-over__text {
+    font-size: 14px;
+  }
+
+  .game-over__text p {
+    margin-bottom: 19px;
+  }
+
+  .game-over__text p:last-child {
+    display: none;
+  }
+
+  .game-over__image {
+    width: 320px;
+    height: 213px;
+  }
+
+  .game-over__button {
+    font-size: 14px;
+    padding: 2px 33px;
+    min-height: 35px;
+    font-weight: 500;
+  }
+
+  .social-game-over {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .social-game-over {
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: 1px solid #295F3E;
+  }
+
+  .social-game-over__text {
+    text-align: left;
+    font-size: 14px;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding-right: 2px;
+    color: #295F3E;
+    line-height: 135.7142857143%;
+    font-weight: 500;
+  }
+
+  .social-game-over li {
+    margin: 0 7px;
+  }
+
+  .social-game-over__link svg {
+    width: 30px;
+    height: 30px;
   }
 }
 
 @media (max-width: 767.98px) and (max-width: 767.98px) {
   .variant-quiz__text {
     line-height: 150%;
+  }
+}
+
+@media (max-width: 380.98px) {
+  .game-over__top {
+    padding: 0 20px;
+  }
+
+  .game-over__container {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 -20px;
+  }
+
+  .game-over__motivation {
+    padding: 0 20px;
+  }
+
+  .game-over__button {
+    margin: 0 20px;
   }
 }
 
@@ -1894,6 +2010,11 @@ a {
   .quiz__piece[data-piece-index="5"] {
     width: 148px;
     height: 177px;
+  }
+
+  .game-over__image {
+    width: 404px;
+    height: 270px;
   }
 }
 

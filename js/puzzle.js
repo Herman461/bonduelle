@@ -296,8 +296,17 @@ prevButton.addEventListener('click', function(e) {
         document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
         document.querySelector('.quiz__variants.active').innerHTML = ''
         document.querySelector('.quiz__variants.active').classList.remove('active')
-
+        return
     }
+
+    if (document.querySelector('.quiz__game-over.active')) {
+        document.querySelector('.quiz__game-over.active').classList.remove('.active')
+        document.querySelector('.quiz__game-over').style.display = 'none'
+        document.querySelector('.quiz__main').style.display = 'block'
+        return
+    }
+
+    window.location.href = '/'
 })
 
 function dragElement(el) {
@@ -368,10 +377,10 @@ function dragElement(el) {
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
-                if (squareIndex !== pieceIndex) {
-                    setInitialPosition(el)
-                    return
-                }
+                // if (squareIndex !== pieceIndex) {
+                //     setInitialPosition(el)
+                //     return
+                // }
                 setFinalPosition(piece, square)
 
                 const stage = +sessionStorage.getItem('stage')
@@ -395,6 +404,7 @@ function setGameOver() {
     if (fixedPieces.length === 6) {
         document.querySelector('.quiz__main').style.display = 'none'
         document.querySelector('.quiz__game-over').style.display = 'block'
+        document.querySelector('.quiz__game-over').classList.add('active')
     }
 }
 
@@ -645,6 +655,10 @@ function setQuestion(e) {
         el.addEventListener('click', checkAnswer)
         variants.appendChild(el)
     }
+
+    const answerDOM = document.createElement('div')
+    answerDOM.className = 'quiz__answer'
+    variants.appendChild(answerDOM);
 }
 
 function checkAnswer(e) {
@@ -708,7 +722,7 @@ function checkAnswer(e) {
                 </div>`
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-                document.querySelector('.quiz__variants').appendChild(el)
+                document.querySelector('.quiz__answer').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
             }
@@ -744,7 +758,8 @@ function checkAnswer(e) {
                 </p>`
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-                document.querySelector('.quiz__variants').appendChild(el)
+
+                document.querySelector('.quiz__answer').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
             }
