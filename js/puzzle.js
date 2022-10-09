@@ -291,11 +291,7 @@ prevButton.addEventListener('click', function(e) {
     if (document.querySelector('.quiz__variants.active')
         && window.matchMedia('(max-width: 768.98px)').matches
     ) {
-        document.body.classList.remove('lock')
-        document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
-        document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
-        document.querySelector('.quiz__variants.active').innerHTML = ''
-        document.querySelector('.quiz__variants.active').classList.remove('active')
+        resetQuestion()
         return
     }
 
@@ -309,6 +305,14 @@ prevButton.addEventListener('click', function(e) {
     window.location.href = '/'
 })
 
+function resetQuestion() {
+    document.body.classList.remove('lock')
+    document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
+    document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
+    document.querySelector('.quiz__variants.active').innerHTML = ''
+    document.querySelector('.quiz__variants.active').classList.remove('active')
+}
+
 function dragElement(el) {
     let pos1 = 0,
         pos2 = 0,
@@ -317,6 +321,7 @@ function dragElement(el) {
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
+        console.log(e.target)
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
 
@@ -329,7 +334,7 @@ function dragElement(el) {
     }
 
     function elementDrag(e) {
-
+        console.log(e.target)
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
         pos1 = pos3 - e.clientX;
@@ -366,8 +371,13 @@ function dragElement(el) {
             const puzzleWidth = puzzlePos.width
             const puzzleHeight = puzzlePos.height
 
-            const x = puzzleX - squareX > -50 && puzzleX - squareX + 50 < puzzleWidth
-            const y = puzzleY - squareY > -50 && puzzleY - squareY + 50 < puzzleHeight
+            let radius = 120
+
+            if (window.matchMedia('(max-width: 767.98px)').matches) {
+                radius = 50
+            }
+            const x = puzzleX - squareX > (radius * -1) && puzzleX - squareX + radius < puzzleWidth
+            const y = puzzleY - squareY > (radius * -1) && puzzleY - squareY + radius < puzzleHeight
 
             if (x && y)  {
                 const piece = e.target.closest('.quiz__piece')
@@ -377,10 +387,10 @@ function dragElement(el) {
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
-                // if (squareIndex !== pieceIndex) {
-                //     setInitialPosition(el)
-                //     return
-                // }
+                if (squareIndex !== pieceIndex) {
+                    setInitialPosition(el)
+                    return
+                }
                 setFinalPosition(piece, square)
 
                 const stage = +sessionStorage.getItem('stage')
@@ -658,7 +668,7 @@ function setQuestion(e) {
 
     const answerDOM = document.createElement('div')
     answerDOM.className = 'quiz__answer'
-    variants.appendChild(answerDOM);
+    document.querySelector('.quiz__variants').appendChild(answerDOM);
 }
 
 function checkAnswer(e) {
@@ -722,7 +732,7 @@ function checkAnswer(e) {
                 </div>`
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-                document.querySelector('.quiz__answer').appendChild(el)
+                document.querySelector('.quiz__board').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
             }
@@ -736,13 +746,15 @@ function checkAnswer(e) {
                 if (document.querySelector('.variant-quiz__body.active')) {
                     document.querySelector('.variant-quiz__body.active').classList.remove('active')
                 }
-            }, 5000)
+            }, 10000)
             const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
 
             puzzle.classList.add('active')
             if (document.querySelector('.quiz__loss')) {
                 document.querySelector('.quiz__loss').remove()
             }
+
+            resetQuestion()
             break;
         } else {
             if (document.querySelector('.quiz__loss')) continue
@@ -758,7 +770,6 @@ function checkAnswer(e) {
                 </p>`
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-
                 document.querySelector('.quiz__answer').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
@@ -981,8 +992,8 @@ function setInitialPosition(el) {
             el.style.top = 'auto'
             break;
     }
-    el.classList.remove('active')
-    el.classList.remove('fixed')
+    // el.classList.remove('active')
+    // el.classList.remove('fixed')
 }
 
 
