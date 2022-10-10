@@ -308,9 +308,13 @@ prevButton.addEventListener('click', function(e) {
 function resetQuestion() {
     document.body.classList.remove('lock')
     document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
-    document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
+
     document.querySelector('.quiz__variants.active').innerHTML = ''
     document.querySelector('.quiz__variants.active').classList.remove('active')
+
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
+    }
 }
 
 function dragElement(el) {
@@ -321,7 +325,7 @@ function dragElement(el) {
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
-        console.log(e.target)
+
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
 
@@ -334,13 +338,18 @@ function dragElement(el) {
     }
 
     function elementDrag(e) {
-        console.log(e.target)
+
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
 
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
+
+        if (e.target.closest('.quiz__slide')) {
+            document.querySelector('.quiz__slide').append(el)
+            // e.target.closest('.quiz__slide').remove()
+        }
 
         if (window.getComputedStyle(el).position !== 'absolute') {
             el.style.position = 'absolute'
@@ -383,7 +392,7 @@ function dragElement(el) {
                 const piece = e.target.closest('.quiz__piece')
 
 
-
+                console.log(piece)
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
@@ -561,6 +570,7 @@ async function setGame() {
         // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
         // setFinalPosition(pieceDOM, square)
     }
+
 }
 imageObj.onload = setGame
 
@@ -715,7 +725,6 @@ function checkAnswer(e) {
             const el = document.createElement('div')
 
             el.className = 'quiz__win win-quiz'
-
             el.innerHTML = `
                 <div class="win-quiz__top">
                     <div class="win-quiz__image">
@@ -746,9 +755,9 @@ function checkAnswer(e) {
                 if (document.querySelector('.variant-quiz__body.active')) {
                     document.querySelector('.variant-quiz__body.active').classList.remove('active')
                 }
-            }, 10000)
+            }, 6000)
             const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
-
+            console.log(puzzle)
             puzzle.classList.add('active')
             if (document.querySelector('.quiz__loss')) {
                 document.querySelector('.quiz__loss').remove()
@@ -783,7 +792,7 @@ function checkAnswer(e) {
                 if (document.querySelector('.variant-quiz__body.active')) {
                     document.querySelector('.variant-quiz__body.active').classList.remove('active')
                 }
-            }, 5000)
+            }, 6000)
 
         }
 
@@ -992,8 +1001,8 @@ function setInitialPosition(el) {
             el.style.top = 'auto'
             break;
     }
-    // el.classList.remove('active')
-    // el.classList.remove('fixed')
+    el.classList.remove('active')
+    el.classList.remove('fixed')
 }
 
 

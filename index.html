@@ -52,10 +52,11 @@
             </div>
         </header>
 
-        <main class="page">
+        <main class="page page_home">
             <div class="intro">
+
                 <div class="intro__bg ibg">
-                    <img src="images/intro/intro-bg3.png" alt="">
+                    <img src="images/intro/main-banner-full-v2-12.png" alt="">
                 </div>
                 <div class="intro__body">
                     <div class="intro__container container">
@@ -63,6 +64,9 @@
                             <img src="images/intro/intro-image.svg" alt="">
                         </div>
                         <div class="intro__content">
+                            <div class="intro__item intro__item_first"></div>
+                            <div class="intro__item intro__item_second"></div>
+                            <div class="intro__item intro__item_third"></div>
                             <div class="intro__title">
                                 <span>Привет!</span>
                                 <br>
@@ -98,6 +102,9 @@
                             </div>
                         </div>
                         <div class="stages__column">
+                            <div class="stages__light">
+                                <img src="images/stages/light.png" alt="">
+                            </div>
                             <div class="stages__item">
                                 <div class="stages__number">2</div>
                                 <div class="stages__text">
@@ -125,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="stages__image">
-                                <img src="images/stages/corn-flying-boy.png" alt="">
+                                <img src="images/stages/corn-fly.png" alt="">
                             </div>
                         </div>
                     </div>
@@ -138,6 +145,7 @@
                     <div class="stages__line stages__line_adaptive">
                         <img src="images/stages/line-bottom-adaptive.svg" alt="">
                     </div>
+
                 </div>
             </div>
             <div class="page__games games">
@@ -145,48 +153,63 @@
                     <img src="images/games/bg.png" alt="">
                 </div>
                 <div class="games__container container">
+                    <div class="games__corn games__corn_first"></div>
+                    <div class="games__corn games__corn_second"></div>
                     <h2 class="games__title">Выбери пазл и начни игру!</h2>
-                    <div class="games__items swiper">
-                        <div class="games__item item-games">
-                            <a data-puzzle="corn" href="quiz.html" class="item-games__body">
-                                <div class="item-games__image">
-                                    <img src="images/games/corn.svg" alt="">
-                                </div>
-                                <div class="item-games__puzzle ibg">
-                                    <div class="items-games__puzzle">
-                                        <img src="images/games/puzzle-orange.png" alt="">
+                    <div class="games__body">
+                        <div class="games__items swiper">
+                            <div class="games__item item-games">
+                                <a data-puzzle="corn" href="quiz.html" class="item-games__body">
+                                    <div class="item-games__image">
+                                        <img src="images/games/corn.svg" alt="">
                                     </div>
-                                    <div class="item-games__name item-games__name_white">Супер-кукурузик</div>
-                                </div>
-                            </a>
+                                    <div class="item-games__puzzle ibg">
+                                        <div class="items-games__puzzle">
+                                            <img src="images/games/puzzle-orange.png" alt="">
+                                        </div>
+                                        <div class="item-games__name item-games__name_white">Супер-кукурузик</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="games__item item-games">
+                                <a data-puzzle="pea" href="quiz.html" class="item-games__body">
+                                    <div class="item-games__image">
+                                        <img src="images/games/pea.svg" alt="">
+                                    </div>
+                                    <div class="item-games__puzzle ibg">
+                                        <div class="items-games__puzzle">
+                                            <img src="images/games/puzzle-green.png" alt="">
+                                        </div>
+                                        <div class="item-games__name item-games__name_green">Супер-горошек</div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="games__item item-games">
+                                <a data-puzzle="together" href="quiz.html" class="item-games__body">
+                                    <div class="item-games__image">
+                                        <img src="images/games/together.svg" alt="">
+                                    </div>
+                                    <div class="item-games__puzzle ibg">
+                                        <div class="items-games__puzzle">
+                                            <img src="images/games/puzzle-orange.png" alt="">
+                                        </div>
+                                        <div class="item-games__name item-games__name_orange">Супер-овощи</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div class="games__item item-games">
-                            <a data-puzzle="pea" href="quiz.html" class="item-games__body">
-                                <div class="item-games__image">
-                                    <img src="images/games/pea.svg" alt="">
-                                </div>
-                                <div class="item-games__puzzle ibg">
-                                    <div class="items-games__puzzle">
-                                        <img src="images/games/puzzle-green.png" alt="">
-                                    </div>
-                                    <div class="item-games__name item-games__name_green">Супер-горошек</div>
-                                </div>
-                            </a>
+                        <div class="games__button-prev stroke">
+                            <svg>
+                                <use xlink:href="images/icons/icons.svg#angle-left"></use>
+                            </svg>
                         </div>
-                        <div class="games__item item-games">
-                            <a data-puzzle="together" href="quiz.html" class="item-games__body">
-                                <div class="item-games__image">
-                                    <img src="images/games/together.svg" alt="">
-                                </div>
-                                <div class="item-games__puzzle ibg">
-                                    <div class="items-games__puzzle">
-                                        <img src="images/games/puzzle-orange.png" alt="">
-                                    </div>
-                                    <div class="item-games__name item-games__name_orange">Супер-овощи</div>
-                                </div>
-                            </a>
+                        <div class="games__button-next stroke">
+                            <svg>
+                                <use xlink:href="images/icons/icons.svg#angle-left"></use>
+                            </svg>
                         </div>
                     </div>
+
                 </div>
             </div>
         </main>

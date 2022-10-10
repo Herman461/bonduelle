@@ -86,21 +86,24 @@ if (toTopButton) {
 if (document.querySelector('.games__items')) {
   var gamesSlider = new Swiper('.games__items', {
     speed: 800,
-    loop: true,
     spaceBetween: 65,
+    slidesPerView: 1,
+    loop: true,
     breakpoints: {
       992: {
         spaceBetween: 10,
-        slidesPerView: 3
+        slidesPerView: 3,
+        loop: false
       },
-      670: {
-        slidesPerView: 2
+      767.98: {
+        slidesPerView: 2,
+        loop: true
       }
-    } // navigation: {
-    //     nextEl: item.parentElement.querySelector(".button-next"),
-    //     prevEl: item.parentElement.querySelector(".button-prev")
-    // },
-
+    },
+    navigation: {
+      nextEl: document.querySelector(".games__button-next"),
+      prevEl: document.querySelector(".games__button-prev")
+    }
   });
 }
 
