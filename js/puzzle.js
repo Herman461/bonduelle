@@ -305,6 +305,7 @@ prevButton.addEventListener('click', function(e) {
 })
 
 function resetQuestion() {
+    document.querySelector('.quiz__top').classList.remove('active')
     document.body.classList.remove('lock')
     document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
 
@@ -696,8 +697,6 @@ function setQuestion(e) {
     // Добавляем заголовок вопроса (сам вопрос)
     const title = document.querySelector('.quiz__title')
 
-
-
     if (!title.classList.contains('active')) {
         title.classList.add('active')
     }
@@ -748,6 +747,7 @@ function setQuestion(e) {
     const answerDOM = document.createElement('div')
     answerDOM.className = 'quiz__answer'
     document.querySelector('.quiz__variants').appendChild(answerDOM);
+    document.querySelector('.quiz__top').classList.add('active')
 }
 
 function checkAnswer(e) {
