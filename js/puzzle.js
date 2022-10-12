@@ -311,7 +311,7 @@ function resetQuestion() {
     document.body.classList.remove('lock')
     document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
 
-    if (window.matchMedia('(max-width: 767.98px)').matches) {
+    if (window.matchMedia('(max-width: 991.98px)').matches) {
         document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
     }
 
@@ -324,7 +324,7 @@ function resetQuestion() {
         const arrow = arrows[index]
         arrow.hidden = false
     }
-    if (window.matchMedia('(min-width: 767.98px)').matches) {
+    if (window.matchMedia('(min-width: 991.98px)').matches) {
         document.querySelector('.quiz__top').classList.remove('active')
         const boardPos = document.querySelector('.quiz__board').getBoundingClientRect()
         window.scrollTo(0, boardPos.top - 10)
@@ -363,13 +363,13 @@ function dragElement(el) {
         if (parseInt(window.getComputedStyle(el).left) > window.innerWidth) {
             el.style.left = (window.innerWidth - el.offsetWidth) + 'px'
         }
-        if (window.matchMedia('(max-width: 767.98px)').matches) {
+        if (window.matchMedia('(max-width: 991.98px)').matches) {
             increasePiece(el)
             setPiecePosition()
             document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
-        if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 767.98px)').matches) {
+        if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
             document.querySelector('.quiz__puzzles').appendChild(el)
         }
 
@@ -391,7 +391,7 @@ function dragElement(el) {
         document.onpointermove = null;
         const squares = document.querySelectorAll('.quiz__square')
 
-        if (window.matchMedia('(max-width: 767.98px)').matches) {
+        if (window.matchMedia('(max-width: 991.98px)').matches) {
             document.querySelector('.quiz__pieces').style.overflowX = 'auto'
         }
         for (let index = 0; index < squares.length; index++) {
@@ -411,7 +411,7 @@ function dragElement(el) {
 
             let radius = 150
 
-            if (window.matchMedia('(max-width: 767.98px)').matches) {
+            if (window.matchMedia('(max-width: 991.98px)').matches) {
                 radius = 100
             }
             const x = puzzleX - squareX > (radius * -1) && puzzleX - squareX + radius < puzzleWidth
@@ -423,7 +423,7 @@ function dragElement(el) {
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
-                if (squareIndex !== pieceIndex && window.matchMedia('(min-width: 767.98px)').matches) {
+                if (squareIndex !== pieceIndex && window.matchMedia('(min-width: 991.98px)').matches) {
                     setInitialPosition(el)
                     return
                 }
@@ -520,7 +520,7 @@ async function setGame() {
     //     const json = await response.json();
     //     console.log(json)
     // }
-    if (window.matchMedia("(max-width: 767.98px)").matches) {
+    if (window.matchMedia("(max-width: 991.98px)").matches) {
         document.querySelector('.quiz__pieces').classList.add('load')
     }
 
@@ -559,7 +559,7 @@ async function setGame() {
         const updatedImage = await resizeImage(imageObj)
 
         // Отрисовка кусков пазла на различных расширениях экрана
-        if (window.matchMedia("(min-width: 1100px)").matches) {
+        if (window.matchMedia("(min-width: 991.98px)").matches) {
             switch (index) {
                 case 0:
                     context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
@@ -580,28 +580,7 @@ async function setGame() {
                     context.drawImage(updatedImage, 312, sourceY - 90, width, height, 0, 0, width + 20, height);
                     break;
             }
-        } else if (window.matchMedia("(min-width: 767.98px) and (max-width: 1100px)").matches) {
-            switch (index) {
-                case 0:
-                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 1:
-                    context.drawImage(updatedImage, sourceX - 32, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 2:
-                    context.drawImage(updatedImage, 235, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 85, width, height, 0, 0, width, height);
-                    break;
-                case 4:
-                    context.drawImage(updatedImage, sourceX - 110, sourceY - 20, width, height, 0, 0, width, height);
-                    break;
-                case 5:
-                    context.drawImage(updatedImage, 270, sourceY - 80, width, height, 0, 0, width + 20, height);
-                    break;
-                }
-        } else if (window.matchMedia("(max-width: 767.98px)").matches) {
+        } else {
             switch (index) {
                 case 0:
                     context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
@@ -651,13 +630,13 @@ async function setGame() {
 
     setPiecePosition()
 
-    if (window.matchMedia("(max-width: 767.98px)").matches) {
+    if (window.matchMedia("(max-width: 991.98px)").matches) {
         document.querySelector('.quiz__pieces').classList.remove('load')
     }
 }
 
 function setPiecePosition() {
-    if (window.matchMedia('(max-width: 767.98px)').matches) {
+    if (window.matchMedia('(max-width: 991.98px)').matches) {
         const pieces = document.querySelectorAll('.quiz__piece')
 
         let width = 0
@@ -671,7 +650,7 @@ function setPiecePosition() {
                 piece.style.left = '15px'
             } else {
                 const prevPiece = pieces[index - 1]
-                width += prevPiece.offsetWidth + 20
+                width += prevPiece.offsetWidth + 25
 
                 piece.style.left = width + 'px'
 
@@ -692,7 +671,7 @@ function resizeImage(image) {
     let height = parseFloat(getComputedStyle(board).height) + 5
     let width = parseFloat(getComputedStyle(board).width) + 5
 
-    if (window.matchMedia('(max-width: 767.98px)').matches) {
+    if (window.matchMedia('(max-width: 991.98px)').matches) {
         height = 137
         width = 204
     }
@@ -741,7 +720,7 @@ function setQuestion(e) {
         ${question.question}   
     `
 
-    if (window.matchMedia('(max-width: 767.98px)').matches) {
+    if (window.matchMedia('(max-width: 991.98px)').matches) {
         variants.appendChild(title)
         document.body.classList.add('lock')
         document.querySelector('.header').classList.add('active')
@@ -788,7 +767,7 @@ function setQuestion(e) {
 
     document.querySelector('.header').classList.add('fixed')
 
-    if (window.matchMedia('(min-width: 767.98px)').matches) {
+    if (window.matchMedia('(min-width: 991.98px)').matches) {
 
         window.scrollTo(0, 0)
         document.querySelector('.quiz__top').classList.add('active')
@@ -855,7 +834,7 @@ function checkAnswer(e) {
                     <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
                 </div>`
 
-            if (window.matchMedia('(max-width: 767.98px)').matches) {
+            if (window.matchMedia('(max-width: 991.98px)').matches) {
                 document.querySelector('.quiz__board').style.position = 'relative'
                 document.querySelector('.quiz__board').appendChild(el)
             } else {
@@ -895,7 +874,7 @@ function checkAnswer(e) {
                     ещё раз!
                 </p>`
 
-            if (window.matchMedia('(max-width: 767.98px)').matches) {
+            if (window.matchMedia('(max-width: 991.98px)').matches) {
                 document.querySelector('.quiz__answer').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
@@ -950,7 +929,7 @@ window.addEventListener('resize', function() {
 function setFinalPosition(piece, square) {
     const index = +piece.dataset.pieceIndex
 
-    if (window.matchMedia("(min-width: 1100px)").matches) {
+    if (window.matchMedia("(min-width: 991.98px)").matches) {
         switch (index) {
             case 0:
                 piece.style.left = square.offsetLeft + "px";
@@ -982,37 +961,7 @@ function setFinalPosition(piece, square) {
                 piece.style.top = square.offsetTop + "px";
                 piece.style.left = square.offsetLeft + "px";
         }
-    } else if (window.matchMedia("(min-width: 767.98px) and (max-width: 1100px)").matches) {
-        switch (index) {
-            case 0:
-                piece.style.left = square.offsetLeft + "px";
-                piece.style.top = square.offsetTop + "px";
-                break;
-            case 1:
-                piece.style.left = square.offsetLeft - 11 + "px";
-                piece.style.top = square.offsetTop + "px";
-                break;
-            case 2:
-                piece.style.left = square.offsetLeft - 37 + "px";
-                piece.style.top = square.offsetTop + "px";
-                break;
-            case 3:
-                piece.style.top = square.offsetTop - 41 + "px";
-                piece.style.left = square.offsetLeft + "px";
-                break;
-            case 4:
-                piece.style.top = square.offsetTop - 9 + "px";
-                piece.style.left = square.offsetLeft - 37 + "px";
-                break;
-            case 5:
-                piece.style.top = square.offsetTop - 40 + "px";
-                piece.style.left = square.offsetLeft - 10 + "px";
-                break;
-            default:
-                piece.style.top = square.offsetTop + "px";
-                piece.style.left = square.offsetLeft + "px";
-        }
-    } else if (window.matchMedia("(max-width: 767.98px)").matches) {
+    }  else {
         switch (index) {
             case 0:
                 piece.style.left = square.offsetLeft + "px";
