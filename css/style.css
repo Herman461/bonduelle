@@ -503,14 +503,6 @@ a {
   background: #FFFAE4;
 }
 
-.quiz__arrow.show {
-  display: block !important;
-}
-
-.quiz__arrow.hide {
-  display: none !important;
-}
-
 .quiz__arrow_first {
   width: 267px;
   height: 193px;
@@ -526,6 +518,14 @@ a {
   left: 60px;
   width: 51px;
   height: 236px;
+}
+
+.quiz__arrow.show {
+  display: block;
+}
+
+.quiz__arrow.hide {
+  display: none;
 }
 
 .quiz__game-over {
@@ -1970,11 +1970,17 @@ a {
     height: 213px;
   }
 
+  .quiz__pieces {
+    position: relative;
+  }
+
   .quiz__piece {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     margin-right: 10px;
+    position: absolute;
+    top: 30px;
   }
 
   .quiz__piece:last-child {
@@ -2012,8 +2018,8 @@ a {
   }
 
   .quiz__pieces {
-    overflow: scroll;
-    min-height: 152px;
+    overflow-x: auto;
+    height: 157px;
     padding: 0 3px;
     width: auto;
     -webkit-box-align: center;
@@ -2091,6 +2097,7 @@ a {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+    z-index: 999;
   }
 
   .win-quiz__top {
@@ -2226,7 +2233,6 @@ a {
   .game-over__container {
     padding-left: 0;
     padding-right: 0;
-    margin: 0 -20px;
   }
 
   .game-over__motivation {

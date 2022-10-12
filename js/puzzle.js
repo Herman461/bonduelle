@@ -329,12 +329,12 @@ function dragElement(el) {
         pos2 = 0,
         pos3 = 0,
         pos4 = 0;
+
     el.onpointerdown = pointerDrag;
 
     function pointerDrag(e) {
 
         if (e.target.closest('.quiz__piece') && !e.target.closest('.quiz__piece').classList.contains('active')) return
-
 
         e.preventDefault();
         pos3 = e.clientX;
@@ -353,6 +353,16 @@ function dragElement(el) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
+        if (parseInt(window.getComputedStyle(el).left) > window.innerWidth) {
+            el.style.left = (window.innerWidth - el.offsetWidth) + 'px'
+        }
+        if (window.matchMedia('(max-width: 767px)').matches) {
+            document.querySelector('.quiz__pieces').style.overflowX = 'visible'
+        }
+
+        if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 767.98px)').matches) {
+            document.querySelector('.quiz__puzzles').appendChild(el)
+        }
 
         if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
             document.querySelector('.quiz__board').style.position = 'static'
@@ -360,13 +370,11 @@ function dragElement(el) {
 
         }
 
-        if (window.getComputedStyle(el).position !== 'absolute') {
-            el.style.position = 'absolute'
-        }
+
 
         el.style.top = el.offsetTop - pos2 + "px";
         el.style.left = el.offsetLeft - pos1 + "px";
-
+        console.log(el.offsetLeft - pos1 )
     }
 
     function stopElementDrag(e) {
@@ -374,6 +382,9 @@ function dragElement(el) {
         document.onpointermove = null;
         const squares = document.querySelectorAll('.quiz__square')
 
+        if (window.matchMedia('(max-width: 767px)').matches) {
+            document.querySelector('.quiz__pieces').style.overflowX = 'auto'
+        }
         for (let index = 0; index < squares.length; index++) {
 
             const square = squares[index]
@@ -389,10 +400,10 @@ function dragElement(el) {
             const puzzleWidth = puzzlePos.width
             const puzzleHeight = puzzlePos.height
 
-            let radius = 120
+            let radius = 150
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-                radius = 50
+                radius = 60
             }
             const x = puzzleX - squareX > (radius * -1) && puzzleX - squareX + radius < puzzleWidth
             const y = puzzleY - squareY > (radius * -1) && puzzleY - squareY + radius < puzzleHeight
@@ -463,6 +474,7 @@ function setPieces() {
         piece.addEventListener( 'touchmove', function(e) {
             e.preventDefault()
         })
+
         positionIndex++
     })
 
@@ -594,11 +606,30 @@ async function setGame() {
 
         pieceDOM.innerHTML = svgImage.documentElement.outerHTML
 
-        // const pieceIndex = pieceDOM.dataset.pieceIndex
-        // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
-        // setFinalPosition(pieceDOM, square)
+
     }
 
+
+    if (window.matchMedia('(max-width: 767.98px)').matches) {
+        const pieces = document.querySelectorAll('.quiz__piece')
+
+        let width = 0
+        for (let index = 0; index < pieces.length; index++) {
+            const piece = pieces[index]
+
+            if (index === 0) {
+                piece.style.left = '15px'
+            } else {
+                const prevPiece = pieces[index - 1]
+                width += prevPiece.offsetWidth + 20
+
+                piece.style.left = width + 'px'
+
+            }
+
+        }
+
+    }
 }
 imageObj.onload = setGame
 
