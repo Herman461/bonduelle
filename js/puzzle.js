@@ -499,7 +499,7 @@ function setSocialIcons() {
     document.querySelector('.social-game-over__item_vk').innerHTML = VK.Share.button({
         url: window.location.origin + '/',
         title: 'Я собрал пазл Bonduelle. Попробуй и ты!',
-        image: window.location.origin + '/puzzle-04.png',
+        image: window.location.origin + '/images/puzzle-04.png',
     },{
         type: 'custom',
         text: `<svg>
@@ -513,7 +513,7 @@ function setSocialIcons() {
         '{"sz":30,"st":"oval","nc":1,"nt":1,"bgclr":"ED8207","txclr":"FFFFFF"}',
         "Я собрал пазл Bonduelle. Попробуй и ты!",
         "",
-        window.location.origin + '/puzzle-04.png'
+        window.location.origin + '/images/puzzle-04.png'
     )
 
 }
