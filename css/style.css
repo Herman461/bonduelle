@@ -858,6 +858,7 @@ a {
 }
 
 .games {
+  overflow: hidden;
   position: relative;
   min-height: 720px;
   display: -webkit-box;
@@ -1169,7 +1170,7 @@ a {
     width: 100%;
     height: auto;
     z-index: 50;
-    background: #fff;
+    background: #fff !important;
   }
 
   .quiz__title {

@@ -430,7 +430,7 @@ function dragElement(el) {
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
-                if (squareIndex !== pieceIndex) {
+                if (squareIndex !== pieceIndex && window.matchMedia('(min-width: 767.98px)').matches) {
                     setInitialPosition(el)
                     return
                 }
