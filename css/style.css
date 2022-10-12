@@ -41,7 +41,6 @@ body.lock {
   -webkit-box-flex: 1;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding-top: 120px;
 }
 
 .page_home {
@@ -221,12 +220,6 @@ a {
 }
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  z-index: 50;
   background: #FFFAE4;
 }
 
@@ -244,10 +237,6 @@ a {
   justify-content: space-between;
   padding: 2px 15px;
   margin: 0 auto;
-}
-
-.header_main {
-  background: #fff;
 }
 
 .header_main .header__container {
@@ -514,6 +503,31 @@ a {
   background: #FFFAE4;
 }
 
+.quiz__arrow.show {
+  display: block !important;
+}
+
+.quiz__arrow.hide {
+  display: none !important;
+}
+
+.quiz__arrow_first {
+  width: 267px;
+  height: 193px;
+  position: absolute;
+  bottom: -10px;
+  left: 110px;
+}
+
+.quiz__arrow_second {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 60px;
+  width: 51px;
+  height: 236px;
+}
+
 .quiz__game-over {
   display: none;
 }
@@ -526,10 +540,16 @@ a {
 .quiz__title {
   color: #295F3E;
   font-size: 40px;
-  font-weight: 500;
+  font-weight: 900;
   text-transform: uppercase;
   line-height: 1.37;
   max-width: 640px;
+}
+
+.quiz__title span {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 400;
 }
 
 .quiz__board {
@@ -575,6 +595,10 @@ a {
 }
 
 .quiz__piece .puzzle__stroke {
+  stroke: transparent !important;
+}
+
+.quiz__piece .puzzle-stroke {
   stroke: transparent !important;
 }
 
@@ -704,6 +728,10 @@ a {
   position: relative;
 }
 
+.quiz__top {
+  position: relative;
+}
+
 .quiz__bottom {
   text-align: left;
   position: fixed;
@@ -781,14 +809,10 @@ a {
 
 .variant-quiz__text {
   text-align: left;
+  font-weight: 300;
   font-size: 22px;
-  font-weight: 500;
   color: #295F3E;
   line-height: 117.6470588235%;
-}
-
-.win-quiz {
-  padding: 20px;
 }
 
 .win-quiz__top {
@@ -1016,7 +1040,7 @@ a {
 .game-over__title {
   color: #295F3E;
   font-size: 40px;
-  font-weight: 500;
+  font-weight: 900;
   letter-spacing: -0.06em;
   line-height: 120%;
   margin-bottom: 35px;
@@ -1027,7 +1051,7 @@ a {
   max-width: 690px;
   margin: 0 auto;
   color: #295F3E;
-  font-weight: 500;
+  font-weight: 900;
   font-size: 30px;
   letter-spacing: -0.05em;
   line-height: 133.3333333333%;
@@ -1038,7 +1062,7 @@ a {
   max-width: 690px;
   margin: 0 auto;
   color: #295F3E;
-  font-weight: 500;
+  font-weight: 300;
   font-size: 30px;
   letter-spacing: -0.05em;
   line-height: 133.3333333333%;
@@ -1051,6 +1075,7 @@ a {
 
 .game-over__text p:last-child {
   margin: 0;
+  font-weight: 900;
 }
 
 .game-over__image {
@@ -1109,12 +1134,22 @@ a {
 }
 
 @media (min-width: 767.98px) {
+  .header_main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 50;
+    background: #fff;
+  }
+
   .quiz__title {
     margin: 0 auto 190px auto;
   }
 
   .quiz__title.active {
-    margin: 0 auto 75px auto;
+    margin: 0 auto 65px auto;
   }
 
   .quiz__puzzles {
@@ -1199,6 +1234,7 @@ a {
     transform: translate(-50%, -50%);
     max-width: 540px;
     overflow: hidden;
+    padding: 20px;
   }
 
   .loss-quiz {
@@ -1857,6 +1893,15 @@ a {
     padding-top: 60px;
   }
 
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 50;
+  }
+
   .header.active::before {
     content: "";
     position: fixed;
@@ -1897,8 +1942,14 @@ a {
     min-height: 160px;
   }
 
+  .quiz__arrow {
+    display: none !important;
+  }
+
   .quiz__title {
     margin-bottom: 15px;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .quiz__title.active {
@@ -1967,6 +2018,10 @@ a {
     align-items: center;
     min-height: 152px;
     padding: 0 3px;
+    width: 100%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
   }
 
   .quiz__prev-button {
@@ -2024,6 +2079,23 @@ a {
     align-self: center;
   }
 
+  .win-quiz {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% + 2px);
+    height: 100%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
   .win-quiz__top {
     position: relative;
     min-height: 98px;
@@ -2050,6 +2122,9 @@ a {
     font-size: 12px;
     line-height: 150%;
     padding: 14px 30px;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
   }
 
   .item-games__image img {

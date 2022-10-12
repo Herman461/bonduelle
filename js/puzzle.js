@@ -281,7 +281,6 @@ if (puzzleName === 'corn') {
     ]
 }
 
-buildPieceWrappers()
 
 const prevButton = document.querySelector('.quiz__prev-button')
 
@@ -309,12 +308,20 @@ function resetQuestion() {
     document.body.classList.remove('lock')
     document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
 
-    document.querySelector('.quiz__variants.active').innerHTML = ''
-    document.querySelector('.quiz__variants.active').classList.remove('active')
-
     if (window.matchMedia('(max-width: 767px)').matches) {
         document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
     }
+
+    document.querySelector('.quiz__variants.active').innerHTML = ''
+    document.querySelector('.quiz__variants.active').classList.remove('active')
+
+
+    const arrows = document.querySelectorAll('.quiz__arrow')
+    for (let index = 0; index < arrows.length; index++) {
+        const arrow = arrows[index]
+        arrow.hidden = false
+    }
+
 }
 
 function dragElement(el) {
@@ -346,9 +353,11 @@ function dragElement(el) {
         pos3 = e.clientX;
         pos4 = e.clientY;
 
-        if (e.target.closest('.quiz__slide')) {
-            document.querySelector('.quiz__slide').append(el)
-            // e.target.closest('.quiz__slide').remove()
+
+        if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
+            document.querySelector('.quiz__board').style.position = 'static'
+            document.querySelector('.quiz__win').remove()
+
         }
 
         if (window.getComputedStyle(el).position !== 'absolute') {
@@ -391,8 +400,6 @@ function dragElement(el) {
             if (x && y)  {
                 const piece = e.target.closest('.quiz__piece')
 
-
-                console.log(piece)
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
 
@@ -402,6 +409,14 @@ function dragElement(el) {
                 }
                 setFinalPosition(piece, square)
 
+                if (Number(piece.dataset.positionIndex) === 0) {
+                    document.querySelector('.quiz__arrow_second').classList.add('show')
+                }
+
+                if (Number(piece.dataset.positionIndex) === 2) {
+                    document.querySelector('.quiz__arrow_second').classList.add('hide')
+                    document.querySelector('.quiz__arrow_first').classList.add('hide')
+                }
                 const stage = +sessionStorage.getItem('stage')
                 sessionStorage.setItem('stage', stage + 1)
 
@@ -427,11 +442,20 @@ function setGameOver() {
     }
 }
 
-function buildPieceWrappers() {
-    const pieces = document.querySelectorAll('.quiz__piece')
 
-    for (let index = 0; index < pieces.length; index++) {
-        const piece = pieces[index]
+function setPieces() {
+    const wrapper = document.querySelector('.quiz__pieces')
+    const indices = [0, 1, 2, 3, 4, 5]
+    shuffle(indices)
+
+    let positionIndex = 0
+    indices.forEach(index => {
+        const piece = document.createElement('div');
+        piece.className = 'quiz__piece'
+        piece.dataset.pieceIndex = String(index)
+        piece.dataset.positionIndex = String(positionIndex)
+        wrapper.appendChild(piece)
+
         piece.addEventListener('click', setQuestion)
 
         dragElement(piece)
@@ -439,10 +463,14 @@ function buildPieceWrappers() {
         piece.addEventListener( 'touchmove', function(e) {
             e.preventDefault()
         })
-    }
+        positionIndex++
+    })
+
+
 }
 
 async function setGame() {
+    setPieces()
     document.querySelector('.game-over__image').appendChild(imageObj)
 
     let sourceY = 0
@@ -617,8 +645,8 @@ function resizeImage(image) {
 function setQuestion(e) {
     const piece = e.target.closest('.quiz__piece')
 
-    // Если пазл уже установлен, то он не интересует
-    if (piece.classList.contains('fixed')) return
+    // Если пазл активный или уже установлен, то он не интересует
+    if (piece.classList.contains('fixed') || piece.classList.contains('active')) return
 
     // Обнуляем варианты ответа на вопрос
     const variants = document.querySelector('.quiz__variants')
@@ -628,14 +656,24 @@ function setQuestion(e) {
     const index = piece.dataset.pieceIndex
     const question = questions[index]
 
+    const arrows = document.querySelectorAll('.quiz__arrow')
+    for (let index = 0; index < arrows.length; index++) {
+        const arrow = arrows[index]
+        arrow.hidden = true
+    }
+
     // Добавляем заголовок вопроса (сам вопрос)
     const title = document.querySelector('.quiz__title')
+
+
 
     if (!title.classList.contains('active')) {
         title.classList.add('active')
     }
-
-    title.textContent = question.question
+    title.innerHTML = `
+        <span>Вопрос №${+piece.dataset.pieceIndex + 1}</span>
+        ${question.question}   
+    `
 
     if (window.matchMedia('(max-width: 767.98px)').matches) {
         variants.appendChild(title)
@@ -741,6 +779,7 @@ function checkAnswer(e) {
                 </div>`
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
+                document.querySelector('.quiz__board').style.position = 'relative'
                 document.querySelector('.quiz__board').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
@@ -749,6 +788,7 @@ function checkAnswer(e) {
 
 
             setTimeout(() => {
+                document.querySelector('.quiz__board').style.position = 'static'
                 if (document.querySelector('.quiz__win')) {
                     document.querySelector('.quiz__win').remove()
                 }
@@ -757,7 +797,7 @@ function checkAnswer(e) {
                 }
             }, 6000)
             const puzzle = document.querySelector(`.quiz__piece[data-piece-index="${questionIndex}"]`)
-            console.log(puzzle)
+
             puzzle.classList.add('active')
             if (document.querySelector('.quiz__loss')) {
                 document.querySelector('.quiz__loss').remove()
@@ -804,6 +844,7 @@ function checkAnswer(e) {
 
 window.addEventListener('click', function(e) {
     if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
+        document.querySelector('.quiz__board').style.position = 'static'
         document.querySelector('.quiz__win').remove()
         if (document.querySelector('.variant-quiz__body.active')) {
             document.querySelector('.variant-quiz__body.active').classList.remove('active')
@@ -1001,8 +1042,8 @@ function setInitialPosition(el) {
             el.style.top = 'auto'
             break;
     }
-    el.classList.remove('active')
-    el.classList.remove('fixed')
+    // el.classList.remove('active')
+    // el.classList.remove('fixed')
 }
 
 

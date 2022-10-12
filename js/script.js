@@ -88,16 +88,13 @@ if (document.querySelector('.games__items')) {
     speed: 800,
     spaceBetween: 65,
     slidesPerView: 1,
-    loop: true,
     breakpoints: {
       992: {
         spaceBetween: 10,
-        slidesPerView: 3,
-        loop: false
+        slidesPerView: 3
       },
       767.98: {
-        slidesPerView: 2,
-        loop: true
+        slidesPerView: 2
       }
     },
     navigation: {
