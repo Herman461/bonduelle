@@ -287,6 +287,12 @@ const prevButton = document.querySelector('.quiz__prev-button')
 prevButton.addEventListener('click', function(e) {
     e.preventDefault()
 
+    if (document.querySelector('.quiz__top.active')
+        && window.matchMedia('(min-width: 768.98px)').matches
+    ) {
+        resetQuestion()
+        return
+    }
     if (document.querySelector('.quiz__variants.active')
         && window.matchMedia('(max-width: 768.98px)').matches
     ) {
