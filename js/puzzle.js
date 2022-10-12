@@ -332,7 +332,10 @@ function resetQuestion() {
         const arrow = arrows[index]
         arrow.hidden = false
     }
-
+    if (window.matchMedia('(min-width: 767.98px)').matches) {
+        const boardPos = document.querySelector('.quiz__board').getBoundingClientRect()
+        window.scrollTo(0, boardPos.top - 10)
+    }
 }
 
 function dragElement(el) {
