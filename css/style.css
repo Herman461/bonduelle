@@ -2031,6 +2031,17 @@ a {
     position: relative;
   }
 
+  .quiz__pieces.load::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FFFAE4;
+    z-index: 20;
+  }
+
   .quiz__piece {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
@@ -2076,12 +2087,17 @@ a {
 
   .quiz__pieces {
     overflow-x: auto;
+    margin: 0 -20px;
     height: 157px;
     padding: 0 3px;
     width: auto;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+  }
+
+  .quiz__pieces::-webkit-scrollbar {
+    width: 0;
   }
 
   .quiz__prev-button {

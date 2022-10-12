@@ -301,7 +301,7 @@ prevButton.addEventListener('click', function(e) {
         resetQuestion()
         return
     }
-    
+
     window.location.href = '/'
 })
 
@@ -513,16 +513,24 @@ function setSocialIcons() {
 
 }
 async function setGame() {
-    setPieces()
-    setSocialIcons()
 
+    // const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
+    //
+    // if (response.ok) {
+    //     const json = await response.json();
+    //     console.log(json)
+    // }
+    if (window.matchMedia("(max-width: 767.98px)").matches) {
+        document.querySelector('.quiz__pieces').classList.add('load')
+    }
 
     let sourceY = 0
     let sourceX = 0
     for (let index = 0; index < 6; ++index) {
         const piece = data[index]
-        const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
 
+        const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+        pieceDOM.removeAttribute('style')
         let width = parseFloat(window.getComputedStyle(pieceDOM).width)
         let height = parseFloat(window.getComputedStyle(pieceDOM).height)
 
@@ -643,6 +651,9 @@ async function setGame() {
 
     setPiecePosition()
 
+    if (window.matchMedia("(max-width: 767.98px)").matches) {
+        document.querySelector('.quiz__pieces').classList.remove('load')
+    }
 }
 
 function setPiecePosition() {
@@ -919,7 +930,9 @@ window.addEventListener('click', function(e) {
     }
 })
 
-
+window.addEventListener('resize', function() {
+    setGame()
+})
 
 
 
@@ -1173,6 +1186,6 @@ function setWatchPersonButton() {
 
 
 setWatchPersonButton()
-
-
+setPieces()
+setSocialIcons()
 
