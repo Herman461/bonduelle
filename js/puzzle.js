@@ -14,6 +14,8 @@ function shuffle(array) {
     return array;
 }
 
+
+
 sessionStorage.setItem('stage', 0)
 
 const imageObj = new Image();
@@ -489,10 +491,33 @@ function setPieces() {
 
 
 }
+function setSocialIcons() {
+    document.querySelector('.game-over__image').appendChild(imageObj)
+    document.querySelector('.social-game-over__item_vk').innerHTML = VK.Share.button({
+        url: 'https://bonduelle.mws.agency/bonduelle/',
+        title: 'Я собрал пазл Bonduelle. Попробуй и ты!',
+        image: imageObj.src,
+    },{
+        type: 'custom',
+        text: `<svg>
+                    <use xlink:href="images/icons/icons.svg#vk"></use>
+               </svg>`
+    });
 
+    OK.CONNECT.insertShareWidget(
+        "ok_shareWidget",
+        window.location.origin,
+        '{"sz":30,"st":"oval","nc":1,"nt":1,"bgclr":"ED8207","txclr":"FFFFFF"}',
+        "Я собрал пазл Bonduelle. Попробуй и ты!",
+        "",
+        imageObj.src
+    )
+
+}
 async function setGame() {
     setPieces()
-    document.querySelector('.game-over__image').appendChild(imageObj)
+    setSocialIcons()
+
 
     let sourceY = 0
     let sourceX = 0
