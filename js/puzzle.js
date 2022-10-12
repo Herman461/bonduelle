@@ -1114,4 +1114,29 @@ function setInitialPosition(el) {
     // el.classList.remove('fixed')
 }
 
+function setWatchPersonButton() {
+    const button = document.querySelector('.game-over__button')
+    const puzzleName = sessionStorage.getItem('puzzleName')
+
+    switch (puzzleName) {
+        case "corn":
+            button.href = 'https://app.arhead.io/lxUbJqTU'
+            break
+        case "pea":
+            button.href = 'https://app.arhead.io/PAB9On6i'
+            break
+        case "together":
+            button.href = 'https://app.arhead.io/lxUbJqTU'
+            break;
+        default:
+            button.href = 'https://app.arhead.io/PAB9On6i'
+            break
+    }
+
+}
+
+
+setWatchPersonButton()
+
+
 
