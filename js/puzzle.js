@@ -446,7 +446,7 @@ function dragElement(el) {
                 sessionStorage.setItem('stage', stage + 1)
 
                 document.querySelector('.quiz__variants').innerHTML = ''
-                document.querySelector('.quiz__title').innerHTML = ''
+                document.querySelector('.quiz__title').innerHTML = 'выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку'
 
 
                 setGameOver()
