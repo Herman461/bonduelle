@@ -371,6 +371,8 @@ function dragElement(el) {
             el.style.left = (window.innerWidth - el.offsetWidth) + 'px'
         }
         if (window.matchMedia('(max-width: 767px)').matches) {
+            increasePiece(el)
+            setPiecePosition()
             document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
@@ -388,7 +390,7 @@ function dragElement(el) {
 
         el.style.top = el.offsetTop - pos2 + "px";
         el.style.left = el.offsetLeft - pos1 + "px";
-        console.log(el.offsetLeft - pos1 )
+
     }
 
     function stopElementDrag(e) {
@@ -417,7 +419,7 @@ function dragElement(el) {
             let radius = 150
 
             if (window.matchMedia('(max-width: 767.98px)').matches) {
-                radius = 60
+                radius = 100
             }
             const x = puzzleX - squareX > (radius * -1) && puzzleX - squareX + radius < puzzleWidth
             const y = puzzleY - squareY > (radius * -1) && puzzleY - squareY + radius < puzzleHeight
@@ -498,7 +500,7 @@ function setSocialIcons() {
     document.querySelector('.game-over__image').appendChild(imageObj)
     document.querySelector('.social-game-over__item_vk').innerHTML = VK.Share.button({
         url: window.location.origin + '/',
-        title: 'Я собрал пазл Bonduelle. Попробуй и ты!',
+        title: 'Сыграй в игру с супер-кукурузиком и супер-горошком и узнай, какие супер-силы они могут тебе дать!',
         image: window.location.origin + '/bonduelle/images/puzzle-04.png',
     },{
         type: 'custom',
@@ -511,7 +513,7 @@ function setSocialIcons() {
         "ok_shareWidget",
         window.location.origin + '/',
         '{"sz":30,"st":"oval","nc":1,"nt":1,"bgclr":"ED8207","txclr":"FFFFFF"}',
-        "Я собрал пазл Bonduelle. Попробуй и ты!",
+        "Сыграй в игру с супер-кукурузиком и супер-горошком и узнай, какие супер-силы они могут тебе дать!",
         "",
         window.location.origin + '/bonduelle/images/puzzle-04.png'
     )
@@ -646,13 +648,20 @@ async function setGame() {
 
     }
 
+    setPiecePosition()
 
+}
+
+function setPiecePosition() {
     if (window.matchMedia('(max-width: 767.98px)').matches) {
         const pieces = document.querySelectorAll('.quiz__piece')
 
         let width = 0
+
         for (let index = 0; index < pieces.length; index++) {
             const piece = pieces[index]
+
+            if (piece.classList.contains('active') || piece.classList.contains('fixed')) return
 
             if (index === 0) {
                 piece.style.left = '15px'
@@ -670,19 +679,6 @@ async function setGame() {
 }
 imageObj.onload = setGame
 
-// window.addEventListener('resize', function() {
-//     // Меняем позицию при пазла, чтобы не выходило за пределы доски
-//
-//     const pieces = document.querySelectorAll('.quiz__piece.fixed')
-//
-//     for (let index = 0; index < pieces.length; index++) {
-//         const piece = pieces[index]
-//         const pieceIndex = piece.dataset.pieceIndex
-//         const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
-//         setFinalPosition(piece, square)
-//     }
-//     setGame()
-// })
 
 function resizeImage(image) {
     const canvas = document.createElement('canvas')
@@ -1063,6 +1059,53 @@ function setFinalPosition(piece, square) {
 
     piece.classList.add('fixed')
     piece.classList.remove('active')
+}
+
+function increasePiece(piece) {
+    const index = +piece.dataset.pieceIndex
+    switch (index) {
+        case 0:
+            piece.style.width = '136px'
+            piece.style.height = '115px'
+            piece.querySelector('svg').setAttribute('width', 136)
+            piece.querySelector('svg').setAttribute('height', 115)
+            break;
+        case 1:
+            piece.style.width = '123px'
+            piece.style.height = '139px'
+            piece.querySelector('svg').setAttribute('width', 123)
+            piece.querySelector('svg').setAttribute('height', 139)
+            break;
+        case 2:
+            piece.style.width = '137px'
+            piece.style.height = '115px'
+            piece.querySelector('svg').setAttribute('width', 137)
+            piece.querySelector('svg').setAttribute('height', 115)
+            break;
+        case 3:
+            piece.style.width = '115px'
+            piece.style.height = '139px'
+            piece.querySelector('svg').setAttribute('width', 115)
+            piece.querySelector('svg').setAttribute('height', 139)
+            break;
+        case 4:
+            piece.style.width = '167px'
+            piece.style.height = '114px'
+            piece.querySelector('svg').setAttribute('width', 167)
+            piece.querySelector('svg').setAttribute('height', 114)
+            break;
+        case 5:
+            piece.style.width = '114px'
+            piece.style.height = '139px'
+            piece.querySelector('svg').setAttribute('width', 114)
+            piece.querySelector('svg').setAttribute('height', 139)
+            break;
+        default:
+            piece.style.width = '136px'
+            piece.style.height = '115px'
+            piece.querySelector('svg').setAttribute('width', 136)
+            piece.querySelector('svg').setAttribute('height', 115)
+    }
 }
 
 function setInitialPosition(el) {

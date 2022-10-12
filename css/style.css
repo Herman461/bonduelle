@@ -1955,6 +1955,7 @@ a {
     width: 100%;
     height: auto;
     z-index: 50;
+    background: #FFFAE4;
   }
 
   .header.active::before {
