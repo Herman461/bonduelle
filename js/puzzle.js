@@ -307,12 +307,11 @@ prevButton.addEventListener('click', function(e) {
 
 function resetQuestion() {
     document.querySelector('.header').classList.remove('fixed')
-    document.querySelector('.quiz__top').classList.remove('active')
 
     document.body.classList.remove('lock')
     document.querySelector('.quiz__title').innerHTML = `выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку`
 
-    if (window.matchMedia('(max-width: 767px)').matches) {
+    if (window.matchMedia('(max-width: 767.98px)').matches) {
         document.querySelector('.quiz__top').appendChild(document.querySelector('.quiz__title'))
     }
 
@@ -326,6 +325,7 @@ function resetQuestion() {
         arrow.hidden = false
     }
     if (window.matchMedia('(min-width: 767.98px)').matches) {
+        document.querySelector('.quiz__top').classList.remove('active')
         const boardPos = document.querySelector('.quiz__board').getBoundingClientRect()
         window.scrollTo(0, boardPos.top - 10)
     }
@@ -363,7 +363,7 @@ function dragElement(el) {
         if (parseInt(window.getComputedStyle(el).left) > window.innerWidth) {
             el.style.left = (window.innerWidth - el.offsetWidth) + 'px'
         }
-        if (window.matchMedia('(max-width: 767px)').matches) {
+        if (window.matchMedia('(max-width: 767.98px)').matches) {
             increasePiece(el)
             setPiecePosition()
             document.querySelector('.quiz__pieces').style.overflowX = 'visible'
@@ -391,7 +391,7 @@ function dragElement(el) {
         document.onpointermove = null;
         const squares = document.querySelectorAll('.quiz__square')
 
-        if (window.matchMedia('(max-width: 767px)').matches) {
+        if (window.matchMedia('(max-width: 767.98px)').matches) {
             document.querySelector('.quiz__pieces').style.overflowX = 'auto'
         }
         for (let index = 0; index < squares.length; index++) {
@@ -601,7 +601,7 @@ async function setGame() {
                     context.drawImage(updatedImage, 270, sourceY - 80, width, height, 0, 0, width + 20, height);
                     break;
                 }
-        } else if (window.matchMedia("(max-width: 767px)").matches) {
+        } else if (window.matchMedia("(max-width: 767.98px)").matches) {
             switch (index) {
                 case 0:
                     context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
@@ -783,8 +783,17 @@ function setQuestion(e) {
     const answerDOM = document.createElement('div')
     answerDOM.className = 'quiz__answer'
     document.querySelector('.quiz__variants').appendChild(answerDOM);
-    document.querySelector('.quiz__top').classList.add('active')
+
+
+
     document.querySelector('.header').classList.add('fixed')
+
+    if (window.matchMedia('(min-width: 767.98px)').matches) {
+
+        window.scrollTo(0, 0)
+        document.querySelector('.quiz__top').classList.add('active')
+        document.body.classList.add('lock')
+    }
 }
 
 function checkAnswer(e) {
@@ -1003,7 +1012,7 @@ function setFinalPosition(piece, square) {
                 piece.style.top = square.offsetTop + "px";
                 piece.style.left = square.offsetLeft + "px";
         }
-    } else if (window.matchMedia("(max-width: 767px)").matches) {
+    } else if (window.matchMedia("(max-width: 767.98px)").matches) {
         switch (index) {
             case 0:
                 piece.style.left = square.offsetLeft + "px";
