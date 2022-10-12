@@ -220,10 +220,6 @@ a {
   visibility: hidden;
 }
 
-.header {
-  background: #FFFAE4;
-}
-
 .header__container {
   max-width: 1085px;
   display: -webkit-box;
@@ -1154,8 +1150,8 @@ a {
 }
 
 @media (min-width: 767.98px) {
-  .header.fixed {
-    position: fixed;
+  .header {
+    position: absolute;
     width: 100%;
     height: auto;
     top: 0;
@@ -1168,6 +1164,7 @@ a {
   .header_main {
     position: fixed;
     top: 0;
+    pointer-events: auto;
     left: 0;
     width: 100%;
     height: auto;
@@ -1223,6 +1220,10 @@ a {
   .quiz__piece:nth-child(6) {
     bottom: 0;
     right: 0;
+  }
+
+  .quiz__container {
+    padding-top: 45px;
   }
 
   .quiz__container {
