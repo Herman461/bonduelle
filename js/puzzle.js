@@ -301,14 +301,7 @@ prevButton.addEventListener('click', function(e) {
         resetQuestion()
         return
     }
-
-    if (document.querySelector('.quiz__game-over.active')) {
-        document.querySelector('.quiz__game-over.active').classList.remove('.active')
-        document.querySelector('.quiz__game-over').style.display = 'none'
-        document.querySelector('.quiz__main').style.display = 'block'
-        return
-    }
-
+    
     window.location.href = '/'
 })
 
