@@ -310,12 +310,14 @@ function setSocialIcons() {
 
 async function initGame() {
     const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
+
+
     if (response.ok) {
         const json = await response.json();
         const data = json.data
 
 
-        // imageObj.src =
+
         for (let index = 0; index < data.length; index++) {
             const item = data[index]
 
@@ -390,13 +392,13 @@ async function setGame() {
                     context.drawImage(updatedImage, 274, sourceY, width, height, 0, 0, width, height );
                     break;
                 case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 100, width, height, 0, 0, width, height);
+                    context.drawImage(updatedImage, sourceX, sourceY - 90, width, height, 0, 0, width, height);
                     break;
                 case 4:
-                    context.drawImage(updatedImage, sourceX - 133, sourceY - 20, width, height, 0, 0, width, height);
+                    context.drawImage(updatedImage, sourceX - 130, sourceY - 20, width, height, 0, 0, width, height);
                     break;
                 case 5:
-                    context.drawImage(updatedImage, 312, sourceY - 90, width, height, 0, 0, width + 20, height);
+                    context.drawImage(updatedImage, 307, sourceY - 89, width, height, 0, 0, width, height);
                     break;
             }
         } else {
@@ -414,10 +416,10 @@ async function setGame() {
                     context.drawImage(updatedImage, sourceX, sourceY - 40, width, height, 0, 0, width, height);
                     break;
                 case 4:
-                    context.drawImage(updatedImage, sourceX - 56, sourceY - 8, width, height, 0, 0, width, height);
+                    context.drawImage(updatedImage, sourceX - 56, sourceY - 11, width, height, 0, 0, width, height);
                     break;
                 case 5:
-                    context.drawImage(updatedImage, 136, sourceY - 55, width - 4, height, 0, 0, width, height);
+                    context.drawImage(updatedImage, 131, sourceY - 43, width, height, 0, 0, width, height);
                     break;
             }
         }
@@ -425,8 +427,8 @@ async function setGame() {
 
 
 
-        timeout += 1000
-        
+        timeout += 100
+
         setTimeout(async () => {
 
             piece.href = canvas.toDataURL()
@@ -449,7 +451,10 @@ async function setGame() {
             svgImage.querySelector('svg').setAttribute('height', height)
 
             pieceDOM.innerHTML = svgImage.documentElement.outerHTML
-
+            pieceDOM.classList.add('visible')
+            // const pieceIndex = pieceDOM.dataset.pieceIndex
+            // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
+            // setFinalPosition(pieceDOM, square)
         }, timeout)
 
 
@@ -458,8 +463,11 @@ async function setGame() {
     setPiecePosition()
 
     if (window.matchMedia("(max-width: 991.98px)").matches) {
+
         document.querySelector('.quiz__pieces').classList.remove('load')
     }
+
+
 }
 
 function setPiecePosition() {
@@ -645,6 +653,8 @@ function checkAnswer(e) {
         if (answer.isEqualNode(item) && rightAnswerIndex === index) {
             if (document.querySelector('.quiz__win')) continue
 
+            const audio = new Audio('../audio/game-win-success.wav');
+            audio.play();
             const el = document.createElement('div')
 
             el.className = 'quiz__win win-quiz'
@@ -762,17 +772,17 @@ function setFinalPosition(piece, square) {
         switch (index) {
             case 0:
                 piece.style.left = square.offsetLeft + "px";
-                piece.style.top = square.offsetTop + "px";
+                piece.style.top = square.offsetTop - 1 + "px";
                 break;
             case 1:
 
                 piece.style.left = square.offsetLeft - 11 + "px";
-                piece.style.top = square.offsetTop + "px";
+                piece.style.top = square.offsetTop - 1 + "px";
                 break;
             case 2:
 
                 piece.style.left = square.offsetLeft - 43 + "px";
-                piece.style.top = square.offsetTop + "px";
+                piece.style.top = square.offsetTop - 1 + "px";
                 break;
             case 3:
                 piece.style.top = square.offsetTop - 48 + "px";
@@ -845,8 +855,8 @@ function setFinalPosition(piece, square) {
                 piece.style.left = square.offsetLeft + "px";
                 piece.style.width = '136px'
                 piece.style.height = '115px'
-                piece.querySelector('svg').setAttribute('width', 136)
-                piece.querySelector('svg').setAttribute('height', 115)
+                piece.querySelector('svg').setAttribute('width', 143)
+                piece.querySelector('svg').setAttribute('height', 135)
         }
     }
 
