@@ -1,3 +1,5 @@
+window.addEventListener('DOMContentLoaded', initGame)
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -18,7 +20,7 @@ function shuffle(array) {
 
 sessionStorage.setItem('stage', 0)
 
-const imageObj = new Image();
+
 const pieces = []
 
 const data = [
@@ -66,223 +68,11 @@ const data = [
     },
 ]
 
+const imageObj = new Image()
 
 let questions = []
 
-const puzzleName = sessionStorage.getItem('puzzleName')
-if (puzzleName === 'corn') {
-    imageObj.src = 'images/puzzle-03.png'
-    questions = [
-        {
-            id: 1,
-            question: 'Как кукуруза помогает улучшать зрение?',
-            items: [
-                'С помощью витаминов и полезных веществ',
-                'Если на неё долго смотреть, то начнёшь лучше видеть',
-                'С помощью витаминов и полезных веществ',
-            ],
-            explanation: 'В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!',
-            rightAnswer: 'a'
-        },
-        {
-            id: 2,
-            question: 'Почему кукуруза даёт тебе супер-силу?',
-            items: [
-                'Потому что она сама супер!',
-                'Поднимая банки с кукурузой много раз, ты станешь сильнее',
-                'Её полезные вещества укрепляют мышцы',
-            ],
-            explanation: 'Кукуруза помогает мышцам и костям стать крепче, благодаря высокому содержанию белка, чтобы у тебя было больше сил!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 3,
-            question: 'Как кукуруза защищает от болезней?',
-            items: [
-                'Она умеет улучшать иммунитет',
-                'Намажься её зёрнами целиком, и никогда не заболеешь',
-                'Из неё можно сделать щит от любой заразы',
-            ],
-            explanation: 'Пищевые волокна, клетчатка и другие полезные вещества в кукурузе помогают противостоять вирусам и бактериям и укрепляют твоё здоровье!',
-            rightAnswer: 'a'
-        },
-        {
-            id: 4,
-            question: 'Почему кукуруза очень полезна для детей?',
-            items: [
-                'Потому что её собирают, когда она молодая',
-                'Из неё можно сделать немало полезных вещей',
-                'В ней много витаминов для роста',
-            ],
-            explanation: 'В кукурузе содержатся витамины А и Е, кальций, железо и другие вещества, очень полезные для роста и развития молодого организма!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 5,
-            question: 'Как кукуруза улучшает ум?',
-            items: [
-                'Соком кукурузы написано много умных книжек',
-                'С помощью полезных витаминов',
-                'Если сосчитать все зёрнышки в банке, то станешь умнее',
-            ],
-            explanation: 'Витамины группы B, которые содержатся в кукурузе, положительно влияют на центральную нервную систему!',
-            rightAnswer: 'b'
-        },
-        {
-            id: 6,
-            question: 'Почему молодая кукуруза такая сладкая?',
-            items: [
-                'Потому что она растёт рядом со сладкими фруктами и ягодами',
-                'Потому что в банки с ней добавляют конфеты',
-                'Она сладкая от природы',
-            ],
-            explanation: 'Молодая кукуруза сладкая от природы, и в баночки с ней не добавляют сахар, поэтому она такая полезная!',
-            rightAnswer: 'c'
-        },
-    ]
-} else if (puzzleName === 'together') {
-    imageObj.src = 'images/puzzle-04.png'
-    questions = [
-        {
-            id: 1,
-            question: 'Почему брокколи так же полезна, как лимон?',
-            items: [
-                'По кочану и по кочерыжке',
-                'Потому что они растут на одном дереве',
-                'В ней столько же витамина С',
-            ],
-            explanation: 'По содержанию витамина С, полезного для здоровья, брокколи не уступает лимону, и при этом в ней нет такой сильной кислоты!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 2,
-            question: 'Почему фасоль сделает тебя крепче?',
-            items: [
-                'Открывая каждый день банки с фасолью, ты станешь сильнее',
-                'В ней много белка',
-                'Потому что фасолинки похожи на сильные мышцы',
-            ],
-            explanation: 'Фасоль очень питательная, и её называют растительным мясом, потому что в ней много белка!',
-            rightAnswer: 'b'
-        },
-        {
-            id: 3,
-            question: 'Почему кабачок очень полезен для детей?',
-            items: [
-                'В нём много витаминов для роста',
-                'Из него можно сделать классные игрушки',
-                'На кабачках удобно считать, чтобы решать задачки по математике',
-            ],
-            explanation: 'В кабачке содержится множество витаминов и микроэлементов, очень полезных для роста и развития детей!',
-            rightAnswer: 'a'
-        },
-        {
-            id: 4,
-            question: 'Почему морковка умеет быстро заживлять ранки?',
-            items: [
-                'Потому что из неё делают пластыри',
-                'У неё есть антисептические свойства',
-                'Она растёт только рядом с подорожником',
-            ],
-            explanation: 'Морковь обладает отличными обеззараживающими свойствами, поэтому она используется для заживления ран и порезов!',
-            rightAnswer: 'b'
-        },
-        {
-            id: 5,
-            question: 'Почему огурчик пробуждает аппетит?',
-            items: [
-                'Потому что его так и хочется съесть',
-                'С ним всё всегда гораздо вкуснее',
-                'Он стимулирует выработку желудочного сока',
-            ],
-            explanation: 'Огурцы славятся тем, что стимулируют выработку желудочного сока, улучшая переваривание пищи и восстанавливая обмен веществ!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 6,
-            question: 'Почему перец помогает уснуть?',
-            items: [
-                'В нём есть специальные витамины ',
-                'Его семенами можно набить подушку',
-                'Можно быстро задремать, если в голове считать перчики',
-            ],
-            explanation: 'Благодаря своим витаминам, сладкий перец помогает при бессоннице, постоянных стрессах, а также избавляет от усталости!',
-            rightAnswer: 'a'
-        },
-    ]
-} else {
-
-    imageObj.src = 'images/puzzle-02.png';
-    questions = [
-        {
-            id: 1,
-            question: 'Как горошек замедляет старение?',
-            items: [
-                'Когда его ешь, то забываешь про возраст',
-                'С помощью витаминов',
-                'Глядя на молодой горошек, можно почувствовать себя молодым',
-            ],
-            explanation: 'Благодаря витаминам группы B, которые есть в горошке, улучшаются обменные процессы, и замедляется старение клеток!',
-            rightAnswer: 'b'
-        },
-        {
-            id: 2,
-            question: 'Почему горошек делает людей энергичными?',
-            items: [
-                'В нём накапливается электроэнергия',
-                'Потому что его надо быстро есть',
-                'Потому что он природный энергетик',
-            ],
-            explanation: 'Горошек с помощью микроэлементов и углеводов прибавляет бодрости организму, чтобы легче переносить физические нагрузки!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 3,
-            question: 'Как горошек помогает нам быть стройными?',
-            items: [
-                'Он нормализует обмен жиров',
-                'Банка с горошком – лучший спортивный инструмент',
-                'Если принять гороховую ванну, то можно похудеть',
-            ],
-            explanation: 'Из-за низкой калорийности горошек очень полезен людям с лишним весом и сидящим на диете!!',
-            rightAnswer: 'a'
-        },
-        {
-            id: 4,
-            question: 'Почему горошек полезен для твоих зубок?',
-            items: [
-                'Потому что его легко раскусить',
-                'У него есть витамины для укрепления зубов',
-                'Зубные врачи тоже очень любят горошек',
-            ],
-            explanation: 'Благодаря каротину или, как его ещё называют, провитамину А, горошек помогает укреплять костную систему и зубную эмаль!',
-            rightAnswer: 'b'
-        },
-        {
-            id: 5,
-            question: 'Как горошек укрепляет сердце?',
-            items: [
-                'Говорят, смех полезен для сердца, а про горошек есть очень много шуток',
-                'Если каждый день открывать банки с горошком, то можно здорово прокачать сердце',
-                'С помощью полезных веществ',
-            ],
-            explanation: 'Горошек, благодаря калию, магнию и кальцию, помогает сердцу работать лучше и улучшает давление!',
-            rightAnswer: 'c'
-        },
-        {
-            id: 6,
-            question: 'Почему горошек полезен для кожи?',
-            items: [
-                'Потому что у него есть витамин А',
-                'Из него получается отличная маска для лица',
-                'Потому что полезен, и всё тут',
-            ],
-            explanation: 'С помощью ретинола (витамина А) горошек помогает быстро восстановить ткани и оказывает положительное влияние на кожу!',
-            rightAnswer: 'a'
-        },
-    ]
-}
-
+const puzzleType = sessionStorage.getItem('puzzleType')
 
 const prevButton = document.querySelector('.quiz__prev-button')
 
@@ -512,16 +302,40 @@ function setSocialIcons() {
         "",
         window.location.origin + '/bonduelle/images/puzzle-04.png'
     )
-
 }
+
+
+async function initGame() {
+    const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
+    if (response.ok) {
+        const json = await response.json();
+        const data = json.data
+
+
+        // imageObj.src =
+        for (let index = 0; index < data.length; index++) {
+            const item = data[index]
+
+            if (!sessionStorage.getItem('puzzleType')) {
+                sessionStorage.setItem('puzzleType', 'together')
+            }
+
+
+            if (item.type === sessionStorage.getItem('puzzleType')) {
+                imageObj.crossOrigin = 'anonymous'
+                imageObj.src = item.imageUrl // <--
+                imageObj.onload = setGame
+
+                sessionStorage.setItem('questions', JSON.stringify(item.questions))
+                break;
+            }
+        }
+
+    }
+}
+
 async function setGame() {
 
-    // const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
-    //
-    // if (response.ok) {
-    //     const json = await response.json();
-    //     console.log(json)
-    // }
     if (window.matchMedia("(max-width: 991.98px)").matches) {
         document.querySelector('.quiz__pieces').classList.add('load')
     }
@@ -662,7 +476,7 @@ function setPiecePosition() {
 
     }
 }
-imageObj.onload = setGame
+
 
 
 function resizeImage(image) {
@@ -692,6 +506,7 @@ function resizeImage(image) {
 
 
 function setQuestion(e) {
+    const questions = JSON.parse(sessionStorage.getItem('questions'))
     const piece = e.target.closest('.quiz__piece')
 
     // Если пазл активный или уже установлен, то он не интересует
@@ -779,6 +594,7 @@ function setQuestion(e) {
 
 function checkAnswer(e) {
     // Массив ответов
+    const questions = JSON.parse(sessionStorage.getItem('questions'))
     const answers = document.querySelectorAll('.quiz__variant')
 
     // Текущий выбранный ответ
@@ -1125,9 +941,9 @@ function setInitialPosition(el) {
 
 function setWatchPersonButton() {
     const button = document.querySelector('.game-over__button')
-    const puzzleName = sessionStorage.getItem('puzzleName')
+    const puzzleType = sessionStorage.getItem('puzzleType')
 
-    switch (puzzleName) {
+    switch (puzzleType) {
         case "corn":
             button.href = 'https://app.arhead.io/lxUbJqTU'
             break

@@ -109,8 +109,8 @@ var puzzleLinks = document.querySelectorAll('[data-puzzle]');
 var _loop = function _loop(_index2) {
   var link = puzzleLinks[_index2];
   link.addEventListener('click', function (e) {
-    var puzzleName = link.dataset.puzzle;
-    sessionStorage.setItem('puzzleName', puzzleName);
+    var puzzleType = link.dataset.puzzle;
+    sessionStorage.setItem('puzzleType', puzzleType);
   });
 };
 
