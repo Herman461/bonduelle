@@ -1,4 +1,7 @@
-window.addEventListener('DOMContentLoaded', initGame)
+window.addEventListener('DOMContentLoaded', function() {
+    initGame()
+    setGame()
+})
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
