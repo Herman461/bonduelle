@@ -1,6 +1,9 @@
 window.addEventListener('DOMContentLoaded', function() {
-    initGame()
     setGame()
+    setTimeout(() => {
+        initGame()
+    }, 1000)
+
 })
 
 function shuffle(array) {
