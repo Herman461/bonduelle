@@ -4,6 +4,11 @@ window.addEventListener('DOMContentLoaded', function() {
         initGame()
     }, 1000)
 
+    if (window.matchMedia("(max-width: 991.98px)").matches) {
+        document.body.classList.add('adapt')
+    } else {
+        document.body.classList.add('desktop')
+    }
 })
 
 function shuffle(array) {
@@ -743,7 +748,14 @@ window.addEventListener('click', function(e) {
 })
 
 window.addEventListener('resize', function() {
-    setGame()
+    if (window.matchMedia("(min-width: 991.98px)").matches && document.body.classList.contains('adapt')) {
+        setGame()
+        document.body.classList.remove('adapt')
+    }
+    if (window.matchMedia("(max-width: 991.98px)").matches && document.body.classList.contains('desktop')) {
+        setGame()
+        document.body.classList.remove('desktop')
+    }
 })
 
 

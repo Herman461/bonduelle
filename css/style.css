@@ -688,7 +688,7 @@ a {
 
 .quiz {
   text-align: center;
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   background: #FFFAE4;
 }
 
