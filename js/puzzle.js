@@ -286,7 +286,7 @@ function setSocialIcons() {
     document.querySelector('.social-game-over__item_vk').innerHTML = VK.Share.button({
         url: window.location.origin + '/',
         title: 'Сыграй в игру с супер-кукурузиком и супер-горошком и узнай, какие супер-силы они могут тебе дать!',
-        image: window.location.origin + '/bonduelle/images/puzzle-04.png',
+        image: window.location.origin + '/upload/quiz/repost-image.png',
     },{
         type: 'custom',
         text: `<svg>
@@ -300,7 +300,7 @@ function setSocialIcons() {
         '{"sz":30,"st":"oval","nc":1,"nt":1,"bgclr":"ED8207","txclr":"FFFFFF"}',
         "Сыграй в игру с супер-кукурузиком и супер-горошком и узнай, какие супер-силы они могут тебе дать!",
         "",
-        window.location.origin + '/bonduelle/images/puzzle-04.png'
+        window.location.origin + '/upload/quiz/repost-image.png'
     )
 }
 
@@ -323,7 +323,7 @@ async function initGame() {
 
             if (item.type === sessionStorage.getItem('puzzleType')) {
                 imageObj.crossOrigin = 'anonymous'
-                imageObj.src = item.imageUrl // <--
+                imageObj.src = item.imageUrl
                 imageObj.onload = setGame
 
                 sessionStorage.setItem('questions', JSON.stringify(item.questions))
