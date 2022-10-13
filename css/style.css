@@ -442,6 +442,7 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  background: #FFFAE4;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -1241,7 +1242,6 @@ a {
   }
 
   .intro {
-    background: #FFFAE4;
     min-height: 682px;
   }
 
@@ -1713,16 +1713,6 @@ a {
     top: 10px;
     -webkit-transform: translate(-50%, 0) rotate(-45deg);
     transform: translate(-50%, 0) rotate(-45deg);
-  }
-
-  .intro::before {
-    content: "";
-    height: 50px;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: url("../images/intro/top-bg.png") 0 bottom/cover no-repeat;
   }
 
   .intro .intro__item_first {
