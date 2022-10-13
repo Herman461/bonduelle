@@ -1,8 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
-    setGame()
-    setTimeout(() => {
-        initGame()
-    }, 1000)
+    initGame()
+
 
     if (window.matchMedia("(max-width: 991.98px)").matches) {
         document.body.classList.add('adapt')
