@@ -1,12 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
     initGame()
-
-
-    if (window.matchMedia("(max-width: 991.98px)").matches) {
-        document.body.classList.add('adapt')
-    } else {
-        document.body.classList.add('desktop')
-    }
+    setGame()
 })
 
 function shuffle(array) {
@@ -348,7 +342,7 @@ async function setGame() {
     if (window.matchMedia("(max-width: 991.98px)").matches) {
         document.querySelector('.quiz__pieces').classList.add('load')
     }
-
+    let timeout = 0
     let sourceY = 0
     let sourceX = 0
     for (let index = 0; index < 6; ++index) {
@@ -429,26 +423,34 @@ async function setGame() {
         }
 
 
-        piece.href = canvas.toDataURL()
 
 
-        const doc = new DOMParser()
+        timeout += 1000
+        
+        setTimeout(async () => {
 
-        const response = await fetch(piece.imageSrc)
-        const str = await response.text()
+            piece.href = canvas.toDataURL()
 
-        const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
-        svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
+            const doc = new DOMParser()
 
-        svgImage.querySelector('image').setAttribute( 'width', piece.width);
-        svgImage.querySelector('image').setAttribute( 'height', piece.height);
+            const response = await fetch(piece.imageSrc)
+            const str = await response.text()
 
-        svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
-        svgImage.querySelector('svg').setAttribute('width', width)
-        svgImage.querySelector('svg').setAttribute('height', height)
+            const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
-        pieceDOM.innerHTML = svgImage.documentElement.outerHTML
+            svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
+
+            svgImage.querySelector('image').setAttribute( 'width', piece.width);
+            svgImage.querySelector('image').setAttribute( 'height', piece.height);
+
+            svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
+            svgImage.querySelector('svg').setAttribute('width', width)
+            svgImage.querySelector('svg').setAttribute('height', height)
+
+            pieceDOM.innerHTML = svgImage.documentElement.outerHTML
+
+        }, timeout)
 
 
     }
@@ -746,14 +748,7 @@ window.addEventListener('click', function(e) {
 })
 
 window.addEventListener('resize', function() {
-    if (window.matchMedia("(min-width: 991.98px)").matches && document.body.classList.contains('adapt')) {
-        setGame()
-        document.body.classList.remove('adapt')
-    }
-    if (window.matchMedia("(max-width: 991.98px)").matches && document.body.classList.contains('desktop')) {
-        setGame()
-        document.body.classList.remove('desktop')
-    }
+    setGame()
 })
 
 
