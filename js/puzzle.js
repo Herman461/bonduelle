@@ -427,6 +427,8 @@ function dragElement(el) {
                     setInitialPosition(el)
                     return
                 }
+
+                if (squareIndex !== pieceIndex && window.matchMedia('(max-width: 991.98px)').matches) return
                 setFinalPosition(piece, square)
 
                 if (Number(piece.dataset.positionIndex) === 0) {
