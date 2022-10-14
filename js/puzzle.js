@@ -428,35 +428,26 @@ async function setGame() {
 
 
 
-        timeout += 10
-
-        setTimeout(async () => {
-
-            piece.href = canvas.toDataURL()
+        piece.href = canvas.toDataURL()
 
 
-            const doc = new DOMParser()
+        const doc = new DOMParser()
 
-            const response = await fetch(piece.imageSrc)
-            const str = await response.text()
+        const response = await fetch(piece.imageSrc)
+        const str = await response.text()
 
-            const svgImage = await doc.parseFromString(str, "image/svg+xml")
+        const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
-            svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
+        svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
 
-            svgImage.querySelector('image').setAttribute( 'width', piece.width);
-            svgImage.querySelector('image').setAttribute( 'height', piece.height);
+        svgImage.querySelector('image').setAttribute( 'width', piece.width);
+        svgImage.querySelector('image').setAttribute( 'height', piece.height);
 
-            svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
-            svgImage.querySelector('svg').setAttribute('width', width)
-            svgImage.querySelector('svg').setAttribute('height', height)
+        svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
+        svgImage.querySelector('svg').setAttribute('width', width)
+        svgImage.querySelector('svg').setAttribute('height', height)
 
-            pieceDOM.innerHTML = svgImage.documentElement.outerHTML
-
-            // const pieceIndex = pieceDOM.dataset.pieceIndex
-            // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
-            // setFinalPosition(pieceDOM, square)
-        }, timeout)
+        pieceDOM.innerHTML = svgImage.documentElement.outerHTML
 
 
     }
