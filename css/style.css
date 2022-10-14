@@ -1023,11 +1023,8 @@ a {
   font-weight: 500;
 }
 
-.win-quiz.pea {
-  overflow: hidden;
-}
-
 .win-quiz.pea .win-quiz__top {
+  overflow: hidden;
   min-height: 145px;
 }
 
@@ -1079,6 +1076,9 @@ a {
 
 .loss-quiz.pea {
   min-height: 178px;
+}
+
+.loss-quiz.pea .loss-quiz__top {
   overflow: hidden;
 }
 

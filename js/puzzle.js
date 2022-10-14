@@ -428,7 +428,7 @@ async function setGame() {
 
 
 
-        timeout += 200
+        timeout += 10
 
         setTimeout(async () => {
 
