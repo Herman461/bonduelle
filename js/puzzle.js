@@ -1,5 +1,7 @@
-initGame()
-
+window.addEventListener('DOMContentLoaded', async function() {
+    await initGame()
+    setGame()
+})
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -325,6 +327,7 @@ async function initGame() {
 
 
             if (item.type === sessionStorage.getItem('puzzleType')) {
+
                 imageObj.crossOrigin = 'anonymous'
                 imageObj.src = item.imageUrl
                 imageObj.onload = setGame
@@ -679,6 +682,9 @@ function checkAnswer(e) {
             }
 
 
+            if (sessionStorage.getItem('puzzleType') === 'pea') {
+                el.classList.add('pea')
+            }
 
             setTimeout(() => {
                 document.querySelector('.quiz__board').style.position = 'static'
@@ -713,12 +719,16 @@ function checkAnswer(e) {
                     ещё раз!
                 </p>`
 
+
             if (window.matchMedia('(max-width: 991.98px)').matches) {
                 document.querySelector('.quiz__answer').appendChild(el)
             } else {
                 document.querySelector('.quiz').appendChild(el)
             }
 
+            if (sessionStorage.getItem('puzzleType') === 'pea') {
+               el.classList.add('pea')
+            }
 
             setTimeout(() => {
                 if (document.querySelector('.quiz__loss')) {

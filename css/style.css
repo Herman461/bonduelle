@@ -7,6 +7,30 @@ body.lock {
   overflow: hidden;
 }
 
+@-webkit-keyframes shadow {
+  0% {
+    -webkit-box-shadow: 0 0 10px rgb(186, 186, 186);
+    box-shadow: 0 0 10px rgb(186, 186, 186);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 40px rgb(186, 186, 186);
+    box-shadow: 0 0 40px rgb(186, 186, 186);
+  }
+}
+
+@keyframes shadow {
+  0% {
+    -webkit-box-shadow: 0 0 10px rgb(186, 186, 186);
+    box-shadow: 0 0 10px rgb(186, 186, 186);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 40px rgb(186, 186, 186);
+    box-shadow: 0 0 40px rgb(186, 186, 186);
+  }
+}
+
 .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -856,6 +880,10 @@ a {
   height: auto;
 }
 
+.quiz {
+  overflow: hidden;
+}
+
 .quiz__container {
   position: relative;
 }
@@ -963,6 +991,10 @@ a {
 .win-quiz__image img {
   width: 180px;
   height: auto;
+  -o-object-position: bottom;
+  object-position: bottom;
+  -o-object-fit: contain;
+  object-fit: contain;
 }
 
 .win-quiz__title {
@@ -991,7 +1023,22 @@ a {
   font-weight: 500;
 }
 
+.win-quiz.pea {
+  overflow: hidden;
+}
+
+.win-quiz.pea .win-quiz__top {
+  min-height: 145px;
+}
+
+.win-quiz.pea .win-quiz__image img {
+  bottom: 0;
+  top: auto;
+  left: 15px;
+}
+
 .loss-quiz {
+  position: relative;
   background: #FFB713;
   border-radius: 40px;
   display: -webkit-box;
@@ -1028,6 +1075,27 @@ a {
   text-transform: uppercase;
   font-size: 33px;
   font-weight: 500;
+}
+
+.loss-quiz.pea {
+  min-height: 178px;
+  overflow: hidden;
+}
+
+.loss-quiz.pea .loss-quiz__image img {
+  width: 180px;
+  height: auto;
+  -o-object-position: bottom;
+  object-position: bottom;
+  -o-object-fit: contain;
+  object-fit: contain;
+  position: absolute;
+  bottom: -72px;
+  left: -24px;
+}
+
+.loss-quiz.pea .loss-quiz__text {
+  padding-left: 100px;
 }
 
 .game-over {
@@ -1087,6 +1155,10 @@ a {
   border-radius: 30px;
   border: 1.3px solid #CBCAC4;
   overflow: hidden;
+  -webkit-animation: shadow 2s ease-in-out infinite;
+  animation: shadow 2s ease-in-out infinite;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 
 .game-over__image img {
@@ -1517,7 +1589,7 @@ a {
     width: 100%;
     height: auto;
     z-index: 100;
-    max-width: 500px;
+    max-width: 460px;
   }
 
   .game-over__top {
@@ -2172,6 +2244,11 @@ a {
     top: -20px;
   }
 
+  .win-quiz__image.pea {
+    width: 136px;
+    height: 136px;
+  }
+
   .win-quiz__title {
     font-size: 17px;
     line-height: 123.5294117647%;
@@ -2202,6 +2279,10 @@ a {
 
   .loss-quiz__text {
     font-size: 20px;
+  }
+
+  .loss-quiz.pea .loss-quiz__image img {
+    width: 155px;
   }
 
   .game-over__title {
