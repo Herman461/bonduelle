@@ -1,5 +1,5 @@
-window.addEventListener('DOMContentLoaded', async function() {
-    await initGame()
+window.addEventListener('DOMContentLoaded', function() {
+    initGame()
     setGame()
 })
 function shuffle(array) {
