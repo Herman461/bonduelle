@@ -1,6 +1,4 @@
-window.addEventListener('DOMContentLoaded', function() {
-    initGame()
-})
+initGame()
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -427,7 +425,7 @@ async function setGame() {
 
 
 
-        timeout += 100
+        timeout += 200
 
         setTimeout(async () => {
 
