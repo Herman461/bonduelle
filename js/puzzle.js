@@ -426,6 +426,8 @@ async function setGame() {
         }
 
 
+        const response = await fetch(piece.imageSrc)
+        const str = await response.text()
 
 
         piece.href = canvas.toDataURL()
@@ -433,8 +435,6 @@ async function setGame() {
 
         const doc = new DOMParser()
 
-        const response = await fetch(piece.imageSrc)
-        const str = await response.text()
 
         const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
