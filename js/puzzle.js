@@ -349,7 +349,10 @@ async function setGame() {
     let sourceY = 0
     let sourceX = 0
     for (let index = 0; index < 6; ++index) {
+
         const piece = data[index]
+        const response = await fetch(piece.imageSrc)
+        const str = await response.text()
 
         const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
         pieceDOM.removeAttribute('style')
@@ -426,8 +429,7 @@ async function setGame() {
         }
 
 
-        const response = await fetch(piece.imageSrc)
-        const str = await response.text()
+
 
 
         piece.href = canvas.toDataURL()
