@@ -766,7 +766,6 @@ a {
 }
 
 .quiz__piece {
-  opacity: 0;
   display: inline-block;
   margin-bottom: 4px;
   cursor: pointer;
