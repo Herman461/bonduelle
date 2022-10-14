@@ -5,13 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css?_v=20221013233835">
+
     <link rel="icon" type="image/png" href="images/favicon.ico" />
     <title>Главная</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
 
+        .preloader {
+            background-color: #FFFAE4;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            transition: all 0.3s ease 0s;
+        }
+
+        .preloader__loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+        }
+
+        .preloader__loader img {
+            width: 140px;
+            height: 140px;
+        }
+
+        .preloader.hide-preloader .preloader__loader {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader.hide-preloader-wrapper {
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @media (max-width: 991.98px) {
+            .preloader__loader img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css?_v=20221014174851">
 </head>
 
 <body>
+    <div class="preloader">
+        <div class="preloader__loader">
+            <img src="images/preloader.gif" alt="" />
+        </div>
+    </div>
+
 
 
     <div class="wrapper">
@@ -274,8 +327,21 @@
         </div>
 
     </div>
-    <script src="js/swiper-bundle.min.js?_v=20221013233835"></script>
-    <script src="js/script.js?_v=20221013233835"></script>
+    <script>
+    window.addEventListener('load', function() {
+        const preloader = document.querySelector('.preloader')
+        preloader.classList.add('hide-preloader')
+        setTimeout(() => {
+            preloader.classList.add('hide-preloader-wrapper')
+        }, 20)
+        setTimeout(() => {
+            document.body.style.overflowY = 'auto'
+        }, 10)
+
+    })
+</script>
+    <script src="js/swiper-bundle.min.js?_v=20221014174851"></script>
+    <script src="js/script.js?_v=20221014174851"></script>
 </body>
 
 </html>

@@ -785,15 +785,6 @@ a {
   opacity: 1;
 }
 
-.quiz__piece::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 .quiz__piece .puzzle__stroke {
   stroke: transparent !important;
 }

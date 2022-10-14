@@ -1,6 +1,5 @@
 window.addEventListener('DOMContentLoaded', function() {
     initGame()
-    setGame()
 })
 
 function shuffle(array) {
@@ -18,6 +17,7 @@ function shuffle(array) {
 
     return array;
 }
+
 
 
 
@@ -451,7 +451,7 @@ async function setGame() {
             svgImage.querySelector('svg').setAttribute('height', height)
 
             pieceDOM.innerHTML = svgImage.documentElement.outerHTML
-            pieceDOM.classList.add('visible')
+
             // const pieceIndex = pieceDOM.dataset.pieceIndex
             // const square = document.querySelector(`.quiz__square[data-square-index="${pieceIndex}"]`)
             // setFinalPosition(pieceDOM, square)
@@ -656,12 +656,12 @@ function checkAnswer(e) {
             const audio = new Audio('../audio/game-win-success.wav');
             audio.play();
             const el = document.createElement('div')
-
+            const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `
                 <div class="win-quiz__top">
                     <div class="win-quiz__image">
-                        <img src="images/puzzles/win.png" alt="">
+                        <img src="${imageSrc}" alt="">
                     </div>
                     <div class="win-quiz__title">
                             Это <br>
@@ -702,11 +702,13 @@ function checkAnswer(e) {
             break;
         } else {
             if (document.querySelector('.quiz__loss')) continue
+
+            const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-loss.png' : 'images/puzzles/loss.png'
             const el = document.createElement('div')
             el.className = 'quiz__loss loss-quiz'
             el.innerHTML = `
                 <div class="loss-quiz__image">
-                    <img src="images/puzzles/loss.png" alt="">
+                    <img src="${imageSrc}" alt="">
                 </div>
                 <p class="loss-quiz__text">
                     Попробуй <br>
