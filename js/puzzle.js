@@ -385,7 +385,7 @@ async function setGame() {
         context.width = String(width)
         context.height = String(height)
 
-        const updatedImage = await resizeImage(imageObj)
+        const updatedImage = imageObj
 
         // Отрисовка кусков пазла на различных расширениях экрана
         if (window.matchMedia("(min-width: 991.98px)").matches) {
