@@ -1,7 +1,4 @@
-window.addEventListener('DOMContentLoaded', function() {
-    initGame()
-    setGame()
-})
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -309,6 +306,9 @@ function setSocialIcons() {
 
 
 async function initGame() {
+    setWatchPersonButton()
+    setPieces()
+    setSocialIcons()
     const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
 
 
@@ -978,7 +978,6 @@ function setWatchPersonButton() {
 }
 
 
-setWatchPersonButton()
-setPieces()
-setSocialIcons()
 
+
+initGame()
