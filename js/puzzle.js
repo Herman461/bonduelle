@@ -317,7 +317,7 @@ async function initGame() {
     if (response.ok) {
         const json = await response.json();
         const data = json.data
-
+        console.log(data)
 
 
         for (let index = 0; index < data.length; index++) {
@@ -500,6 +500,8 @@ function resizeImage(image) {
         width = 204
     }
 
+    // desktopImage: 477 x 322
+    // mobileImage: 137 x 204
     canvas.height = height
     canvas.width = width
 
