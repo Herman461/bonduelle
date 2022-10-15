@@ -353,6 +353,10 @@ async function setGame() {
         const piece = data[index]
         const response = await fetch(piece.imageSrc)
         const str = await response.text()
+        const doc = new DOMParser()
+
+
+        const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
         const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
         pieceDOM.removeAttribute('style')
@@ -427,20 +431,9 @@ async function setGame() {
                     break;
             }
         }
-
-
-
-
-
         piece.href = canvas.toDataURL()
 
-
-        const doc = new DOMParser()
-
-
-        const svgImage = await doc.parseFromString(str, "image/svg+xml")
-
-        svgImage.querySelector('image').setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', piece.href);
+        svgImage.querySelector('image').setAttribute('xlink:href', piece.href);
 
         svgImage.querySelector('image').setAttribute( 'width', piece.width);
         svgImage.querySelector('image').setAttribute( 'height', piece.height);

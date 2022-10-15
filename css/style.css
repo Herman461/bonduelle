@@ -13,9 +13,14 @@ body.lock {
     box-shadow: 0 0 10px rgb(186, 186, 186);
   }
 
-  100% {
+  50% {
     -webkit-box-shadow: 0 0 40px rgb(186, 186, 186);
     box-shadow: 0 0 40px rgb(186, 186, 186);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 10px rgb(186, 186, 186);
+    box-shadow: 0 0 10px rgb(186, 186, 186);
   }
 }
 
@@ -25,9 +30,14 @@ body.lock {
     box-shadow: 0 0 10px rgb(186, 186, 186);
   }
 
-  100% {
+  50% {
     -webkit-box-shadow: 0 0 40px rgb(186, 186, 186);
     box-shadow: 0 0 40px rgb(186, 186, 186);
+  }
+
+  100% {
+    -webkit-box-shadow: 0 0 10px rgb(186, 186, 186);
+    box-shadow: 0 0 10px rgb(186, 186, 186);
   }
 }
 
