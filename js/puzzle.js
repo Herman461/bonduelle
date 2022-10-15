@@ -1,4 +1,6 @@
-
+window.addEventListener('DOMContentLoaded', function() {
+    initGame()
+})
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -979,5 +981,3 @@ function setWatchPersonButton() {
 
 
 
-
-initGame()
