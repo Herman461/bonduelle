@@ -154,7 +154,7 @@ function dragElement(el) {
             el.style.left = (window.innerWidth - el.offsetWidth) + 'px'
         }
         if (window.matchMedia('(max-width: 991.98px)').matches) {
-            increasePiece(el)
+            el.style.transform = 'scale(1)'
             setPiecePosition()
             document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
