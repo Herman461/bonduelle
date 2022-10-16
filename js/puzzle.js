@@ -1,6 +1,4 @@
-window.addEventListener('DOMContentLoaded', function() {
-    initGame()
-})
+initGame()
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -308,17 +306,16 @@ function setSocialIcons() {
 
 
 async function initGame() {
+    document.body.classList.add('puzzle-game')
     setWatchPersonButton()
     setPieces()
-    setSocialIcons()
+
     const response = await fetch('https://bonduelle.mws.agency/api/v1/questions/')
 
 
     if (response.ok) {
         const json = await response.json();
         const data = json.data
-        console.log(data)
-
 
         for (let index = 0; index < data.length; index++) {
             const item = data[index]
@@ -340,6 +337,10 @@ async function initGame() {
         }
 
     }
+
+    setSocialIcons()
+
+    document.querySelector('.quiz__preloader').remove()
 }
 
 async function setGame() {
@@ -350,110 +351,115 @@ async function setGame() {
     let timeout = 0
     let sourceY = 0
     let sourceX = 0
-    for (let index = 0; index < 6; ++index) {
+    const updatedImage = resizeImage(imageObj)
+    updatedImage.onload = async function() {
 
-        const piece = data[index]
-        const response = await fetch(piece.imageSrc)
-        const str = await response.text()
-        const doc = new DOMParser()
+        for (let index = 0; index < 6; ++index) {
 
 
-        const svgImage = await doc.parseFromString(str, "image/svg+xml")
-
-        const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
-        pieceDOM.removeAttribute('style')
-        let width = parseFloat(window.getComputedStyle(pieceDOM).width)
-        let height = parseFloat(window.getComputedStyle(pieceDOM).height)
-
-        // Устанавливаем начало координат, начиная со второго столбца пазлов
-        if (index % 3 !== 0) {
-            sourceX += width;
-        } else {
-            sourceX = 0
-        }
-
-        // Устанавливаем начало координат для второй строки пазлов
-        if (index > 2) {
-            sourceY = height;
-        }
-
-        const canvas = document.createElement('canvas')
-        const context = canvas.getContext('2d');
+            const piece = data[index]
+            const response = await fetch(piece.imageSrc)
+            const str = await response.text()
+            const doc = new DOMParser()
 
 
-        canvas.width = width
-        canvas.height = height
+            const svgImage = await doc.parseFromString(str, "image/svg+xml")
 
-        context.width = String(width)
-        context.height = String(height)
+            const pieceDOM = document.querySelector(`.quiz__piece[data-piece-index="${index}"]`)
+            pieceDOM.removeAttribute('style')
+            let width = parseFloat(window.getComputedStyle(pieceDOM).width)
+            let height = parseFloat(window.getComputedStyle(pieceDOM).height)
 
-        const updatedImage = imageObj
-
-        // Отрисовка кусков пазла на различных расширениях экрана
-        if (window.matchMedia("(min-width: 991.98px)").matches) {
-            switch (index) {
-                case 0:
-                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 1:
-                    context.drawImage(updatedImage, sourceX - 35, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 2:
-                    context.drawImage(updatedImage, 274, sourceY, width, height, 0, 0, width, height );
-                    break;
-                case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 90, width, height, 0, 0, width, height);
-                    break;
-                case 4:
-                    context.drawImage(updatedImage, sourceX - 130, sourceY - 20, width, height, 0, 0, width, height);
-                    break;
-                case 5:
-                    context.drawImage(updatedImage, 307, sourceY - 89, width, height, 0, 0, width, height);
-                    break;
+            // Устанавливаем начало координат, начиная со второго столбца пазлов
+            if (index % 3 !== 0) {
+                sourceX += width;
+            } else {
+                sourceX = 0
             }
-        } else {
-            switch (index) {
-                case 0:
-                    context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 1:
-                    context.drawImage(updatedImage, sourceX - 15, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 2:
-                    context.drawImage(updatedImage, 117, sourceY, width, height, 0, 0, width, height);
-                    break;
-                case 3:
-                    context.drawImage(updatedImage, sourceX, sourceY - 40, width, height, 0, 0, width, height);
-                    break;
-                case 4:
-                    context.drawImage(updatedImage, sourceX - 56, sourceY - 11, width, height, 0, 0, width, height);
-                    break;
-                case 5:
-                    context.drawImage(updatedImage, 131, sourceY - 43, width, height, 0, 0, width, height);
-                    break;
+
+            // Устанавливаем начало координат для второй строки пазлов
+            if (index > 2) {
+                sourceY = height;
             }
+
+            const canvas = document.createElement('canvas')
+            const context = canvas.getContext('2d');
+
+
+            canvas.width = width
+            canvas.height = height
+
+            context.width = String(width)
+            context.height = String(height)
+
+
+
+            // Отрисовка кусков пазла на различных расширениях экрана
+            if (window.matchMedia("(min-width: 991.98px)").matches) {
+                switch (index) {
+                    case 0:
+                        context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
+                        break;
+                    case 1:
+                        context.drawImage(updatedImage, sourceX - 35, sourceY, width, height, 0, 0, width, height);
+                        break;
+                    case 2:
+                        context.drawImage(updatedImage, 274, sourceY, width, height, 0, 0, width, height );
+                        break;
+                    case 3:
+                        context.drawImage(updatedImage, sourceX, sourceY - 90, width, height, 0, 0, width, height);
+                        break;
+                    case 4:
+                        context.drawImage(updatedImage, sourceX - 130, sourceY - 20, width, height, 0, 0, width, height);
+                        break;
+                    case 5:
+                        context.drawImage(updatedImage, 307, sourceY - 89, width, height, 0, 0, width, height);
+                        break;
+                }
+            } else {
+                switch (index) {
+                    case 0:
+                        context.drawImage(updatedImage, sourceX, sourceY, width, height, 0, 0, width, height);
+                        break;
+                    case 1:
+                        context.drawImage(updatedImage, sourceX - 25, sourceY, width, height, 0, 0, width, height);
+                        break;
+                    case 2:
+                        context.drawImage(updatedImage, 185, sourceY, width, height, 0, 0, width, height);
+                        break;
+                    case 3:
+                        context.drawImage(updatedImage, sourceX, sourceY - 62, width, height, 0, 0, width, height);
+                        break;
+                    case 4:
+                        context.drawImage(updatedImage, sourceX - 91, sourceY - 15, width, height, 0, 0, width, height);
+                        break;
+                    case 5:
+                        context.drawImage(updatedImage, 210, sourceY - 66, width, height, 0, 0, width, height);
+                        break;
+                }
+            }
+            piece.href = canvas.toDataURL()
+
+            svgImage.querySelector('image').setAttribute('xlink:href', piece.href);
+
+            svgImage.querySelector('image').setAttribute( 'width', piece.width);
+            svgImage.querySelector('image').setAttribute( 'height', piece.height);
+
+            svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
+            svgImage.querySelector('svg').setAttribute('width', width)
+            svgImage.querySelector('svg').setAttribute('height', height)
+
+            pieceDOM.innerHTML = svgImage.documentElement.outerHTML
+
         }
-        piece.href = canvas.toDataURL()
 
-        svgImage.querySelector('image').setAttribute('xlink:href', piece.href);
+        setPiecePosition()
 
-        svgImage.querySelector('image').setAttribute( 'width', piece.width);
-        svgImage.querySelector('image').setAttribute( 'height', piece.height);
+        if (window.matchMedia("(max-width: 991.98px)").matches) {
 
-        svgImage.querySelector('svg').setAttribute('viewBox', '0 0 ' + (piece.width + 2) + ' ' + piece.height)
-        svgImage.querySelector('svg').setAttribute('width', width)
-        svgImage.querySelector('svg').setAttribute('height', height)
+            document.querySelector('.quiz__pieces').classList.remove('load')
+        }
 
-        pieceDOM.innerHTML = svgImage.documentElement.outerHTML
-
-
-    }
-
-    setPiecePosition()
-
-    if (window.matchMedia("(max-width: 991.98px)").matches) {
-
-        document.querySelector('.quiz__pieces').classList.remove('load')
     }
 
 
@@ -495,18 +501,12 @@ function resizeImage(image) {
     let height = parseFloat(getComputedStyle(board).height) + 5
     let width = parseFloat(getComputedStyle(board).width) + 5
 
-    if (window.matchMedia('(max-width: 991.98px)').matches) {
-        height = 137
-        width = 204
-    }
 
-    // desktopImage: 477 x 322
-    // mobileImage: 137 x 204
     canvas.height = height
     canvas.width = width
 
     context.drawImage(image, 0, 0, width, height)
-    const dataUrl = canvas.toDataURL('image/jpeg')
+    const dataUrl = canvas.toDataURL('image/png')
     const newImage = new Image()
 
     newImage.src = dataUrl
@@ -805,58 +805,36 @@ function setFinalPosition(piece, square) {
             case 0:
                 piece.style.left = square.offsetLeft + "px";
                 piece.style.top = square.offsetTop + "px";
-                piece.style.width = '136px'
-                piece.style.height = '115px'
-                piece.querySelector('svg').setAttribute('width', 136)
-                piece.querySelector('svg').setAttribute('height', 115)
+
                 break;
             case 1:
-                piece.style.left = square.offsetLeft - 6 + "px";
+                piece.style.left = square.offsetLeft - 8 + "px";
                 piece.style.top = square.offsetTop + "px";
-                piece.style.width = '123px'
-                piece.style.height = '139px'
-                piece.querySelector('svg').setAttribute('width', 123)
-                piece.querySelector('svg').setAttribute('height', 139)
+
+
                 break;
             case 2:
                 piece.style.left = square.offsetLeft - 28 + "px";
                 piece.style.top = square.offsetTop + "px";
-                piece.style.width = '137px'
-                piece.style.height = '115px'
-                piece.querySelector('svg').setAttribute('width', 137)
-                piece.querySelector('svg').setAttribute('height', 115)
+
+
                 break;
             case 3:
                 piece.style.top = square.offsetTop - 31 + "px";
                 piece.style.left = square.offsetLeft + "px";
-                piece.style.width = '115px'
-                piece.style.height = '139px'
-                piece.querySelector('svg').setAttribute('width', 115)
-                piece.querySelector('svg').setAttribute('height', 139)
+
+
                 break;
             case 4:
                 piece.style.top = square.offsetTop - 6 + "px";
                 piece.style.left = square.offsetLeft - 28 + "px";
-                piece.style.width = '167px'
-                piece.style.height = '114px'
-                piece.querySelector('svg').setAttribute('width', 167)
-                piece.querySelector('svg').setAttribute('height', 114)
+
                 break;
             case 5:
                 piece.style.top = square.offsetTop - 32 + "px";
                 piece.style.left = square.offsetLeft - 3 + "px";
-                piece.style.width = '114px'
-                piece.style.height = '139px'
-                piece.querySelector('svg').setAttribute('width', 114)
-                piece.querySelector('svg').setAttribute('height', 139)
+
                 break;
-            default:
-                piece.style.top = square.offsetTop + "px";
-                piece.style.left = square.offsetLeft + "px";
-                piece.style.width = '136px'
-                piece.style.height = '115px'
-                piece.querySelector('svg').setAttribute('width', 143)
-                piece.querySelector('svg').setAttribute('height', 135)
         }
     }
 
@@ -956,8 +934,7 @@ function setInitialPosition(el) {
             el.style.top = 'auto'
             break;
     }
-    // el.classList.remove('active')
-    // el.classList.remove('fixed')
+
 }
 
 function setWatchPersonButton() {

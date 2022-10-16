@@ -7,6 +7,10 @@ body.lock {
   overflow: hidden;
 }
 
+body.puzzle-game {
+  background: #FFFAE4;
+}
+
 @-webkit-keyframes shadow {
   0% {
     -webkit-box-shadow: 0 0 10px rgb(186, 186, 186);
@@ -775,9 +779,23 @@ a {
   font-weight: 400;
 }
 
+.quiz__preloader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.quiz__preloader img {
+  width: 60px;
+  height: 60px;
+}
+
 .quiz__board {
   height: 317px;
   width: 472px;
+  position: relative;
   border-radius: 35px;
   border: 1.3px solid #CBCAC4;
   margin: 0 auto;
@@ -814,10 +832,6 @@ a {
   stroke: none !important;
 }
 
-.quiz__piece.visible {
-  opacity: 1;
-}
-
 .quiz__piece .puzzle__stroke {
   stroke: transparent !important;
 }
@@ -831,6 +845,8 @@ a {
   cursor: grab;
   -webkit-filter: grayscale(0);
   filter: grayscale(0);
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 .quiz__piece.active path {
@@ -846,6 +862,8 @@ a {
   -webkit-filter: grayscale(0) !important;
   filter: grayscale(0) !important;
   cursor: default;
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 
 .quiz__piece.hold {
@@ -883,9 +901,6 @@ a {
 }
 
 .quiz__pieces {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   width: 500px;
   height: auto;
 }
@@ -1485,6 +1500,11 @@ a {
 
   .quiz__title.active {
     margin: 0 auto 65px auto;
+  }
+
+  .quiz__preloader img {
+    width: 90px;
+    height: 90px;
   }
 
   .quiz__puzzles {
@@ -2124,45 +2144,47 @@ a {
     margin: 0;
   }
 
+  .quiz__piece {
+    -webkit-transform: scale(0.7);
+    transform: scale(0.7);
+  }
+
   .quiz__piece[data-piece-index="0"] {
-    width: 86px;
-    height: 73px;
+    width: 135px;
+    height: 115px;
   }
 
   .quiz__piece[data-piece-index="1"] {
-    width: 78px;
-    height: 88px;
+    width: 123px;
+    height: 139px;
   }
 
   .quiz__piece[data-piece-index="2"] {
-    width: 86px;
-    height: 73px;
+    width: 137px;
+    height: 115px;
   }
 
   .quiz__piece[data-piece-index="3"] {
-    width: 73px;
-    height: 88px;
+    width: 115px;
+    height: 139px;
   }
 
   .quiz__piece[data-piece-index="4"] {
-    width: 105px;
-    height: 73px;
+    width: 167px;
+    height: 114px;
   }
 
   .quiz__piece[data-piece-index="5"] {
-    width: 75px;
-    height: 90px;
+    width: 117px;
+    height: 142px;
   }
 
   .quiz__pieces {
     overflow-x: auto;
     scrollbar-width: none;
-    height: 157px;
+    height: 190px;
     padding: 0 3px;
     width: auto;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
   }
 
   .quiz__pieces::-webkit-scrollbar {
