@@ -212,11 +212,13 @@ function dragElement(el) {
 
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
-
-                if (squareIndex !== pieceIndex && window.matchMedia('(min-width: 991.98px)').matches) {
+                console.log('sq:' + squareIndex)
+                console.log('pi:' + pieceIndex)
+                if (squareIndex !== pieceIndex) {
                     setInitialPosition(el)
                     return
                 }
+
 
                 if (squareIndex !== pieceIndex && window.matchMedia('(max-width: 991.98px)').matches) return
                 setFinalPosition(piece, square)
@@ -235,12 +237,26 @@ function dragElement(el) {
                 document.querySelector('.quiz__variants').innerHTML = ''
                 document.querySelector('.quiz__title').innerHTML = 'выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку'
 
-
+                updatePieceIndices()
                 setGameOver()
+            } else {
+                // console.log('?')
+                // el.classList.remove('active')
+                // setInitialPosition(el)
+                // setPiecePosition()
+                // el.classList.add('active')
             }
         }
 
 
+    }
+}
+
+function updatePieceIndices() {
+    const pieces = document.querySelector('.quiz__pieces').querySelectorAll('.quiz__piece')
+    for (let index = 0; index < pieces.length; index++) {
+        const piece = pieces[index]
+        piece.dataset.positionIndex = String(index)
     }
 }
 
@@ -474,7 +490,7 @@ function setPiecePosition() {
         for (let index = 0; index < pieces.length; index++) {
             const piece = pieces[index]
 
-            if (piece.classList.contains('active') || piece.classList.contains('fixed')) return
+            if (!piece.closest('.quiz__pieces') || piece.classList.contains('fixed')) return
 
             if (index === 0) {
                 piece.style.left = '15px'
@@ -839,101 +855,70 @@ function setFinalPosition(piece, square) {
     }
 
     piece.classList.add('fixed')
+    piece.removeAttribute('data-position-index')
     piece.classList.remove('active')
 }
 
-function increasePiece(piece) {
-    const index = +piece.dataset.pieceIndex
-    switch (index) {
-        case 0:
-            piece.style.width = '136px'
-            piece.style.height = '115px'
-            piece.querySelector('svg').setAttribute('width', 136)
-            piece.querySelector('svg').setAttribute('height', 115)
-            break;
-        case 1:
-            piece.style.width = '123px'
-            piece.style.height = '139px'
-            piece.querySelector('svg').setAttribute('width', 123)
-            piece.querySelector('svg').setAttribute('height', 139)
-            break;
-        case 2:
-            piece.style.width = '137px'
-            piece.style.height = '115px'
-            piece.querySelector('svg').setAttribute('width', 137)
-            piece.querySelector('svg').setAttribute('height', 115)
-            break;
-        case 3:
-            piece.style.width = '115px'
-            piece.style.height = '139px'
-            piece.querySelector('svg').setAttribute('width', 115)
-            piece.querySelector('svg').setAttribute('height', 139)
-            break;
-        case 4:
-            piece.style.width = '167px'
-            piece.style.height = '114px'
-            piece.querySelector('svg').setAttribute('width', 167)
-            piece.querySelector('svg').setAttribute('height', 114)
-            break;
-        case 5:
-            piece.style.width = '114px'
-            piece.style.height = '139px'
-            piece.querySelector('svg').setAttribute('width', 114)
-            piece.querySelector('svg').setAttribute('height', 139)
-            break;
-        default:
-            piece.style.width = '136px'
-            piece.style.height = '115px'
-            piece.querySelector('svg').setAttribute('width', 136)
-            piece.querySelector('svg').setAttribute('height', 115)
-    }
-}
 
 function setInitialPosition(el) {
-    const index = Array.from(document.querySelectorAll('.quiz__piece')).findIndex(piece => {
-        return el.isEqualNode(piece)
-    })
+    if (window.matchMedia('(min-width: 991.98px)').matches) {
+        const index = Array.from(document.querySelectorAll('.quiz__piece')).findIndex(piece => {
+            return el.isEqualNode(piece)
+        })
+        switch (index) {
+            case 0:
 
-    switch (index) {
-        case 0:
+                el.style.left = 0;
+                el.style.top = '35px'
+                el.style.right = 'auto'
+                el.style.bottom = 'auto'
+                break;
+            case 1:
 
-            el.style.left = 0;
-            el.style.top = '35px'
-            el.style.right = 'auto'
-            el.style.bottom = 'auto'
-            break;
-        case 1:
+                el.style.left = 'auto';
+                el.style.top = '35px'
+                el.style.right = 0
+                el.style.bottom = 'autp'
+                break;
+            case 2:
+                el.style.bottom = 0;
+                el.style.left = 0
+                el.style.right = 'auto'
+                el.style.top = 'auto'
+                break;
+            case 3:
+                el.style.bottom = 0;
+                el.style.left = "28%"
+                el.style.right = 'auto'
+                el.style.top = 'auto'
+                break;
+            case 4:
+                el.style.left = "53%";
+                el.style.bottom = 0;
+                el.style.right = 'auto'
+                el.style.top = 'auto'
+                break;
+            case 5:
+                el.style.right = 0;
+                el.style.bottom = 0
+                el.style.left = 'auto'
+                el.style.top = 'auto'
+                break;
+        }
+    } else {
+        const positionIndex = +el.dataset.positionIndex
+        const nextEl = document.querySelector(`.quiz__piece[data-position-index="${positionIndex + 1}"]`)
+        // if (!nextEl && )
+        document.querySelector('.quiz__pieces').insertBefore(el, nextEl)
+        el.style.top = '30px'
+        el.style.transform = 'scale(0.7)'
+        el.style.filter = 'grayscale(0)'
+        el.classList.remove('active')
 
-            el.style.left = 'auto';
-            el.style.top = '35px'
-            el.style.right = 0
-            el.style.bottom = 'autp'
-            break;
-        case 2:
-            el.style.bottom = 0;
-            el.style.left = 0
-            el.style.right = 'auto'
-            el.style.top = 'auto'
-            break;
-        case 3:
-            el.style.bottom = 0;
-            el.style.left = "28%"
-            el.style.right = 'auto'
-            el.style.top = 'auto'
-            break;
-        case 4:
-            el.style.left = "53%";
-            el.style.bottom = 0;
-            el.style.right = 'auto'
-            el.style.top = 'auto'
-            break;
-        case 5:
-            el.style.right = 0;
-            el.style.bottom = 0
-            el.style.left = 'auto'
-            el.style.top = 'auto'
-            break;
+        setPiecePosition()
+        el.classList.add('active')
     }
+
 
 }
 
