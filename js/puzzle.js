@@ -27,10 +27,6 @@ document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
     document.querySelector('.quiz__line span').style.left = percent + '%'
 })
 
-document.querySelector('.quiz__line span').addEventListener('mouseenter', function() {
-    console.log(e.pageY)
-})
-
 sessionStorage.setItem('stage', 0)
 
 
@@ -659,7 +655,6 @@ function checkAnswer(e) {
             break;
     }
 
-
     if (document.querySelector('.variant-quiz__body.active')) return
 
     answer.querySelector('.variant-quiz__body').classList.add('active')
@@ -674,6 +669,7 @@ function checkAnswer(e) {
 
             audio.play();
             const el = document.createElement('div')
+
             const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `
@@ -688,7 +684,7 @@ function checkAnswer(e) {
                     </div>
                 </div>
                 <div class="win-quiz__text">
-                    <p>В кукурузе содержатся вещества бета-каротин и лютеин, которые помогают зрению правильно развиваться!</p>
+                    <p>${question.explanation}</p>
                 </div>`
 
             if (window.matchMedia('(max-width: 991.98px)').matches) {
