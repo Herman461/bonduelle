@@ -1,7 +1,7 @@
 
 initGame()
 
-let width = 0
+
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -22,7 +22,10 @@ function shuffle(array) {
 const audio = new Audio('../audio/game-win-success.wav');
 
 document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
-    const scrollWidth = e.target.scrollWidth - window.innerWidth
+    let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
+    if (window.matchMedia('(max-width: 360.98px)').matches) {
+        scrollWidth = e.target.scrollWidth - window.innerWidth + 20
+    }
     const percent = (e.target.scrollLeft / scrollWidth) * 100
     document.querySelector('.quiz__line span').style.left = percent + '%'
 })
@@ -494,7 +497,7 @@ function setPiecePosition() {
         const pieces = document.querySelectorAll('.quiz__piece')
 
 
-
+        let width = 0
         for (let index = 0; index < pieces.length; index++) {
             const piece = pieces[index]
 
@@ -655,6 +658,7 @@ function checkAnswer(e) {
             break;
     }
 
+
     if (document.querySelector('.variant-quiz__body.active')) return
 
     answer.querySelector('.variant-quiz__body').classList.add('active')
@@ -669,7 +673,6 @@ function checkAnswer(e) {
 
             audio.play();
             const el = document.createElement('div')
-
             const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `

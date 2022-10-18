@@ -2144,6 +2144,7 @@ a {
     background: #175733;
     position: relative;
     top: -10px;
+    z-index: 10;
     pointer-events: none;
   }
 
@@ -2256,7 +2257,6 @@ a {
   .quiz__pieces {
     overflow-x: auto;
     scrollbar-width: none;
-    margin: 0 -20px;
     height: 190px;
     padding: 0 20px;
     width: auto;
@@ -2285,7 +2285,7 @@ a {
     top: 0;
     height: 100vh;
     background: #FFFAE4;
-    z-index: 10;
+    z-index: 11;
     overflow: auto;
     padding: 70px 20px 92px;
   }
@@ -2480,12 +2480,14 @@ a {
 }
 
 @media (max-width: 360.98px) {
-  .quiz__puzzles {
-    margin: 0 -20px;
+  .quiz__line {
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .quiz__pieces {
-    padding: 0 20px;
+  .quiz__puzzles {
+    margin: 0 -20px;
   }
 }
 
