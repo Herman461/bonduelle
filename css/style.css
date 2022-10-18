@@ -2092,6 +2092,8 @@ a {
     height: 1px;
     background: #175733;
     position: relative;
+    top: -10px;
+    pointer-events: none;
   }
 
   .quiz__line span {
