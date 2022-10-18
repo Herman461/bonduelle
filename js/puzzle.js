@@ -19,6 +19,8 @@ function shuffle(array) {
     return array;
 }
 
+const audio = new Audio('../audio/game-win-success.wav');
+
 document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
     const scrollWidth = e.target.scrollWidth - window.innerWidth
     const percent = (e.target.scrollLeft / scrollWidth) * 100
@@ -669,7 +671,7 @@ function checkAnswer(e) {
         if (answer.isEqualNode(item) && rightAnswerIndex === index) {
             if (document.querySelector('.quiz__win')) continue
 
-            const audio = new Audio('../audio/game-win-success.wav');
+
             audio.play();
             const el = document.createElement('div')
             const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
