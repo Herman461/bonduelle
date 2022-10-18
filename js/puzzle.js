@@ -1,4 +1,8 @@
+
 initGame()
+
+let width = 0
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -15,8 +19,15 @@ function shuffle(array) {
     return array;
 }
 
+document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
+    const scrollWidth = e.target.scrollWidth - window.innerWidth
+    const percent = (e.target.scrollLeft / scrollWidth) * 100
+    document.querySelector('.quiz__line span').style.left = percent + '%'
+})
 
-
+document.querySelector('.quiz__line span').addEventListener('mouseenter', function() {
+    console.log(e.pageY)
+})
 
 sessionStorage.setItem('stage', 0)
 
@@ -212,8 +223,7 @@ function dragElement(el) {
 
                 const squareIndex = square.dataset.squareIndex
                 const pieceIndex = piece.dataset.pieceIndex
-                console.log('sq:' + squareIndex)
-                console.log('pi:' + pieceIndex)
+
                 if (squareIndex !== pieceIndex) {
                     setInitialPosition(el)
                     return
@@ -485,7 +495,7 @@ function setPiecePosition() {
     if (window.matchMedia('(max-width: 991.98px)').matches) {
         const pieces = document.querySelectorAll('.quiz__piece')
 
-        let width = 0
+
 
         for (let index = 0; index < pieces.length; index++) {
             const piece = pieces[index]
@@ -501,7 +511,6 @@ function setPiecePosition() {
                 piece.style.left = width + 'px'
 
             }
-
         }
 
     }
