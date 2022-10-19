@@ -2258,6 +2258,7 @@ a {
 
   .quiz__pieces {
     overflow-x: auto;
+    -ms-overflow-style: none;
     scrollbar-width: none;
     height: 190px;
     padding: 0 20px;
@@ -2266,6 +2267,7 @@ a {
 
   .quiz__pieces::-webkit-scrollbar {
     width: 0;
+    height: 0;
   }
 
   .quiz__prev-button {
