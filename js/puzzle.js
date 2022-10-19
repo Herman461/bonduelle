@@ -1,4 +1,3 @@
-
 initGame()
 
 
@@ -757,7 +756,7 @@ function checkAnswer(e) {
             }
 
             if (sessionStorage.getItem('puzzleType') === 'pea') {
-               el.classList.add('pea')
+                el.classList.add('pea')
             }
 
             setTimeout(() => {
@@ -985,6 +984,4 @@ function setWatchPersonButton() {
     }
 
 }
-
-
 
