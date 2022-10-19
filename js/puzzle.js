@@ -171,8 +171,8 @@ function dragElement(el) {
         }
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             el.style.transform = 'scale(1)'
-            // setPiecePosition()
-            // document.querySelector('.quiz__pieces').style.overflowX = 'visible'
+            setPiecePosition()
+            document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
         if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
