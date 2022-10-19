@@ -1095,6 +1095,7 @@ a {
 
 .loss-quiz.pea {
   min-height: 178px;
+  overflow: hidden;
 }
 
 .loss-quiz.pea .loss-quiz__top {
@@ -2144,7 +2145,7 @@ a {
     background: #175733;
     position: relative;
     top: -10px;
-    z-index: 10;
+    z-index: 9;
     pointer-events: none;
   }
 
@@ -2209,6 +2210,7 @@ a {
     flex: 0 0 auto;
     margin-right: 10px;
     position: absolute;
+    z-index: 10;
     top: 30px;
   }
 

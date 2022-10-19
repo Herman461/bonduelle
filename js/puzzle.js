@@ -168,7 +168,7 @@ function dragElement(el) {
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             el.style.transform = 'scale(1)'
             setPiecePosition()
-            document.querySelector('.quiz__pieces').style.overflowX = 'visible'
+            // document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
         if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
@@ -753,7 +753,7 @@ function checkAnswer(e) {
                 if (document.querySelector('.variant-quiz__body.active')) {
                     document.querySelector('.variant-quiz__body.active').classList.remove('active')
                 }
-            }, 6000)
+            }, 30000)
 
         }
 
