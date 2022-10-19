@@ -21,7 +21,7 @@ function shuffle(array) {
 
 const audio = new Audio('../audio/game-win-success.wav');
 
-function setScroll() {
+function setScroll(e) {
 
     let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
     if (window.matchMedia('(max-width: 360.98px)').matches) {
@@ -31,7 +31,7 @@ function setScroll() {
     document.querySelector('.quiz__line span').style.left = percent + '%'
 }
 document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
-    setScroll()
+    setScroll(e)
 })
 
 sessionStorage.setItem('stage', 0)
