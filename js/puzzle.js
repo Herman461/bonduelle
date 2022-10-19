@@ -797,8 +797,27 @@ window.addEventListener('click', function(e) {
     }
 })
 
+if (window.matchMedia('(max-width: 991.98px)').matches) {
+    document.body.classList.add('mobile')
+}
+
+if (window.matchMedia('(min-width: 991.98px)').matches) {
+    document.body.classList.add('desktop')
+}
+
 window.addEventListener('resize', function() {
-    setGame()
+    if (window.matchMedia('(max-width: 991.98px)').matches && !document.body.classList.contains('mobile')) {
+        setGame()
+        document.body.classList.remove('desktop')
+        document.body.classList.add('mobile')
+    }
+
+    if (window.matchMedia('(min-width: 991.98px)').matches && !document.body.classList.contains('desktop')) {
+        setGame()
+        document.body.classList.remove('mobile')
+        document.body.classList.add('desktop')
+    }
+
 })
 
 
