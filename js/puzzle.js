@@ -191,9 +191,8 @@ function dragElement(el) {
         if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
             const absolutePosition = el.getBoundingClientRect()
 
-            if (absolutePosition.left < 0) {
-                el.style.left = (e.clientX - (el.offsetWidth / 2)) + 'px'
-            }
+            el.style.left = (e.clientX - (el.offsetWidth / 2)) + 'px'
+            
             document.querySelector('.quiz__puzzles').appendChild(el)
         }
 
