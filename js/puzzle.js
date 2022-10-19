@@ -21,13 +21,17 @@ function shuffle(array) {
 
 const audio = new Audio('../audio/game-win-success.wav');
 
-document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
+function setScroll() {
+
     let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
     if (window.matchMedia('(max-width: 360.98px)').matches) {
         scrollWidth = e.target.scrollWidth - window.innerWidth + 20
     }
     const percent = (e.target.scrollLeft / scrollWidth) * 100
     document.querySelector('.quiz__line span').style.left = percent + '%'
+}
+document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
+    setScroll()
 })
 
 sessionStorage.setItem('stage', 0)
@@ -167,7 +171,7 @@ function dragElement(el) {
         }
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             el.style.transform = 'scale(1)'
-            setPiecePosition()
+            // setPiecePosition()
             // document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
@@ -195,6 +199,7 @@ function dragElement(el) {
 
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             document.querySelector('.quiz__pieces').style.overflowX = 'auto'
+
         }
         for (let index = 0; index < squares.length; index++) {
 
