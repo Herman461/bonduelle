@@ -21,18 +21,20 @@ function shuffle(array) {
 
 const audio = new Audio('../audio/game-win-success.wav');
 
-// function setScroll(e) {
-//
-//     let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
-//     if (window.matchMedia('(max-width: 360.98px)').matches) {
-//         scrollWidth = e.target.scrollWidth - window.innerWidth + 20
-//     }
-//     const percent = (e.target.scrollLeft / scrollWidth) * 100
-//     document.querySelector('.quiz__line span').style.left = percent + '%'
-// }
-// document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
-//     setScroll(e)
-// })
+let scrollOffset = 0;
+function setScroll(e) {
+
+    let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
+    if (window.matchMedia('(max-width: 360.98px)').matches) {
+        scrollWidth = e.target.scrollWidth - window.innerWidth + 20
+    }
+    const percent = (e.target.scrollLeft / scrollWidth) * 100
+    scrollOffset = e.target.scrollLeft - window.innerWidth
+    document.querySelector('.quiz__line span').style.left = percent + '%'
+}
+document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
+    setScroll(e)
+})
 
 sessionStorage.setItem('stage', 0)
 
@@ -172,17 +174,9 @@ function dragElement(el) {
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             el.style.transform = 'scale(1)'
 
-            document.querySelector('.quiz__pieces').style.overflowX = 'visible'
+            // document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
-        if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
-            document.querySelector('.quiz__puzzles').appendChild(el)
-            const absolutePosition = el.getBoundingClientRect()
-            console.log(absolutePosition.x)
-            el.style.left = (absolutePosition.x) + 'px'
-            el.style.top = (absolutePosition.y - 82.2) + 'px'
-
-        }
 
         if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
             document.querySelector('.quiz__board').style.position = 'static'
@@ -194,6 +188,15 @@ function dragElement(el) {
 
         el.style.top = el.offsetTop - pos2 + "px";
         el.style.left = el.offsetLeft - pos1 + "px";
+
+        if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
+            const absolutePosition = el.getBoundingClientRect()
+
+            if (absolutePosition.left < 0) {
+                el.style.left = (e.clientX - (el.offsetWidth / 2)) + 'px'
+            }
+            document.querySelector('.quiz__puzzles').appendChild(el)
+        }
 
     }
 
