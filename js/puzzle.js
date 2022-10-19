@@ -21,18 +21,18 @@ function shuffle(array) {
 
 const audio = new Audio('../audio/game-win-success.wav');
 
-function setScroll(e) {
-
-    let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
-    if (window.matchMedia('(max-width: 360.98px)').matches) {
-        scrollWidth = e.target.scrollWidth - window.innerWidth + 20
-    }
-    const percent = (e.target.scrollLeft / scrollWidth) * 100
-    document.querySelector('.quiz__line span').style.left = percent + '%'
-}
-document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
-    setScroll(e)
-})
+// function setScroll(e) {
+//
+//     let scrollWidth = e.target.scrollWidth - window.innerWidth + 40
+//     if (window.matchMedia('(max-width: 360.98px)').matches) {
+//         scrollWidth = e.target.scrollWidth - window.innerWidth + 20
+//     }
+//     const percent = (e.target.scrollLeft / scrollWidth) * 100
+//     document.querySelector('.quiz__line span').style.left = percent + '%'
+// }
+// document.querySelector('.quiz__pieces').addEventListener('scroll', function(e) {
+//     setScroll(e)
+// })
 
 sessionStorage.setItem('stage', 0)
 
@@ -171,12 +171,17 @@ function dragElement(el) {
         }
         if (window.matchMedia('(max-width: 991.98px)').matches) {
             el.style.transform = 'scale(1)'
-            setPiecePosition()
+
             document.querySelector('.quiz__pieces').style.overflowX = 'visible'
         }
 
         if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
             document.querySelector('.quiz__puzzles').appendChild(el)
+            const absolutePosition = el.getBoundingClientRect()
+            console.log(absolutePosition.x)
+            el.style.left = (absolutePosition.x) + 'px'
+            el.style.top = (absolutePosition.y - 82.2) + 'px'
+
         }
 
         if (document.querySelector('.quiz__win') && !e.target.closest('.quiz__win')) {
@@ -238,7 +243,7 @@ function dragElement(el) {
 
                 if (squareIndex !== pieceIndex && window.matchMedia('(max-width: 991.98px)').matches) return
                 setFinalPosition(piece, square)
-
+                setPiecePosition()
                 if (Number(piece.dataset.positionIndex) === 0) {
                     document.querySelector('.quiz__arrow_second').classList.add('show')
                 }
@@ -254,6 +259,7 @@ function dragElement(el) {
                 document.querySelector('.quiz__title').innerHTML = 'выбирай пазл,<br /> отвечай на вопросы<br /> и собери картинку'
 
                 updatePieceIndices()
+
                 setGameOver()
             } else {
                 // console.log('?')
