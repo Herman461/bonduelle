@@ -1,3 +1,4 @@
+
 initGame()
 
 
@@ -191,8 +192,9 @@ function dragElement(el) {
         if (el.closest('.quiz__pieces') && window.matchMedia('(max-width: 991.98px)').matches) {
             const absolutePosition = el.getBoundingClientRect()
 
-            el.style.left = (e.clientX - (el.offsetWidth / 2)) + 'px'
-            
+            if (absolutePosition.left < 0) {
+                el.style.left = (e.clientX - (el.offsetWidth / 2)) + 'px'
+            }
             document.querySelector('.quiz__puzzles').appendChild(el)
         }
 
@@ -332,15 +334,6 @@ function setSocialIcons() {
                     <use xlink:href="images/icons/icons.svg#vk"></use>
                </svg>`
     });
-
-    OK.CONNECT.insertShareWidget(
-        "ok_shareWidget",
-        window.location.origin + '/',
-        '{"sz":30,"st":"oval","nc":1,"nt":1,"bgclr":"ED8207","txclr":"FFFFFF"}',
-        "Сыграй в игру с супер-кукурузиком и супер-горошком и узнай, какие супер-силы они могут тебе дать!",
-        "",
-        window.location.origin + '/upload/quiz/repost-image.png'
-    )
 }
 
 
@@ -675,6 +668,7 @@ function checkAnswer(e) {
 
     answer.querySelector('.variant-quiz__body').classList.add('active')
 
+    const randImageIndex = shuffle([0, 1])[0]
     for (let index = 0; index < answers.length; ++index) {
         const item = answers[index]
 
@@ -685,7 +679,7 @@ function checkAnswer(e) {
 
             audio.play();
             const el = document.createElement('div')
-            const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
+            const imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `
                 <div class="win-quiz__top">
@@ -710,7 +704,7 @@ function checkAnswer(e) {
             }
 
 
-            if (sessionStorage.getItem('puzzleType') === 'pea') {
+            if (randImageIndex === 0) {
                 el.classList.add('pea')
             }
 
@@ -735,7 +729,7 @@ function checkAnswer(e) {
         } else {
             if (document.querySelector('.quiz__loss')) continue
 
-            const imageSrc = sessionStorage.getItem('puzzleType') === 'pea' ? 'images/puzzles/pea-loss.png' : 'images/puzzles/loss.png'
+            const imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-loss.png' : 'images/puzzles/loss.png'
             const el = document.createElement('div')
             el.className = 'quiz__loss loss-quiz'
             el.innerHTML = `
@@ -754,8 +748,8 @@ function checkAnswer(e) {
                 document.querySelector('.quiz').appendChild(el)
             }
 
-            if (sessionStorage.getItem('puzzleType') === 'pea') {
-                el.classList.add('pea')
+            if (randImageIndex === 0) {
+               el.classList.add('pea')
             }
 
             setTimeout(() => {
@@ -765,7 +759,7 @@ function checkAnswer(e) {
                 if (document.querySelector('.variant-quiz__body.active')) {
                     document.querySelector('.variant-quiz__body.active').classList.remove('active')
                 }
-            }, 30000)
+            }, 6000)
 
         }
 
@@ -983,4 +977,6 @@ function setWatchPersonButton() {
     }
 
 }
+
+
 
