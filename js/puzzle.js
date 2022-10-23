@@ -682,11 +682,11 @@ function checkAnswer(e) {
             let imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
 
             if (sessionStorage.getItem('puzzleType') === 'corn') {
-                imageSrc = 'images/puzzles/loss.png'
+                imageSrc = 'images/puzzles/win.png'
             } else if (sessionStorage.getItem('puzzleType') === 'pea') {
-                imageSrc = 'images/puzzles/pea-loss.png'
+                imageSrc = 'images/puzzles/pea-win.png'
             }
-            
+
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `
                 <div class="win-quiz__top">
@@ -711,9 +711,13 @@ function checkAnswer(e) {
             }
 
 
-            if (randImageIndex === 0) {
+            if (randImageIndex === 0 && sessionStorage.getItem('puzzleType') === 'together') {
                 el.classList.add('pea')
             }
+            if (sessionStorage.getItem('puzzleType') === 'pea') {
+                el.classList.add('pea')
+            }
+
 
             setTimeout(() => {
                 document.querySelector('.quiz__board').style.position = 'static'
@@ -760,8 +764,12 @@ function checkAnswer(e) {
                 document.querySelector('.quiz').appendChild(el)
             }
 
-            if (randImageIndex === 0) {
+            if (randImageIndex === 0 && sessionStorage.getItem('puzzleType') === 'together') {
                el.classList.add('pea')
+            }
+
+            if (sessionStorage.getItem('puzzleType') === 'pea') {
+                el.classList.add('pea')
             }
 
             setTimeout(() => {
