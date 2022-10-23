@@ -679,7 +679,14 @@ function checkAnswer(e) {
 
             audio.play();
             const el = document.createElement('div')
-            const imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
+            let imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-win.png' : 'images/puzzles/win.png'
+
+            if (sessionStorage.getItem('puzzleType') === 'corn') {
+                imageSrc = 'images/puzzles/loss.png'
+            } else if (sessionStorage.getItem('puzzleType') === 'pea') {
+                imageSrc = 'images/puzzles/pea-loss.png'
+            }
+            
             el.className = 'quiz__win win-quiz'
             el.innerHTML = `
                 <div class="win-quiz__top">
@@ -729,7 +736,12 @@ function checkAnswer(e) {
         } else {
             if (document.querySelector('.quiz__loss')) continue
 
-            const imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-loss.png' : 'images/puzzles/loss.png'
+            let imageSrc = randImageIndex === 0 ? 'images/puzzles/pea-loss.png' : 'images/puzzles/loss.png'
+            if (sessionStorage.getItem('puzzleType') === 'corn') {
+                imageSrc = 'images/puzzles/loss.png'
+            } else if (sessionStorage.getItem('puzzleType') === 'pea') {
+                imageSrc = 'images/puzzles/pea-loss.png'
+            }
             const el = document.createElement('div')
             el.className = 'quiz__loss loss-quiz'
             el.innerHTML = `
